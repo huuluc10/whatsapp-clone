@@ -29,11 +29,11 @@ class AuthRepository {
             throw Exception(e.message);
           },
           codeSent: ((String verificationId, int? resendToken) async {
-            Navigator.push(
-              context,
-              OTPScreen.routeName,
-              argumemnts: verificationId,
-            );
+            // Navigator.push(
+            //   context,
+            //   OTPScreen.routeName,
+            //   argumemnts: verificationId,
+            // );
           }),
           codeAutoRetrievalTimeout: (String verificationId) {});
     } on FirebaseAuthException catch (e) {
