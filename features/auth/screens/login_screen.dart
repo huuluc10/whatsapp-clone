@@ -69,7 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
             ),
             Expanded(child: Container()),
-            Container(
+            SizedBox(
               width: 90,
               child: Center(
                   child: CustomButton(

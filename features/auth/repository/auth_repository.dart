@@ -1,5 +1,6 @@
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/otp_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,6 +54,22 @@ class AuthRepository {
                 arguments: verificationId);
           }),
           codeAutoRetrievalTimeout: (String verificationId) {});
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context: context, content: e.message!);
+    }
+  }
+
+  void verifyOTP({
+    required BuildContext context,
+    required String verificationId,
+    required String userOTP,
+  }) async {
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: userOTP);
+      await auth.signInWithCredential(credential);
+      Navigator.pushNamedAndRemoveUntil(
+          context, UserInformationScreen.routeName, (route) => false);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context: context, content: e.message!);
     }
