@@ -26,7 +26,27 @@ class AuthRepository {
             await auth.signInWithCredential(credential);
           },
           verificationFailed: (e) {
-            throw Exception(e.message);
+            String error;
+            switch (e.code) {
+              case 'invalid-phone-number':
+                error =
+                    'Invalid phone number. Please check your phone number and retry.';
+                break;
+              case 'session-expired':
+                error = 'Authentication time has expired.';
+                break;
+              case 'too-many-requests':
+                error =
+                    'Too many requests to send verification messages in a short time.';
+                break;
+              case 'user-disabled':
+                error = 'User disabled or locked account.';
+                break;
+              default:
+                error = 'An unknown error occurred';
+                break;
+            }
+            showSnackBar(context: context, content: error);
           },
           codeSent: ((String verificationId, int? resendToken) async {
             Navigator.pushNamed(context, OTPScreen.routeName,
