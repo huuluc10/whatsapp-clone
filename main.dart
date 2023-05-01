@@ -54,6 +54,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: backgroundColor,
           appBarTheme: const AppBarTheme(color: appBarColor)),
       onGenerateRoute: (settings) => generateRoute(settings),
+      debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
     );
   }

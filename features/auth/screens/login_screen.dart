@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 10),
             Row(
               children: [
-                Text('+84'),
+                const Text('+84'),
                 const SizedBox(width: 10),
                 SizedBox(
                   width: size.width * 0.7,
