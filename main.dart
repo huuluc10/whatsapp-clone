@@ -1,4 +1,7 @@
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
+import 'package:chatapp_clone_whatsapp/common/widgets/error.dart';
+import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
+import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/login_screen.dart';
 import 'package:chatapp_clone_whatsapp/firebase_options.dart';
 import 'package:chatapp_clone_whatsapp/router.dart';
@@ -43,20 +46,32 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Chat Application',
       theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: backgroundColor,
-          appBarTheme: const AppBarTheme(color: appBarColor)),
+        scaffoldBackgroundColor: backgroundColor,
+        appBarTheme: const AppBarTheme(color: appBarColor),
+      ),
       onGenerateRoute: (settings) => generateRoute(settings),
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+      home: ref.watch(userDataAuthProvider).when(
+          data: (user) {
+            if (user == null) {
+              return const LoginScreen();
+            } else {
+              return const Scaffold();
+            }
+          },
+          error: (error, trace) {
+            return ErrorScreen(error: error.toString());
+          },
+          loading: () => const Loader()),
     );
   }
 }

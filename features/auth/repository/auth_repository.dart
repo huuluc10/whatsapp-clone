@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
+import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../common/repositories/common_firebase_storage_repository.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
@@ -18,6 +23,18 @@ class AuthRepository {
   final FirebaseFirestore firestore;
 
   AuthRepository({required this.auth, required this.firestore});
+
+  Future<UserModel?> getCurrentUserData() async {
+    UserModel? user;
+    var userData = await firestore
+        .collection('users')
+        .doc(auth.currentUser!.phoneNumber)
+        .get();
+    if (userData.data() != null) {
+      user = UserModel.fromMap(userData.data()!);
+    }
+    return user;
+  }
 
   void singInWithPhone(BuildContext context, String phoneNumber) async {
     try {
@@ -51,7 +68,7 @@ class AuthRepository {
           },
           codeSent: ((String verificationId, int? resendToken) async {
             Navigator.pushNamed(context, OTPScreen.routeName,
-                arguments: verificationId);
+                arguments: [verificationId, phoneNumber]);
           }),
           codeAutoRetrievalTimeout: (String verificationId) {});
     } on FirebaseAuthException catch (e) {
@@ -59,19 +76,62 @@ class AuthRepository {
     }
   }
 
-  void verifyOTP({
-    required BuildContext context,
-    required String verificationId,
-    required String userOTP,
-  }) async {
+  void verifyOTP(
+      {required BuildContext context,
+      required String verificationId,
+      required String userOTP,
+      required String phoneNumber}) async {
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: userOTP);
       await auth.signInWithCredential(credential);
       Navigator.pushNamedAndRemoveUntil(
-          context, UserInformationScreen.routeName, (route) => false);
+          context, UserInformationScreen.routeName, (route) => false,
+          arguments: phoneNumber);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context: context, content: e.message!);
+    }
+  }
+
+  void saveUserDataToFirebase({
+    required String name,
+    required File? profilePic,
+    required ProviderRef ref,
+    required BuildContext context,
+  }) async {
+    try {
+      String uid = auth.currentUser!.uid;
+      String photoUrl =
+          'https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg';
+
+      if (profilePic != null) {
+        photoUrl = await ref
+            .read(commonFirebaseStorageRepositoryProvider)
+            .storeFileToFirebase(
+              'profilePic/$uid',
+              profilePic,
+            );
+      }
+
+      var user = UserModel(
+        name: name,
+        uid: uid,
+        profilePic: photoUrl,
+        isOnline: true,
+        phoneNumber: auth.currentUser!.phoneNumber.toString(),
+        groupId: [],
+      );
+
+      await firestore.collection('users').doc(uid).set(user.toMap());
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Scaffold(),
+          ),
+          (route) => false);
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
     }
   }
 }

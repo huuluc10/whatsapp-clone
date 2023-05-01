@@ -1,17 +1,25 @@
-import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
-import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
+import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 
 class OTPScreen extends ConsumerWidget {
   static const String routeName = '/otp-screen';
   final String verificationId;
-  const OTPScreen({Key? key, required this.verificationId}) : super(key: key);
+  final String phoneNumber;
+  const OTPScreen({
+    super.key,
+    required this.verificationId,
+    required this.phoneNumber,
+  });
 
-  void verifyOTP(WidgetRef ref, BuildContext context, String userOTP) {
+  void verifyOTP(
+      WidgetRef ref, BuildContext context, String userOTP, String phoneNumber) {
     ref
         .read(authControllerProvider)
-        .verifyOTP(context, verificationId, userOTP);
+        .verifyOTP(context, verificationId, userOTP, phoneNumber);
   }
 
   @override
@@ -42,10 +50,8 @@ class OTPScreen extends ConsumerWidget {
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
                   if (value.length == 6) {
-                    print('verifying opt');
-                    verifyOTP(ref, context, value.trim());
+                    verifyOTP(ref, context, value.trim(), phoneNumber);
                   }
-                  print('this function was run');
                 },
               ),
             )
