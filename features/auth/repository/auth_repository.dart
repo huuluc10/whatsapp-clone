@@ -26,12 +26,12 @@ class AuthRepository {
 
   Future<UserModel?> getCurrentUserData() async {
     UserModel? user;
-    var userData = await firestore
-        .collection('users')
-        .doc(auth.currentUser!.phoneNumber)
-        .get();
-    if (userData.data() != null) {
-      user = UserModel.fromMap(userData.data()!);
+    if (auth.currentUser != null) {
+      var userData =
+          await firestore.collection('users').doc(auth.currentUser!.uid).get();
+      if (userData.data() != null) {
+        user = UserModel.fromMap(userData.data()!);
+      }
     }
     return user;
   }
@@ -66,7 +66,7 @@ class AuthRepository {
             }
             showSnackBar(context: context, content: error);
           },
-          codeSent: ((String verificationId, int? resendToken) async {
+          codeSent: ((String verificationId, int? resendToken) {
             Navigator.pushNamed(context, OTPScreen.routeName,
                 arguments: [verificationId, phoneNumber]);
           }),
@@ -89,7 +89,14 @@ class AuthRepository {
           context, UserInformationScreen.routeName, (route) => false,
           arguments: phoneNumber);
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context: context, content: e.message!);
+      String errorMessage =
+          'Xác thực OTP không thành công. Vui lòng thử lại sau.';
+      if (e.code == 'firebase_auth/invalid-verification-code') {
+        errorMessage = 'Mã OTP không đúng. Vui lòng kiểm tra và thử lại.';
+      } else if (e.code == 'firebase_auth/session-expired') {
+        errorMessage = 'Mã OTP đã hết hạn. Vui lòng thử lại.';
+      }
+      showSnackBar(context: context, content: errorMessage);
     }
   }
 
@@ -127,7 +134,11 @@ class AuthRepository {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const Scaffold(),
+            builder: (context) => const Scaffold(
+              body: Center(
+                child: Text('Đã đăng nhập'),
+              ),
+            ),
           ),
           (route) => false);
     } catch (e) {

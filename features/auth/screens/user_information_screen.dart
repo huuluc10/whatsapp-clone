@@ -69,7 +69,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
                       bottom: 0,
                       right: 0,
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.green,
                         ),

@@ -65,7 +65,11 @@ class MyApp extends ConsumerWidget {
             if (user == null) {
               return const LoginScreen();
             } else {
-              return const Scaffold();
+              return const Scaffold(
+                body: Center(
+                  child: Text('Đã đăng nhập'),
+                ),
+              );
             }
           },
           error: (error, trace) {
