@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:chatapp_clone_whatsapp/common/screens/main_screen_layout.dart';
+import 'package:chatapp_clone_whatsapp/common/screens/welcom_screen.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
@@ -9,7 +9,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../common/repositories/common_firebase_storage_repository.dart';
 
 final authRepositoryProvider = Provider(
@@ -35,6 +34,11 @@ class AuthRepository {
       }
     }
     return user;
+  }
+
+  Future<void> logout(BuildContext context) async {
+    await auth.signOut();
+    Navigator.pushNamed(context, WelcomeScreen.routeName);
   }
 
   void singInWithPhone(BuildContext context, String phoneNumber) async {
@@ -92,7 +96,6 @@ class AuthRepository {
           context,
           UserInformationScreen.routeName,
           (route) => false,
-          arguments: phoneNumber,
         );
       }
       Navigator.pushNamedAndRemoveUntil(

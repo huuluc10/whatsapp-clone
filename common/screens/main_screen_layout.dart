@@ -1,5 +1,7 @@
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/contacts_list.dart';
+import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
+import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenLayout extends StatelessWidget {
@@ -35,13 +37,28 @@ class MainScreenLayout extends StatelessWidget {
                 Icons.more_vert,
                 color: Colors.grey,
               ),
+              onSelected: (value) {
+                if (value == 'newGroup') {
+                  //TODO: màn hình chọn thành viên cho group
+                } else {
+                  Navigator.pushNamed(context, UserInformationScreen.routeName);
+                }
+              },
               itemBuilder: (context) => <PopupMenuEntry<String>>[
                 const PopupMenuItem(
-                    child: SizedBox(
-                  width: 100,
-                  child: Text('New group'),
-                )),
-                const PopupMenuItem(child: Text('Settings')),
+                  value: "newGroup",
+                  child: SizedBox(
+                    width: 100,
+                    child: Text('New group'),
+                  ),
+                ),
+                const PopupMenuItem(
+                  value: 'settings',
+                  child: SizedBox(
+                    width: 100,
+                    child: Text('Settings'),
+                  ),
+                ),
               ],
             )
           ],
