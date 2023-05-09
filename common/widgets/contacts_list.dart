@@ -1,5 +1,6 @@
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/chat_list.dart';
+import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatelessWidget {
@@ -12,7 +13,9 @@ class ContactsList extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: StreamBuilder(builder: (context, snapshot) {
+            child: StreamBuilder<List<ChatContact>>(
+                // stream: ,
+                builder: (context, snapshot) {
               return ListView.builder(
                 shrinkWrap: true,
                 itemCount: info.length,

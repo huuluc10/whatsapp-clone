@@ -1,6 +1,6 @@
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/contacts_list.dart';
-import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
+import 'package:chatapp_clone_whatsapp/common/widgets/oops_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -83,7 +83,14 @@ class MainScreenLayout extends StatelessWidget {
             ],
           ),
         ),
-        body: const ContactsList(),
+        body: TabBarView(
+          children: [
+            OopsWidget(),
+            const ContactsList(),
+            OopsWidget(),
+            OopsWidget(),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           backgroundColor: tabColor,

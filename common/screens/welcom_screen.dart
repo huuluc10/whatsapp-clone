@@ -24,9 +24,10 @@ class WelcomeScreen extends StatelessWidget {
             Text(
               'WELCOME',
               style: const TextStyle(
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 50),
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+                fontSize: 50,
+              ),
             ),
             SizedBox(height: size.height * 0.02),
             OutlinedButton(
