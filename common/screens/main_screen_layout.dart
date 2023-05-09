@@ -12,7 +12,7 @@ class MainScreenLayout extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          elevation: 0,
+          elevation: 1,
           title: const Text(
             "Chat App",
             style: TextStyle(
@@ -29,13 +29,21 @@ class MainScreenLayout extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            IconButton(
-              onPressed: () {},
+            PopupMenuButton<String>(
+              color: appBarColor,
               icon: const Icon(
                 Icons.more_vert,
                 color: Colors.grey,
               ),
-            ),
+              itemBuilder: (context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem(
+                    child: SizedBox(
+                  width: 100,
+                  child: Text('New group'),
+                )),
+                const PopupMenuItem(child: Text('Settings')),
+              ],
+            )
           ],
           bottom: const TabBar(
             indicatorColor: tabColor,

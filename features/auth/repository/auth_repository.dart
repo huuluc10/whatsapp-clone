@@ -86,9 +86,20 @@ class AuthRepository {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: userOTP);
       await auth.signInWithCredential(credential);
+      UserModel? user = await getCurrentUserData();
+      if (user!.name.isEmpty) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          UserInformationScreen.routeName,
+          (route) => false,
+          arguments: phoneNumber,
+        );
+      }
       Navigator.pushNamedAndRemoveUntil(
-          context, UserInformationScreen.routeName, (route) => false,
-          arguments: phoneNumber);
+        context,
+        MainScreenLayout.routeName,
+        (route) => false,
+      );
     } on FirebaseAuthException catch (e) {
       String errorMessage =
           'Xác thực OTP không thành công. Vui lòng thử lại sau.';
