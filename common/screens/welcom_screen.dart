@@ -30,11 +30,7 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(height: size.height * 0.02),
             OutlinedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ));
+                  Navigator.pushNamed(context, LoginScreen.routeName);
                 },
                 child: const Text(
                   'Login',

@@ -1,3 +1,4 @@
+import 'package:chatapp_clone_whatsapp/common/screens/main_screen_layout.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/error.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
@@ -66,11 +67,7 @@ class MyApp extends ConsumerWidget {
             if (user == null) {
               return const WelcomeScreen();
             } else {
-              return const Scaffold(
-                body: Center(
-                  child: Text('Đã đăng nhập'),
-                ),
-              );
+              return const MainScreenLayout();
             }
           },
           error: (error, trace) {

@@ -1,3 +1,4 @@
+import 'package:chatapp_clone_whatsapp/common/screens/main_screen_layout.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/error.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/login_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/otp_screen.dart';
@@ -23,9 +24,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case UserInformationScreen.routeName:
       final verificationID = settings.arguments as String;
       return MaterialPageRoute(
-          builder: (context) => UserInformationScreen(
-                phoneNumber: verificationID,
-              ));
+        builder: (context) => UserInformationScreen(
+          phoneNumber: verificationID,
+        ),
+      );
+    case MainScreenLayout.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const MainScreenLayout(),
+      );
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chatapp_clone_whatsapp/common/screens/main_screen_layout.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
@@ -134,11 +135,7 @@ class AuthRepository {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const Scaffold(
-              body: Center(
-                child: Text('Đã đăng nhập'),
-              ),
-            ),
+            builder: (context) => const MainScreenLayout(),
           ),
           (route) => false);
     } catch (e) {
