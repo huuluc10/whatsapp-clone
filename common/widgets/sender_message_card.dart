@@ -32,8 +32,8 @@ class SenderMessageCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              left: 3,
-              bottom: 2,
+              left: 10,
+              bottom: 1,
               child: Row(
                 children: [
                   Text(

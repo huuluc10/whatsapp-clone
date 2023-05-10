@@ -32,8 +32,8 @@ class MyMessageCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: 2,
-              right: 3,
+              bottom: 1,
+              right: 5,
               child: Row(
                 children: [
                   Text(
