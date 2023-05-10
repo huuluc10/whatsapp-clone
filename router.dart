@@ -17,10 +17,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final verificationId = arguments[0] as String;
       final phoneNumber = arguments[1] as String;
       return MaterialPageRoute(
-        builder: (context) => OTPScreen(
-          verificationId: verificationId,
-          phoneNumber: phoneNumber,
-        ),
+        builder: (context) => OTPScreen(verificationId, phoneNumber),
       );
     case UserInformationScreen.routeName:
       // final bool isNewUser = settings.arguments as bool;

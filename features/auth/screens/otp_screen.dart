@@ -1,29 +1,46 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 
-class OTPScreen extends ConsumerWidget {
+class OTPScreen extends ConsumerStatefulWidget {
   static const String routeName = '/otp-screen';
   final String verificationId;
   final String phoneNumber;
-  const OTPScreen({
-    super.key,
-    required this.verificationId,
-    required this.phoneNumber,
-  });
+
+  OTPScreen(this.verificationId, this.phoneNumber);
+
+  @override
+  ConsumerState<OTPScreen> createState() => _OTPScreenState();
+}
+
+class _OTPScreenState extends ConsumerState<OTPScreen> {
+  int time = 60;
+  late Stream<int> _timerStream;
+  late StreamSubscription<int> _timerSubscription;
+
+  Future<void> updateTimeToVerify() {
+    if (time > 0) {
+      return Future.delayed(const Duration(seconds: 1)).then((value) {
+        time--;
+      });
+    } else {
+      return Future.value();
+    }
+  }
 
   void verifyOTP(
       WidgetRef ref, BuildContext context, String userOTP, String phoneNumber) {
     ref
         .read(authControllerProvider)
-        .verifyOTP(context, verificationId, userOTP, phoneNumber);
+        .verifyOTP(context, widget.verificationId, userOTP, phoneNumber);
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -49,12 +66,22 @@ class OTPScreen extends ConsumerWidget {
                 ),
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  if (value.length == 6) {
-                    verifyOTP(ref, context, value.trim(), phoneNumber);
+                  if (value.length == 6 && time >= 0) {
+                    verifyOTP(ref, context, value.trim(), widget.phoneNumber);
                   }
                 },
               ),
-            )
+            ),
+            FutureBuilder(
+              future: updateTimeToVerify(),
+              builder: (context, snapshot) => Text(
+                time.toString(),
+              ),
+            ),
+            time == 0
+                ? const Text(
+                    'Verification time has expired, please perform the action again.')
+                : Container(),
           ],
         ),
       ),

@@ -56,7 +56,7 @@ class MainScreenLayout extends StatelessWidget {
                   value: 'settings',
                   child: SizedBox(
                     width: 100,
-                    child: Text('Settings'),
+                    child: Text('Profile'),
                   ),
                 ),
               ],
@@ -69,10 +69,10 @@ class MainScreenLayout extends StatelessWidget {
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
             tabs: [
               Tab(
-                icon: Icon(Icons.people),
+                text: 'Chats',
               ),
               Tab(
-                text: 'Chats',
+                icon: Icon(Icons.people),
               ),
               Tab(
                 text: 'Status',
@@ -83,10 +83,10 @@ class MainScreenLayout extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
+            ContactsList(),
             OopsWidget(),
-            const ContactsList(),
             OopsWidget(),
             OopsWidget(),
           ],
