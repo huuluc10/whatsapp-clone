@@ -7,13 +7,7 @@ import '../widgets/bottom_chat_field.dart';
 
 class ChatScreen extends StatelessWidget {
   static const String routeName = '/mobile-chat-screen';
-  final String name;
-  final String uid;
-  const ChatScreen({
-    Key? key,
-    required this.name,
-    required this.uid,
-  }): super(key: key);
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +27,7 @@ class ChatScreen extends StatelessWidget {
           const Expanded(
             child: ChatList(),
           ),
-          BottomChatField(
-            recieverUserId: uid,
-          )
+          BottomChatField()
         ],
       ),
     );
