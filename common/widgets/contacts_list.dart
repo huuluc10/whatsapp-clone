@@ -1,6 +1,6 @@
-import 'package:chatapp_clone_whatsapp/common/screens/chat_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/screens/chat_screen.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
-import 'package:chatapp_clone_whatsapp/common/widgets/chat_list.dart';
+import 'package:chatapp_clone_whatsapp/info.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatelessWidget {
@@ -20,8 +20,11 @@ class ContactsList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ChatScreen()));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ChatScreen(),
+                        ),
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
