@@ -6,6 +6,7 @@ import '../../../info.dart';
 import '../widgets/bottom_chat_field.dart';
 
 class ChatScreen extends StatelessWidget {
+  static const String routeName = '/mobile-chat-screen';
   const ChatScreen({Key? key}) : super(key: key);
 
   @override

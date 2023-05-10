@@ -140,7 +140,7 @@ class AuthRepository {
         uid: uid,
         profilePic: photoUrl,
         isOnline: true,
-        phoneNumber: auth.currentUser!.phoneNumber.toString(),
+        phoneNumber: auth.currentUser!.phoneNumber!,
         groupId: [],
       );
 
