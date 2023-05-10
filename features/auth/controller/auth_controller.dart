@@ -52,4 +52,8 @@ class AuthController {
   Future<void> logout(BuildContext context) async {
     await authRepository.logout(context);
   }
+
+  Stream<UserModel> userDataById(String userId){
+    return authRepository.userData(userId);
+  }
 }

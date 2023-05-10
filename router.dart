@@ -29,15 +29,21 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => UserInformationScreen(),
       );
-      case SelectContactsScreen.routeName:
+    case SelectContactsScreen.routeName:
       // final bool isNewUser = settings.arguments as bool;
       return MaterialPageRoute(
         builder: (context) => const SelectContactsScreen(),
       );
-      case ChatScreen.routeName:
+    case ChatScreen.routeName:
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final name = arguments['name'];
+      final uid = arguments['uid'];
       // final bool isNewUser = settings.arguments as bool;
       return MaterialPageRoute(
-        builder: (context) => const ChatScreen(),
+        builder: (context) => ChatScreen(
+          name: name,
+          uid: uid,
+        ),
       );
 
     case MainScreenLayout.routeName:
