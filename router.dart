@@ -4,6 +4,7 @@ import 'package:chatapp_clone_whatsapp/common/widgets/error.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/login_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -27,6 +28,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => UserInformationScreen(),
       );
+      case SelectContactsScreen.routeName:
+      // final bool isNewUser = settings.arguments as bool;
+      return MaterialPageRoute(
+        builder: (context) => const SelectContactsScreen(),
+      );
+
     case MainScreenLayout.routeName:
       return MaterialPageRoute(
         builder: (context) => const MainScreenLayout(),
