@@ -4,4 +4,4 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final getContactsProvider = FutureProvider((ref) {
   final selectContactRepository = ref.watch(selectContactRepositoryProvier);
   return selectContactRepository.getContacts();
-})
+});
