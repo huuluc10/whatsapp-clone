@@ -140,7 +140,7 @@ class AuthRepository {
         uid: uid,
         profilePic: photoUrl,
         isOnline: true,
-        phoneNumber: auth.currentUser!.phoneNumber.toString(),
+        phoneNumber: auth.currentUser!.phoneNumber!,
         groupId: [],
       );
 
@@ -155,5 +155,13 @@ class AuthRepository {
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
+  }
+
+  Stream<UserModel> userData(String userId) {
+    return firestore
+        .collection('user')
+        .doc(userId)
+        .snapshots()
+        .map((event) => UserModel.fromMap(event.data()!));
   }
 }

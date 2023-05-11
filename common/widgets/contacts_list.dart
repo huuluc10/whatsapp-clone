@@ -1,6 +1,6 @@
+import 'package:chatapp_clone_whatsapp/features/chat/screens/chat_screen.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
-import 'package:chatapp_clone_whatsapp/common/widgets/chat_list.dart';
-import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
+import 'package:chatapp_clone_whatsapp/info.dart';
 import 'package:flutter/material.dart';
 
 class ContactsList extends StatelessWidget {
@@ -13,15 +13,22 @@ class ContactsList extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: StreamBuilder<List<ChatContact>>(
-                // stream: ,
-                builder: (context, snapshot) {
+            child: StreamBuilder(builder: (context, snapshot) {
               return ListView.builder(
                 shrinkWrap: true,
                 itemCount: info.length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ChatScreen(
+                            name: 'test',
+                            uid: '12345',
+                          ),
+                        ),
+                      );
+                    },
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: ListTile(

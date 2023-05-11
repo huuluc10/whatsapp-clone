@@ -2,6 +2,7 @@ import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/contacts_list.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/oops_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenLayout extends StatelessWidget {
@@ -92,7 +93,9 @@ class MainScreenLayout extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, SelectContactsScreen.routeName);
+          },
           backgroundColor: tabColor,
           child: const Icon(
             Icons.message,
