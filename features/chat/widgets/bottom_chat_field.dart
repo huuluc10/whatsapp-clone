@@ -57,10 +57,12 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
               }
             },
             decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(),
+
               filled: true,
               fillColor: mobileChatBoxColor,
               prefixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: SizedBox(
                   width: 100,
                   child: Row(
@@ -116,19 +118,20 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
         ),
         Padding(
           padding: const EdgeInsets.only(
-            bottom: 8,
+            bottom: 2,
             left: 2,
             right: 2,
+            top: 2
           ),
           child: CircleAvatar(
-            backgroundColor: Color(0xFF128C7E),
+            backgroundColor: const Color(0xFF128C7E),
             radius: 25,
             child: GestureDetector(
+              onTap: sendTextMessage,
               child: Icon(
                 isShowSendButton ? Icons.send : Icons.mic,
                 color: Colors.white,
               ),
-              onTap: sendTextMessage,
             ),
           ),
         )
