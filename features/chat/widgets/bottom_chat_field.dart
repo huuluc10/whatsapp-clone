@@ -20,10 +20,10 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   void sendTextMessage() async {
     if (isShowSendButton) {
       ref.read(chatControllerProvider).sendTextMessage(
-            context,
-            _messageController.text.trim(),
-            widget.recieverUserId,
-          );
+        context,
+        _messageController.text.trim(),
+        widget.recieverUserId,
+      );
 
       setState(() {
         _messageController.text = '';
@@ -57,10 +57,12 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
               }
             },
             decoration: InputDecoration(
+              enabledBorder: const OutlineInputBorder(),
+
               filled: true,
               fillColor: mobileChatBoxColor,
               prefixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: SizedBox(
                   width: 100,
                   child: Row(
@@ -108,7 +110,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide:
-                      const BorderSide(width: 20, style: BorderStyle.none)),
+                  const BorderSide(width: 20, style: BorderStyle.none)),
               hintText: "Nhập nội dung",
               contentPadding: const EdgeInsets.all(10),
             ),
@@ -116,19 +118,20 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
         ),
         Padding(
           padding: const EdgeInsets.only(
-            bottom: 8,
-            left: 2,
-            right: 2,
+              bottom: 2,
+              left: 2,
+              right: 2,
+              top: 2
           ),
           child: CircleAvatar(
-            backgroundColor: Color(0xFF128C7E),
+            backgroundColor: const Color(0xFF128C7E),
             radius: 25,
             child: GestureDetector(
+              onTap: sendTextMessage,
               child: Icon(
                 isShowSendButton ? Icons.send : Icons.mic,
                 color: Colors.white,
               ),
-              onTap: sendTextMessage,
             ),
           ),
         )

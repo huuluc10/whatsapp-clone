@@ -161,7 +161,7 @@ class AuthRepository {
 
   Stream<UserModel> userData(String userId) {
     return firestore
-        .collection('user')
+        .collection('users')
         .doc(userId)
         .snapshots()
         .map((event) => UserModel.fromMap(event.data()!));

@@ -29,11 +29,11 @@ class ChatScreen extends ConsumerWidget {
               return Column(
                 children: [
                   Text(name),
-                  // Text(
-                  //   snapshot.data!.isOnline ? 'online' : 'offline',
-                  //   style: const TextStyle(
-                  //       fontSize: 13, fontWeight: FontWeight.normal),
-                  // ),
+                  Text(
+                    snapshot.data!.isOnline ? 'online' : 'offline',
+                    style: const TextStyle(
+                        fontSize: 13, fontWeight: FontWeight.normal),
+                  ),
                 ],
               );
             }),
@@ -46,8 +46,10 @@ class ChatScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
-            child: ChatList(),
+          Expanded(
+            child: ChatList(
+              recieverUserId: uid,
+            ),
           ),
           BottomChatField(
             recieverUserId: uid,
