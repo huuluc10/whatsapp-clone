@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 
 class Message {
@@ -19,28 +21,32 @@ class Message {
     required this.isSeen,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "senderId": this.senderId,
-      "recieverId": this.recieverId,
-      "text": this.text,
-      "type": this.type,
-      "timeSent": this.timeSent.toIso8601String(),
-      "messageId": this.messageId,
-      "isSeen": this.isSeen,
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'senderId': senderId,
+      'recieverId': recieverId,
+      'text': text,
+      'type': type.type,
+      'timeSent': timeSent.millisecondsSinceEpoch,
+      'messageId': messageId,
+      'isSeen': isSeen,
     };
   }
 
-  factory Message.fromJson(Map<String, dynamic> json) {
+  factory Message.fromMap(Map<String, dynamic> map) {
     return Message(
-      senderId: json["senderId"],
-      recieverId: json["recieverId"],
-      text: json["text"],
-      type: json["type"],
-      timeSent: DateTime.parse(json["timeSent"]),
-      messageId: json["messageId"],
-      isSeen: json["isSeen"].toLowerCase() == 'true',
+      senderId: map['senderId'] as String,
+      recieverId: map['recieverId'] as String,
+      text: map['text'] as String,
+      type: (map['type'] as String).toEnum(),
+      timeSent: DateTime.fromMillisecondsSinceEpoch(map['timeSent'] as int),
+      messageId: map['messageId'] as String,
+      isSeen: map['isSeen'] as bool,
     );
   }
-//
+
+  String toJson() => json.encode(toMap());
+
+  factory Message.fromJson(String source) =>
+      Message.fromMap(json.decode(source) as Map<String, dynamic>);
 }

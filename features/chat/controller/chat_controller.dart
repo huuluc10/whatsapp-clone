@@ -1,7 +1,7 @@
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
+import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../repository/chat_repository.dart';
 
 final chatControllerProvider = Provider((ref) {
@@ -20,6 +20,10 @@ class ChatController {
     required this.chatRepository,
     required this.ref,
   });
+
+  Stream<List<ChatContact>> chatContacts() {
+    return chatRepository.getChatContacts();
+  }
 
   void sendTextMessage(
     BuildContext context,

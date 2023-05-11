@@ -45,42 +45,40 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         backgroundColor: backgroundColor,
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text('Application will need to verify your phone number'),
-              const SizedBox(height: 10),
-              Center(
-                child: Row(
-                  children: [
-                    const Text('+84'),
-                    const SizedBox(width: 14),
-                    SizedBox(
-                      width: size.width * 0.7,
-                      child: TextField(
-                        controller: phoneController,
-                        keyboardType: TextInputType.number,
-                        decoration:
-                            const InputDecoration(hintText: 'Phone number'),
-                      ),
-                    )
-                  ],
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text('Application will need to verify your phone number'),
+            const SizedBox(height: 10),
+            Center(
+              child: Row(
+                children: [
+                  const Text('+84'),
+                  const SizedBox(width: 14),
+                  SizedBox(
+                    width: size.width * 0.7,
+                    child: TextField(
+                      controller: phoneController,
+                      keyboardType: TextInputType.number,
+                      decoration:
+                          const InputDecoration(hintText: 'Phone number'),
+                    ),
+                  )
+                ],
               ),
-              Expanded(child: Container()),
-              SizedBox(
-                width: 90,
-                child: Center(
-                    child: CustomButton(
-                  onPress: sendPhoneNumber,
-                  text: "Next",
-                )),
-              ),
-            ],
-          ),
+            ),
+            Expanded(child: Container()),
+            SizedBox(
+              width: 90,
+              child: Center(
+                  child: CustomButton(
+                onPress: sendPhoneNumber,
+                text: "Next",
+              )),
+            ),
+          ],
         ),
       ),
     );

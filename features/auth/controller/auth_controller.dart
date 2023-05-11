@@ -25,12 +25,12 @@ class AuthController {
     required this.ref,
   });
 
-  void signInWithPhone(BuildContext context, String phoneNumber) {
+  void signInWithPhone(BuildContext context, String phoneNumber) async {
     authRepository.singInWithPhone(context, phoneNumber);
   }
 
   void verifyOTP(BuildContext context, String verificationId, String userOTP,
-      String phoneNumber) {
+      String phoneNumber) async {
     authRepository.verifyOTP(
         context: context,
         verificationId: verificationId,
@@ -53,7 +53,7 @@ class AuthController {
     await authRepository.logout(context);
   }
 
-  Stream<UserModel> userDataById(String userId){
+  Stream<UserModel> userDataById(String userId) {
     return authRepository.userData(userId);
   }
 }

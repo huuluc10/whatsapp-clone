@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 class ChatContact {
   final String name;
   final String profilePic;
@@ -5,32 +8,36 @@ class ChatContact {
   final DateTime timeSent;
   final String lastMessage;
 
-  ChatContact(
-      {required this.name,
-      required this.profilePic,
-      required this.contactId,
-      required this.timeSent,
-      required this.lastMessage});
+  ChatContact({
+    required this.name,
+    required this.profilePic,
+    required this.contactId,
+    required this.timeSent,
+    required this.lastMessage,
+  });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "name": this.name,
-      "profilePic": this.profilePic,
-      "contactId": this.contactId,
-      "timeSent": this.timeSent.millisecondsSinceEpoch,
-      "lastMessage": this.lastMessage,
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'name': name,
+      'profilePic': profilePic,
+      'contactId': contactId,
+      'timeSent': timeSent.millisecondsSinceEpoch,
+      'lastMessage': lastMessage,
     };
   }
 
-  factory ChatContact.fromJson(Map<String, dynamic> json) {
+  factory ChatContact.fromMap(Map<String, dynamic> map) {
     return ChatContact(
-      name: json["name"]??"",
-      profilePic: json["profilePic"]??"",
-      contactId: json["contactId"]??"",
-      timeSent: DateTime.fromMillisecondsSinceEpoch(json["timeSent"]),
-      lastMessage: json["lastMessage"]??"",
+      name: map['name'] as String,
+      profilePic: map['profilePic'] as String,
+      contactId: map['contactId'] as String,
+      timeSent: DateTime.fromMillisecondsSinceEpoch(map['timeSent'] as int),
+      lastMessage: map['lastMessage'] as String,
     );
   }
 
+  String toJson() => json.encode(toMap());
 
+  factory ChatContact.fromJson(String source) =>
+      ChatContact.fromMap(json.decode(source) as Map<String, dynamic>);
 }

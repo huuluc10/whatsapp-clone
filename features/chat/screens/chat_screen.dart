@@ -5,8 +5,6 @@ import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.
 import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../info.dart';
 import '../widgets/bottom_chat_field.dart';
 
 class ChatScreen extends ConsumerWidget {
@@ -31,11 +29,11 @@ class ChatScreen extends ConsumerWidget {
               return Column(
                 children: [
                   Text(name),
-                  Text(
-                    snapshot.data!.isOnline ? 'online' : 'offline',
-                    style:
-                        const TextStyle(fontSize: 13, fontWeight: FontWeight.normal),
-                  ),
+                  // Text(
+                  //   snapshot.data!.isOnline ? 'online' : 'offline',
+                  //   style: const TextStyle(
+                  //       fontSize: 13, fontWeight: FontWeight.normal),
+                  // ),
                 ],
               );
             }),
@@ -51,7 +49,9 @@ class ChatScreen extends ConsumerWidget {
           const Expanded(
             child: ChatList(),
           ),
-          BottomChatField(recieverUserId: uid,)
+          BottomChatField(
+            recieverUserId: uid,
+          )
         ],
       ),
     );

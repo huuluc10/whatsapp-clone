@@ -91,18 +91,20 @@ class AuthRepository {
           verificationId: verificationId, smsCode: userOTP);
       await auth.signInWithCredential(credential);
       UserModel? user = await getCurrentUserData();
-      if (user!.name.isEmpty) {
+      print(user?.name == null);
+      if (user?.name == null) {
         Navigator.pushNamedAndRemoveUntil(
           context,
           UserInformationScreen.routeName,
           (route) => false,
         );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          MainScreenLayout.routeName,
+          (route) => false,
+        );
       }
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        MainScreenLayout.routeName,
-        (route) => false,
-      );
     } on FirebaseAuthException catch (e) {
       String errorMessage =
           'Xác thực OTP không thành công. Vui lòng thử lại sau.';

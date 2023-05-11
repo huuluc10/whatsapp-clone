@@ -22,6 +22,36 @@ class ChatRepository {
 
   ChatRepository({required this.firestore, required this.auth});
 
+  Stream<List<ChatContact>> getChatContacts() {
+    return firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .snapshots()
+        .asyncMap((event) async {
+      List<ChatContact> contacts = [];
+      for (var document in event.docs) {
+        var chatContact = ChatContact.fromMap(document.data());
+        var userData = await firestore
+            .collection('users')
+            .doc(chatContact.contactId)
+            .get();
+        var user = UserModel.fromMap(userData.data()!);
+
+        contacts.add(
+          ChatContact(
+            name: user.name,
+            profilePic: user.profilePic,
+            contactId: chatContact.contactId,
+            timeSent: chatContact.timeSent,
+            lastMessage: chatContact.lastMessage,
+          ),
+        );
+      }
+      return contacts;
+    });
+  }
+
   void _saveDataToContactsSubcollection(
     UserModel senderUserData,
     UserModel recieverUserData,
@@ -39,10 +69,10 @@ class ChatRepository {
     await firestore
         .collection('users')
         .doc(recieverUserId)
-        .collection('chat')
+        .collection('chats')
         .doc(auth.currentUser!.uid)
         .set(
-          recieverChatContact.toJson(),
+          recieverChatContact.toMap(),
         );
     var senderChatContact = ChatContact(
       name: recieverUserData.name,
@@ -54,10 +84,10 @@ class ChatRepository {
     await firestore
         .collection('users')
         .doc(auth.currentUser!.uid)
-        .collection('chat')
+        .collection('chats')
         .doc(recieverUserId)
         .set(
-          senderChatContact.toJson(),
+          senderChatContact.toMap(),
         );
   }
 
@@ -86,7 +116,7 @@ class ChatRepository {
         .doc(recieverUserId)
         .collection('messages')
         .doc(messageId)
-        .set(message.toJson());
+        .set(message.toMap());
     await firestore
         .collection('users')
         .doc(recieverUserId)
@@ -94,7 +124,7 @@ class ChatRepository {
         .doc(auth.currentUser!.uid)
         .collection('messages')
         .doc(messageId)
-        .set(message.toJson());
+        .set(message.toMap());
   }
 
   void sendTextMessage({
@@ -108,7 +138,9 @@ class ChatRepository {
       UserModel recieverUserData;
       var userDataMap =
           await firestore.collection('users').doc(recieverUserId).get();
+
       recieverUserData = UserModel.fromMap(userDataMap.data()!);
+      print(recieverUserData.uid.toString());
       _saveDataToContactsSubcollection(
         senderUser,
         recieverUserData,

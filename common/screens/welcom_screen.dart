@@ -21,9 +21,9 @@ class WelcomeScreen extends StatelessWidget {
               width: 200,
             ),
             SizedBox(height: size.height * 0.05),
-            Text(
+            const Text(
               'WELCOME',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
                 fontSize: 50,
