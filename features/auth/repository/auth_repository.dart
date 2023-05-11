@@ -91,18 +91,20 @@ class AuthRepository {
           verificationId: verificationId, smsCode: userOTP);
       await auth.signInWithCredential(credential);
       UserModel? user = await getCurrentUserData();
-      if (user!.name.isEmpty) {
+      print(user?.name == null);
+      if (user?.name == null) {
         Navigator.pushNamedAndRemoveUntil(
           context,
           UserInformationScreen.routeName,
           (route) => false,
         );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          MainScreenLayout.routeName,
+          (route) => false,
+        );
       }
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        MainScreenLayout.routeName,
-        (route) => false,
-      );
     } on FirebaseAuthException catch (e) {
       String errorMessage =
           'Xác thực OTP không thành công. Vui lòng thử lại sau.';
@@ -140,7 +142,7 @@ class AuthRepository {
         uid: uid,
         profilePic: photoUrl,
         isOnline: true,
-        phoneNumber: auth.currentUser!.phoneNumber.toString(),
+        phoneNumber: auth.currentUser!.phoneNumber!,
         groupId: [],
       );
 
@@ -155,5 +157,13 @@ class AuthRepository {
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
+  }
+
+  Stream<UserModel> userData(String userId) {
+    return firestore
+        .collection('user')
+        .doc(userId)
+        .snapshots()
+        .map((event) => UserModel.fromMap(event.data()!));
   }
 }

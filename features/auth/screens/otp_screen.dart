@@ -18,20 +18,6 @@ class OTPScreen extends ConsumerStatefulWidget {
 }
 
 class _OTPScreenState extends ConsumerState<OTPScreen> {
-  int time = 60;
-  late Stream<int> _timerStream;
-  late StreamSubscription<int> _timerSubscription;
-
-  Future<void> updateTimeToVerify() {
-    if (time > 0) {
-      return Future.delayed(const Duration(seconds: 1)).then((value) {
-        time--;
-      });
-    } else {
-      return Future.value();
-    }
-  }
-
   void verifyOTP(
       WidgetRef ref, BuildContext context, String userOTP, String phoneNumber) {
     ref
@@ -66,22 +52,12 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
                 ),
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
-                  if (value.length == 6 && time >= 0) {
+                  if (value.length == 6) {
                     verifyOTP(ref, context, value.trim(), widget.phoneNumber);
                   }
                 },
               ),
             ),
-            FutureBuilder(
-              future: updateTimeToVerify(),
-              builder: (context, snapshot) => Text(
-                time.toString(),
-              ),
-            ),
-            time == 0
-                ? const Text(
-                    'Verification time has expired, please perform the action again.')
-                : Container(),
           ],
         ),
       ),
