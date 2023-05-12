@@ -3,6 +3,8 @@ import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/chat_list.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
+import 'package:chatapp_clone_whatsapp/features/auth/screens/otp_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/media_chat/screens/media_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contact_info_screen.dart';
 import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:flutter/material.dart';
@@ -80,8 +82,12 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     'name': widget.name,
                   },
                 );
-              } else if (value == 'images') {
-                //TODO: chuyển hướng sang gridview hình ảnh
+              } else if (value == 'media') {
+                Navigator.pushNamed(
+                  context,
+                  MediaScreen.routeName,
+                  arguments: widget.name,
+                );
               } else {
                 //TODO: xóa cuộc trò chuyện
               }
@@ -98,11 +104,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 ),
               ),
               const PopupMenuItem(
-                value: 'images',
+                value: 'media',
                 child: SizedBox(
                   width: 90,
                   child: Text(
-                    'Images',
+                    'Media',
                     style: TextStyle(fontSize: 14),
                   ),
                 ),

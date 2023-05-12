@@ -2,7 +2,6 @@ import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/my_message_card.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/sender_message_card.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/controller/chat_controller.dart';
-import 'package:chatapp_clone_whatsapp/info.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +19,9 @@ class ChatList extends ConsumerStatefulWidget {
 }
 
 class _ChatListState extends ConsumerState<ChatList> {
-  final ScrollController messageController= ScrollController();
+  final ScrollController messageController = ScrollController();
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     messageController.dispose();
   }
@@ -31,13 +29,15 @@ class _ChatListState extends ConsumerState<ChatList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Message>>(
-        stream: ref.read(chatControllerProvider).chatStream(widget.recieverUserId),
+        stream:
+            ref.read(chatControllerProvider).chatStream(widget.recieverUserId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loader();
           }
           SchedulerBinding.instance.addPostFrameCallback((_) {
-            messageController.jumpTo(messageController.position.maxScrollExtent);
+            messageController
+                .jumpTo(messageController.position.maxScrollExtent);
           });
 
           return ListView.builder(
