@@ -11,6 +11,7 @@ import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contac
 import 'package:flutter/material.dart';
 
 import 'common/screens/settings_options.dart';
+import 'features/media_chat/screens/media_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -19,7 +20,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const LoginScreen(),
       );
     case OTPScreen.routeName:
-      final arguments = settings.arguments as List<Object>;
+      final arguments = settings.arguments as Map<String, dynamic>;
       final verificationId = arguments[0] as String;
       final phoneNumber = arguments[1] as String;
       return MaterialPageRoute(
@@ -69,6 +70,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case SettingScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const SettingScreen(),
+      );
+    case MediaScreen.routeName:
+      final name = settings.arguments as String;
+      return MaterialPageRoute(
+        builder: (context) => MediaScreen(name: name),
       );
     default:
       return MaterialPageRoute(
