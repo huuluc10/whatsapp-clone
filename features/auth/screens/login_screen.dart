@@ -26,6 +26,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (phoneNumber.isNotEmpty) {
       //Provider ref -> interact provider with provider
       //widget ref -> make widget interact with provider
+      if (phoneNumber.length == 10) {
+        phoneNumber = phoneNumber.replaceFirst('0', '');
+      }
       ref
           .read(authControllerProvider)
           .signInWithPhone(context, '+84$phoneNumber');
