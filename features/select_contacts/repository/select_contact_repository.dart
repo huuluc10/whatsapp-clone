@@ -41,6 +41,7 @@ class SelectContactRepository {
         String selectedPhoneNum = selectedContact.phones[0].number
             .replaceAll(' ', '')
             .replaceFirst('0', '+84');
+
         if (selectedPhoneNum == userData.phoneNumber) {
           isFound = true;
           Navigator.pushNamed(context, ChatScreen.routeName, arguments: {

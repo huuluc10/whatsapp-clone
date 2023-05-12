@@ -14,8 +14,7 @@ class DisplayTextImageGIF extends StatelessWidget {
       style: const TextStyle(
         fontSize: 16,
       ),
-    ): CachedNetworkImage(
-      imageUrl
-    );
+    ):
+    ;
   }
 }

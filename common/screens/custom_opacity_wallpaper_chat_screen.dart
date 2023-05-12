@@ -50,7 +50,7 @@ class _CustomWallpaperScreenState extends State<CustomWallpaperScreen> {
           children: [
             Column(
               children: const [
-                MyMessageCard(message: 'This is my message example', date: ''),
+                MyMessageCard(message: 'This is my message example', date: '', type: null,),
                 SenderMessageCard(
                   message: 'This is sender message example',
                   date: '',
