@@ -13,8 +13,10 @@ class MyMessageCard extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
-        constraints:
-            BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 45),
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width - 45,
+          minWidth: 110,
+        ),
         child: Card(
           elevation: 1,
           shape: const RoundedRectangleBorder(
@@ -42,12 +44,12 @@ class MyMessageCard extends StatelessWidget {
                 children: [
                   Text(
                     date,
-                    style: TextStyle(fontSize: 13, color: Colors.white60),
+                    style: const TextStyle(fontSize: 13, color: Colors.white60),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
-                  Icon(
+                  const Icon(
                     Icons.done_all,
                     size: 20,
                     color: Colors.white60,
