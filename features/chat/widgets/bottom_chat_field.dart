@@ -54,6 +54,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     }
   }
 
+
   void selectGIF() async {
     final gif = await pickGIF(context);
     if (gif != null) {
