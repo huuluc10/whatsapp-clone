@@ -1,3 +1,4 @@
+import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,14 +21,25 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   void sendTextMessage() async {
     if (isShowSendButton) {
       ref.read(chatControllerProvider).sendTextMessage(
-        context,
-        _messageController.text.trim(),
-        widget.recieverUserId,
-      );
+            context,
+            _messageController.text.trim(),
+            widget.recieverUserId,
+          );
 
       setState(() {
         _messageController.text = '';
       });
+    }
+  }
+
+  void selectGIF() async {
+    final gif = await pickGIF(context);
+    if (gif != null) {
+      ref.read(chatControllerProvider).sendGIFMessage(
+            context,
+            gif.url,
+            widget.recieverUserId,
+          );
     }
   }
 
@@ -58,7 +70,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             },
             decoration: InputDecoration(
               enabledBorder: const OutlineInputBorder(),
-
               filled: true,
               fillColor: mobileChatBoxColor,
               prefixIcon: Padding(
@@ -75,7 +86,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: selectGIF,
                         icon: const Icon(
                           Icons.gif,
                           color: Colors.grey,
@@ -110,19 +121,14 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide:
-                  const BorderSide(width: 20, style: BorderStyle.none)),
+                      const BorderSide(width: 20, style: BorderStyle.none)),
               hintText: "Nhập nội dung",
               contentPadding: const EdgeInsets.all(10),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(
-              bottom: 2,
-              left: 2,
-              right: 2,
-              top: 2
-          ),
+          padding: const EdgeInsets.only(bottom: 2, left: 2, right: 2, top: 2),
           child: CircleAvatar(
             backgroundColor: const Color(0xFF128C7E),
             radius: 25,
