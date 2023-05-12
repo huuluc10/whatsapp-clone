@@ -41,9 +41,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     print(state);
-    showSnackBar(context: context, content: state.toString());
     super.didChangeAppLifecycleState(state);
-    // ref.watch(provider)
     switch (state) {
       case AppLifecycleState.resumed:
       case AppLifecycleState.paused:
