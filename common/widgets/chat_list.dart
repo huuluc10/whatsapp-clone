@@ -6,23 +6,42 @@ import 'package:chatapp_clone_whatsapp/info.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class ChatList extends ConsumerWidget {
+class ChatList extends ConsumerStatefulWidget {
   final String recieverUserId;
 
   const ChatList({Key? key, required this.recieverUserId}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _ChatListState();
+}
+
+class _ChatListState extends ConsumerState<ChatList> {
+  final ScrollController messageController= ScrollController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    messageController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return StreamBuilder<List<Message>>(
-        stream: ref.read(chatControllerProvider).chatStream(recieverUserId),
+        stream: ref.read(chatControllerProvider).chatStream(widget.recieverUserId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loader();
           }
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            messageController.jumpTo(messageController.position.maxScrollExtent);
+          });
+
           return ListView.builder(
+            controller: messageController,
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               final messageData = snapshot.data![index];
@@ -30,10 +49,9 @@ class ChatList extends ConsumerWidget {
               if (messageData.senderId ==
                   FirebaseAuth.instance.currentUser!.uid) {
                 return MyMessageCard(message: messageData.text, date: timeSent);
-              }
-              else {
+              } else {
                 return SenderMessageCard(
-                  message: messageData.text, date: timeSent);
+                    message: messageData.text, date: timeSent);
               }
             },
           );

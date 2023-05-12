@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../common/utils/colors.dart';
 import '../controller/chat_controller.dart';
 
@@ -32,6 +33,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
 
   @override
   void dispose() {
+    // TODO: implement dispose
     super.dispose();
     _messageController.dispose();
   }
@@ -41,33 +43,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     return Row(
       children: [
         Expanded(
-<<<<<<< HEAD
-          child: Padding(
-            padding: const EdgeInsets.only(
-              bottom: 5,
-              left: 5,
-            ),
-            child: TextFormField(
-              autofocus: false,
-              controller: _messageController,
-              onChanged: (value) {
-                if (value.isNotEmpty) {
-                  setState(() {
-                    isShowSendButton = true;
-                  });
-                } else {
-                  setState(() {
-                    isShowSendButton = false;
-                  });
-                }
-              },
-              decoration: InputDecoration(
-                enabledBorder: const OutlineInputBorder(),
-                filled: true,
-                fillColor: mobileChatBoxColor,
-                prefixIcon: SizedBox(
-                  width: 75,
-=======
           child: TextFormField(
             controller: _messageController,
             onChanged: (value) {
@@ -90,110 +65,58 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: SizedBox(
                   width: 100,
->>>>>>> origin/DisplayingMessages
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.emoji_emotions,
-                              color: Colors.grey,
-                            ),
-                            iconSize: 18,
-                          ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.emoji_emotions,
+                          color: Colors.grey,
                         ),
                       ),
-                      SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.gif,
-                            color: Colors.grey,
-                          ),
-                          iconSize: 18,
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.gif,
+                          color: Colors.grey,
                         ),
                       ),
                     ],
                   ),
                 ),
-                suffixIcon: SizedBox(
-                  width: 70,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: Colors.grey,
-                          ),
-                          iconSize: 18,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.attach_file,
-                              color: Colors.grey,
-                            ),
-                            iconSize: 18,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(64),
-                  borderSide: const BorderSide(
-                    width: 20,
-                    style: BorderStyle.none,
-                  ),
-                ),
-                hintText: "Nhập nội dung",
-                contentPadding: const EdgeInsets.all(5),
               ),
-<<<<<<< HEAD
-=======
+              suffixIcon: SizedBox(
+                width: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.attach_file,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide:
                   const BorderSide(width: 20, style: BorderStyle.none)),
               hintText: "Nhập nội dung",
               contentPadding: const EdgeInsets.all(10),
->>>>>>> origin/DisplayingMessages
             ),
           ),
         ),
-        const SizedBox(width: 5),
         Padding(
-<<<<<<< HEAD
-          padding: const EdgeInsets.only(bottom: 2, left: 2, right: 2, top: 2),
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: const Color(0xFF128C7E),
-              borderRadius: BorderRadius.circular(24),
-            ),
-=======
           padding: const EdgeInsets.only(
               bottom: 2,
               left: 2,
@@ -203,7 +126,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
           child: CircleAvatar(
             backgroundColor: const Color(0xFF128C7E),
             radius: 25,
->>>>>>> origin/DisplayingMessages
             child: GestureDetector(
               onTap: sendTextMessage,
               child: Icon(
