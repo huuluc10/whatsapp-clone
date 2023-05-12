@@ -145,7 +145,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                   borderRadius: BorderRadius.circular(20),
                   borderSide:
                       const BorderSide(width: 20, style: BorderStyle.none)),
-              hintText: "Nhập nội dung",
+              hintText: "Enter text",
               contentPadding: const EdgeInsets.all(10),
             ),
           ),
