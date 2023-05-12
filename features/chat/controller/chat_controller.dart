@@ -48,10 +48,20 @@ class ChatController {
         );
   }
   void sendFileMessage(
-  BuildContext context,
-  File? file,
-  String recieverUserId,
-  MessageEnum messageEnum,
-      ){}
-
+      BuildContext context,
+      File file,
+      String recieverUserId,
+      MessageEnum messageEnum,
+      ) {
+    ref.read(userDataAuthProvider).whenData(
+          (value) => chatRepository.sendFileMessage(
+        context: context,
+        file: file,
+        recieverUserId: recieverUserId,
+        senderUserData: value!,
+        messageEnum:  messageEnum,
+        ref: ref,
+      ),
+    );
+  }
 }

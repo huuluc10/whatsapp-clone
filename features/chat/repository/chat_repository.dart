@@ -193,7 +193,6 @@ class ChatRepository {
       UserModel recieverUserData;
       var userDataMap =
       await firestore.collection('users').doc(recieverUserId).get();
-
       recieverUserData = UserModel.fromMap(userDataMap.data()!);
       _saveDataToContactsSubcollection(
         senderUser,
@@ -215,64 +214,7 @@ class ChatRepository {
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
-    void sendFileMessage({
-      required BuildContext context,
-      required File file,
-      required String recieverUserId,
-      required UserModel senderUserData,
-      required ProviderRef ref,
-      required MessageEnum messageEnum,
-    }) async {
-      try {
-        var timeSent = DateTime.now();
-        var messageId;
-        const Uuid().v1();
-        String imageUrl = await ref
-            .read(commonFirebaseStorageRepositoryProvider)
-            .storeFileToFirebase(
-            'chat/${messageEnum.type}/${senderUserData
-                .uid}/$recieverUserId/$messageId',
-            file);
-        UserModel recieverUserData;
-        var userDataMap =
-        await firestore.collection('user').doc(recieverUserId).get();
-        recieverUserData = UserModel.fromMap(userDataMap.data()!);
-        String contactMsg;
-        switch (messageEnum) {
-          case MessageEnum.image:
-            contactMsg = 'Photo';
-            break;
-          case MessageEnum.video:
-            contactMsg = 'Video';
-            break;
-          case MessageEnum.image:
-            contactMsg = 'Audio';
-            break;
-          case MessageEnum.gif:
-            contactMsg = 'GIF';
-            break;
-          default:
-            contactMsg = 'GIF';
-        }
-        _saveDataToContactsSubcollection(
-          senderUserData,
-          recieverUserData,
-          contactMsg,
-          timeSent,
-          recieverUserId,
-        );
-        _saveMessageToMessageSubcollection(
-            recieverUserId: recieverUserId,
-            text: imageUrl,
-            timeSent: timeSent,
-            messageId: messageId,
-            username: senderUserData.name,
-            recieverUsername: recieverUserData.name,
-            messageType: messageEnum);
-      } catch (e) {
-        showSnackBar(context: context, content: e.toString());
-      }
-    }
+
   }
 
   void sendFileMessage({
@@ -285,8 +227,7 @@ class ChatRepository {
   }) async {
     try {
       var timeSent = DateTime.now();
-      var messageId;
-      const Uuid().v1();
+      var messageId = const Uuid().v1();
       String imageUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
           .storeFileToFirebase(
@@ -294,24 +235,24 @@ class ChatRepository {
               file);
       UserModel recieverUserData;
       var userDataMap =
-          await firestore.collection('user').doc(recieverUserId).get();
+          await firestore.collection('users').doc(recieverUserId).get();
       recieverUserData = UserModel.fromMap(userDataMap.data()!);
       String contactMsg;
       switch (messageEnum) {
         case MessageEnum.image:
-          contactMsg = 'Photo';
+          contactMsg = 'image';
           break;
         case MessageEnum.video:
-          contactMsg = 'Video';
+          contactMsg = 'video';
           break;
         case MessageEnum.image:
-          contactMsg = 'Audio';
+          contactMsg = 'audio';
           break;
         case MessageEnum.gif:
-          contactMsg = 'GIF';
+          contactMsg = 'gif';
           break;
         default:
-          contactMsg = 'GIF';
+          contactMsg = 'gif';
       }
       _saveDataToContactsSubcollection(
         senderUserData,
@@ -330,6 +271,5 @@ class ChatRepository {
           messageType: messageEnum);
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
-
     }
   }}

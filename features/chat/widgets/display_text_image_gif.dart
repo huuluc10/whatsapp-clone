@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/video_player_item.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -17,8 +18,12 @@ class DisplayTextImageGIF extends StatelessWidget {
       style: const TextStyle(
         fontSize: 16,
       ),
-    ) : CachedNetworkImage(
-        imageUrl: message,
-    );
+    ) : type == MessageEnum.video
+        ? VideoPlayerItem(
+          videoUrl:message
+        )
+        :CachedNetworkImage(
+          imageUrl: message,
+        );
   }
 }

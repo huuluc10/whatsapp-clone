@@ -49,10 +49,10 @@ class _ChatListState extends ConsumerState<ChatList> {
               if (messageData.senderId ==
                   FirebaseAuth.instance.currentUser!.uid) {
                 return MyMessageCard(message: messageData.text, date: timeSent,type: messageData.type,);
-              } else {
+              }
                 return SenderMessageCard(
                     message: messageData.text, date: timeSent, type: messageData.type,);
-              }
+
             },
           );
         });
