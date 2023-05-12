@@ -1,6 +1,6 @@
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
-import 'package:chatapp_clone_whatsapp/common/widgets/my_message_card.dart';
-import 'package:chatapp_clone_whatsapp/common/widgets/sender_message_card.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/my_message_card.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/sender_message_card.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/controller/chat_controller.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
