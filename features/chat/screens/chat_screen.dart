@@ -52,11 +52,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               return Column(
                 children: [
                   Text(widget.name),
-                  // Text(
-                  //   snapshot.data!.isOnline ? 'online' : 'offline',
-                  //   style:
-                  //       const TextStyle(fontSize: 13, fontWeight: FontWeight.normal),
-                  // ),
+                  Text(
+                    snapshot.data!.isOnline ? 'online' : 'offline',
+                    style: const TextStyle(
+                        fontSize: 13, fontWeight: FontWeight.normal),
+                  ),
                 ],
               );
             }),
@@ -131,8 +131,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         ),
         child: Column(
           children: [
-            const Expanded(
-              child: ChatList(),
+            Expanded(
+              child: ChatList(
+                recieverUserId: widget.uid,
+              ),
             ),
             BottomChatField(
               recieverUserId: widget.uid,

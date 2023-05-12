@@ -19,10 +19,10 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   void sendTextMessage() async {
     if (isShowSendButton) {
       ref.read(chatControllerProvider).sendTextMessage(
-            context,
-            _messageController.text.trim(),
-            widget.recieverUserId,
-          );
+        context,
+        _messageController.text.trim(),
+        widget.recieverUserId,
+      );
 
       setState(() {
         _messageController.text = '';
@@ -41,6 +41,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     return Row(
       children: [
         Expanded(
+<<<<<<< HEAD
           child: Padding(
             padding: const EdgeInsets.only(
               bottom: 5,
@@ -66,6 +67,30 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 fillColor: mobileChatBoxColor,
                 prefixIcon: SizedBox(
                   width: 75,
+=======
+          child: TextFormField(
+            controller: _messageController,
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                setState(() {
+                  isShowSendButton = true;
+                });
+              } else {
+                setState(() {
+                  isShowSendButton = false;
+                });
+              }
+            },
+            decoration: InputDecoration(
+              enabledBorder: const OutlineInputBorder(),
+
+              filled: true,
+              fillColor: mobileChatBoxColor,
+              prefixIcon: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: SizedBox(
+                  width: 100,
+>>>>>>> origin/DisplayingMessages
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -145,11 +170,21 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 hintText: "Nhập nội dung",
                 contentPadding: const EdgeInsets.all(5),
               ),
+<<<<<<< HEAD
+=======
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide:
+                  const BorderSide(width: 20, style: BorderStyle.none)),
+              hintText: "Nhập nội dung",
+              contentPadding: const EdgeInsets.all(10),
+>>>>>>> origin/DisplayingMessages
             ),
           ),
         ),
         const SizedBox(width: 5),
         Padding(
+<<<<<<< HEAD
           padding: const EdgeInsets.only(bottom: 2, left: 2, right: 2, top: 2),
           child: Container(
             width: 40,
@@ -158,6 +193,17 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
               color: const Color(0xFF128C7E),
               borderRadius: BorderRadius.circular(24),
             ),
+=======
+          padding: const EdgeInsets.only(
+              bottom: 2,
+              left: 2,
+              right: 2,
+              top: 2
+          ),
+          child: CircleAvatar(
+            backgroundColor: const Color(0xFF128C7E),
+            radius: 25,
+>>>>>>> origin/DisplayingMessages
             child: GestureDetector(
               onTap: sendTextMessage,
               child: Icon(
