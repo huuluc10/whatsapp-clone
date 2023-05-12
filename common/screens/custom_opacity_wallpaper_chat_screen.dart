@@ -1,3 +1,4 @@
+import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/custom_button.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/my_message_card.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/sender_message_card.dart';
@@ -50,7 +51,7 @@ class _CustomWallpaperScreenState extends State<CustomWallpaperScreen> {
           children: [
             Column(
               children: const [
-                MyMessageCard(message: 'This is my message example', date: '', type: null,),
+                MyMessageCard(message: 'This is my message example', date: '',),
                 SenderMessageCard(
                   message: 'This is sender message example',
                   date: '',

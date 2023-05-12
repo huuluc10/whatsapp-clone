@@ -38,9 +38,10 @@ class SelectContactRepository {
       bool isFound = false;
       for (var document in userCollection.docs) {
         var userData = UserModel.fromMap(document.data());
-        String selectedPhoneNum = selectedContact.phones[0].number
-            .replaceAll(' ', '')
-            .replaceFirst('0', '+84');
+
+
+        String selectedPhoneNum =
+            selectedContact.phones[0].number.replaceAll('','');
 
         if (selectedPhoneNum == userData.phoneNumber) {
           isFound = true;
