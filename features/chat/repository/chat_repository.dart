@@ -181,7 +181,7 @@ class ChatRepository {
       showSnackBar(context: context, content: e.toString());
     }
   }
-<<<<<<< HEAD
+
 
   void sendGIFMessage({
     required BuildContext context,
@@ -213,8 +213,8 @@ class ChatRepository {
         recieverUsername: recieverUserData.name,
         messageType: MessageEnum.gif,
       );
-    } catch (e) {
-=======
+    } catch (e) {showSnackBar(context: context, content: e.toString());}}
+  
   void sendFileMessage({
       required BuildContext context,
       required File file,
@@ -231,7 +231,7 @@ class ChatRepository {
       var userDataMap = await firestore.collection('user').doc(recieverUserId).get();
       recieverUserData = UserModel.fromMap(userDataMap.data()!);
       String contactMsg;
-      switch(messageEnum){
+      switch(messageEnum) {
         case MessageEnum.image:
           contactMsg = 'Photo';
           break;
@@ -265,8 +265,7 @@ class ChatRepository {
           messageType: messageEnum
       );
     }catch(e){
->>>>>>> origin/ChangingOnOffStatus
+
       showSnackBar(context: context, content: e.toString());
     }
-  }
-}
+  }}
