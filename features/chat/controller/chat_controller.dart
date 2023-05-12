@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
@@ -44,6 +47,7 @@ class ChatController {
           ),
         );
   }
+<<<<<<< HEAD
 
   void sendGIFMessage(
       BuildContext context, String gifUrl, String recieverUserId) {
@@ -55,5 +59,23 @@ class ChatController {
             senderUser: value!,
           ),
         );
+=======
+  void sendFileMessage(
+      BuildContext context,
+      File file,
+      String recieverUserId,
+      MessageEnum messageEnum,
+      ) {
+    ref.read(userDataAuthProvider).whenData(
+          (value) => chatRepository.sendFileMessage(
+          context: context,
+          file: file,
+          recieverUserId: recieverUserId,
+          senderUserData: value!,
+          messageEnum: messageEnum,
+          ref: ref,
+          ),
+    );
+>>>>>>> origin/ChangingOnOffStatus
   }
 }

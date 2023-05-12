@@ -1,15 +1,53 @@
 import 'package:chatapp_clone_whatsapp/common/screens/settings_options.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
-import 'package:chatapp_clone_whatsapp/features/chat/widgets/contacts_list.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/oops_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
+import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/contacts_list.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MainScreenLayout extends StatelessWidget {
+class MainScreenLayout extends ConsumerStatefulWidget {
   const MainScreenLayout({super.key});
+
   static const routeName = '/main_screen';
 
   @override
+  ConsumerState<MainScreenLayout> createState() => _MainScreenLayoutState();
+}
+
+class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        ref.read(authControllerProvider).setUserState(true);
+        break;
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.detached:
+      case AppLifecycleState.paused:
+        ref.read(authControllerProvider).setUserState(false);
+        break;
+    }
+  }
+
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
@@ -84,7 +122,7 @@ class MainScreenLayout extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
             ContactsList(),
             OopsWidget(),
