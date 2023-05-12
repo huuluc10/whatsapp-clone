@@ -1,6 +1,6 @@
 import 'package:chatapp_clone_whatsapp/common/widgets/custom_button.dart';
-import 'package:chatapp_clone_whatsapp/common/widgets/my_message_card.dart';
-import 'package:chatapp_clone_whatsapp/common/widgets/sender_message_card.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/my_message_card.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/sender_message_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

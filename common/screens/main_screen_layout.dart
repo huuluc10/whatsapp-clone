@@ -1,6 +1,6 @@
 import 'package:chatapp_clone_whatsapp/common/screens/settings_options.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
-import 'package:chatapp_clone_whatsapp/common/widgets/contacts_list.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/contacts_list.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/oops_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';

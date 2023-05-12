@@ -20,11 +20,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const LoginScreen(),
       );
     case OTPScreen.routeName:
-      final arguments = settings.arguments as Map<String, dynamic>;
+      final arguments = settings.arguments as List<Object>;
       final verificationId = arguments[0] as String;
       final phoneNumber = arguments[1] as String;
       return MaterialPageRoute(
-        builder: (context) => OTPScreen(verificationId, phoneNumber),
+        builder: (context) => OTPScreen(
+          verificationId: verificationId,
+          phoneNumber: phoneNumber,
+        ),
       );
     case UserInformationScreen.routeName:
       // final bool isNewUser = settings.arguments as bool;
@@ -72,7 +75,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const SettingScreen(),
       );
     case MediaScreen.routeName:
-      final name = settings.arguments as String;
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final name = arguments['name'];
       return MaterialPageRoute(
         builder: (context) => MediaScreen(name: name),
       );

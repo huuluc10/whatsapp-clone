@@ -11,7 +11,8 @@ class OTPScreen extends ConsumerStatefulWidget {
   final String verificationId;
   final String phoneNumber;
 
-  OTPScreen(this.verificationId, this.phoneNumber);
+  const OTPScreen(
+      {super.key, required this.verificationId, required this.phoneNumber});
 
   @override
   ConsumerState<OTPScreen> createState() => _OTPScreenState();

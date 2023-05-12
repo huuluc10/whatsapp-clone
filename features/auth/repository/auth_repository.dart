@@ -72,10 +72,8 @@ class AuthRepository {
             showSnackBar(context: context, content: error);
           },
           codeSent: ((String verificationId, int? resendToken) {
-            Navigator.pushNamed(context, OTPScreen.routeName, arguments: {
-              'verificationId': verificationId,
-              'phoneNumber': phoneNumber
-            });
+            Navigator.pushNamed(context, OTPScreen.routeName,
+                arguments: [verificationId, phoneNumber]);
           }),
           codeAutoRetrievalTimeout: (String verificationId) {});
     } on FirebaseAuthException catch (e) {
