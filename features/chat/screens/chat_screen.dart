@@ -29,7 +29,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   void getValue() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     double? sliderValue = prefs.getDouble('sliderValue') ?? 0.3;
-    print(sliderValue);
     _currentSliderValue = sliderValue;
     setState(() {});
   }

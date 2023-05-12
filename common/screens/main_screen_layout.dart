@@ -1,10 +1,12 @@
 import 'package:chatapp_clone_whatsapp/common/screens/settings_options.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
-import 'package:chatapp_clone_whatsapp/features/chat/widgets/contacts_list.dart';
+import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/oops_screen.dart';
 
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
-import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
+
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/contacts_list.dart';
+
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,37 +19,38 @@ class MainScreenLayout extends ConsumerStatefulWidget {
   @override
   ConsumerState<MainScreenLayout> createState() => _MainScreenLayoutState();
 }
-
-
 class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
     with WidgetsBindingObserver {
   @override
-
   void initState() {
-    // TODO: implement initState
     super.initState();
+    setOnline();
     WidgetsBinding.instance.addObserver(this);
   }
 
-
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
   }
 
+  void setOnline() async {
+    ref.read(authControllerProvider).setUserState(true);
+  }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+    showSnackBar(context: context, content: state.toString());
     super.didChangeAppLifecycleState(state);
+    // ref.watch(provider)
     switch (state) {
       case AppLifecycleState.resumed:
+      case AppLifecycleState.paused:
         ref.read(authControllerProvider).setUserState(true);
         break;
       case AppLifecycleState.inactive:
       case AppLifecycleState.detached:
-      case AppLifecycleState.paused:
         ref.read(authControllerProvider).setUserState(false);
         break;
     }
@@ -55,7 +58,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
 
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           elevation: 1,
@@ -72,11 +75,9 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
               onPressed: () {},
               icon: const Icon(
                 Icons.search,
-
                 color: Colors.grey,
               ),
             ),
-
             PopupMenuButton<String>(
               color: appBarColor,
               icon: const Icon(
@@ -87,26 +88,32 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
                 if (value == 'newGroup') {
                   //TODO: màn hình chọn thành viên cho group
                 } else {
-                  Navigator.pushNamed(context, UserInformationScreen.routeName);
+                  Navigator.pushNamed(context, SettingScreen.routeName);
                 }
               },
               itemBuilder: (context) => <PopupMenuEntry<String>>[
                 const PopupMenuItem(
                   value: "newGroup",
                   child: SizedBox(
-                    width: 100,
-                    child: Text('New group'),
+                    width: 90,
+                    child: Text(
+                      'New group',
+                      style: TextStyle(fontSize: 14),
+                    ),
                   ),
                 ),
                 const PopupMenuItem(
                   value: 'settings',
                   child: SizedBox(
-                    width: 100,
-                    child: Text('Profile'),
+                    width: 90,
+                    child: Text(
+                      'Settings',
+                      style: TextStyle(fontSize: 14),
+                    ),
                   ),
                 ),
               ],
-            )
+            ),
           ],
           bottom: const TabBar(
             indicatorColor: tabColor,
@@ -118,22 +125,14 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
                 text: 'Chats',
               ),
               Tab(
-                icon: Icon(Icons.people),
-              ),
-              Tab(
-                text: 'Status',
-              ),
-              Tab(
                 text: 'Calls',
               ),
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
             ContactsList(),
-            OopsWidget(),
-            OopsWidget(),
             OopsWidget(),
           ],
         ),

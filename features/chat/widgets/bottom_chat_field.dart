@@ -1,7 +1,9 @@
+
+import 'dart:io';
+import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../common/utils/colors.dart';
 import '../controller/chat_controller.dart';
 
@@ -32,16 +34,28 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     }
   }
 
-  void selectGIF() async {
-    final gif = await pickGIF(context);
-    if (gif != null) {
-      ref.read(chatControllerProvider).sendGIFMessage(
-            context,
-            gif.url,
-            widget.recieverUserId,
-          );
+
+  void sendFileMessage(
+    File file,
+    MessageEnum messageEnum,
+  ) {
+    ref.read(chatControllerProvider).sendFileMessage(
+          context,
+          file,
+          widget.recieverUserId,
+          messageEnum,
+        );
+  }
+
+  void selectImage() async {
+    File? image = await pickImageFromGalary(context);
+    if (image != null) {
+      sendFileMessage(image, MessageEnum.image);
     }
   }
+
+
+
 
   @override
   void dispose() {
@@ -86,7 +100,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                         ),
                       ),
                       IconButton(
-                        onPressed: selectGIF,
+                        onPressed: (){},
                         icon: const Icon(
                           Icons.gif,
                           color: Colors.grey,
