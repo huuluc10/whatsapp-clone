@@ -1,5 +1,6 @@
 import 'package:chatapp_clone_whatsapp/common/screens/settings_options.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
+import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/oops_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
@@ -21,28 +22,34 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
     with WidgetsBindingObserver {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    setOnline();
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
   }
 
+  void setOnline() async {
+    ref.read(authControllerProvider).setUserState(true);
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+    showSnackBar(context: context, content: state.toString());
     super.didChangeAppLifecycleState(state);
+    // ref.watch(provider)
     switch (state) {
       case AppLifecycleState.resumed:
+      case AppLifecycleState.paused:
         ref.read(authControllerProvider).setUserState(true);
         break;
       case AppLifecycleState.inactive:
       case AppLifecycleState.detached:
-      case AppLifecycleState.paused:
         ref.read(authControllerProvider).setUserState(false);
         break;
     }

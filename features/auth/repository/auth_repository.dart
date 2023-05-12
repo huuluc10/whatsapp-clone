@@ -37,6 +37,7 @@ class AuthRepository {
   }
 
   Future<void> logout(BuildContext context) async {
+    setUserState(false);
     await auth.signOut();
     Navigator.pushNamed(context, WelcomeScreen.routeName);
   }
@@ -91,7 +92,6 @@ class AuthRepository {
           verificationId: verificationId, smsCode: userOTP);
       await auth.signInWithCredential(credential);
       UserModel? user = await getCurrentUserData();
-      print(user?.name == null);
       if (user?.name == null) {
         Navigator.pushNamedAndRemoveUntil(
           context,
@@ -166,9 +166,13 @@ class AuthRepository {
         .snapshots()
         .map((event) => UserModel.fromMap(event.data()!));
   }
-  void setUserState(bool isOnline) async{
-    await firestore.collection('user').doc(auth.currentUser!.uid).update({
-      'isOnline': isOnline,
-    });
+
+  void setUserState(bool isOnline) async {
+    UserModel? user = await getCurrentUserData();
+    if (user != null) {
+      await firestore.collection('users').doc(auth.currentUser!.uid).update({
+        'isOnline': isOnline,
+      });
+    }
   }
 }

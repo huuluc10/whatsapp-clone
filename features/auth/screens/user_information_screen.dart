@@ -207,12 +207,20 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
                     );
                   },
                 ),
-                Expanded(child: Container()),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 14),
-                  child: SizedBox(
-                    width: 88,
-                    child: CustomButton(text: 'Log out', onPress: logout),
+                // Expanded(child: Container()),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: 88,
+                          height: 40,
+                          child: CustomButton(text: 'Log out', onPress: logout),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
