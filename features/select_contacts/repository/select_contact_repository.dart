@@ -38,8 +38,9 @@ class SelectContactRepository {
       bool isFound = false;
       for (var document in userCollection.docs) {
         var userData = UserModel.fromMap(document.data());
-        String selectedPhoneNum =
-            selectedContact.phones[0].number.replaceAll('', '');
+        String selectedPhoneNum = selectedContact.phones[0].number
+            .replaceAll(' ', '')
+            .replaceFirst('0', '+84');
         if (selectedPhoneNum == userData.phoneNumber) {
           isFound = true;
           Navigator.pushNamed(context, ChatScreen.routeName, arguments: {

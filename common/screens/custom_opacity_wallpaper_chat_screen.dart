@@ -18,14 +18,12 @@ class _CustomWallpaperScreenState extends State<CustomWallpaperScreen> {
   void getValue() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     double? sliderValue = prefs.getDouble('sliderValue') ?? 0.3;
-    print(sliderValue);
     _currentSliderValue = sliderValue;
     setState(() {});
   }
 
   void setValue() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(_currentSliderValue);
     await prefs.setDouble('sliderValue', _currentSliderValue);
   }
 
