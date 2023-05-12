@@ -61,7 +61,7 @@ class MainScreenLayout extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
           bottom: const TabBar(
             indicatorColor: tabColor,

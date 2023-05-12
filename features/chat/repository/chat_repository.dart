@@ -140,7 +140,6 @@ class ChatRepository {
           await firestore.collection('users').doc(recieverUserId).get();
 
       recieverUserData = UserModel.fromMap(userDataMap.data()!);
-      print(recieverUserData.uid.toString());
       _saveDataToContactsSubcollection(
         senderUser,
         recieverUserData,
