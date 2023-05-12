@@ -1,7 +1,7 @@
+import 'package:chatapp_clone_whatsapp/common/screens/settings_options.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/contacts_list.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/oops_screen.dart';
-import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class MainScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           elevation: 1,
@@ -42,22 +42,28 @@ class MainScreenLayout extends StatelessWidget {
                 if (value == 'newGroup') {
                   //TODO: màn hình chọn thành viên cho group
                 } else {
-                  Navigator.pushNamed(context, UserInformationScreen.routeName);
+                  Navigator.pushNamed(context, SettingScreen.routeName);
                 }
               },
               itemBuilder: (context) => <PopupMenuEntry<String>>[
                 const PopupMenuItem(
                   value: "newGroup",
                   child: SizedBox(
-                    width: 100,
-                    child: Text('New group'),
+                    width: 90,
+                    child: Text(
+                      'New group',
+                      style: TextStyle(fontSize: 14),
+                    ),
                   ),
                 ),
                 const PopupMenuItem(
                   value: 'settings',
                   child: SizedBox(
-                    width: 100,
-                    child: Text('Profile'),
+                    width: 90,
+                    child: Text(
+                      'Settings',
+                      style: TextStyle(fontSize: 14),
+                    ),
                   ),
                 ),
               ],
@@ -73,12 +79,6 @@ class MainScreenLayout extends StatelessWidget {
                 text: 'Chats',
               ),
               Tab(
-                icon: Icon(Icons.people),
-              ),
-              Tab(
-                text: 'Status',
-              ),
-              Tab(
                 text: 'Calls',
               ),
             ],
@@ -87,8 +87,6 @@ class MainScreenLayout extends StatelessWidget {
         body: const TabBarView(
           children: [
             ContactsList(),
-            OopsWidget(),
-            OopsWidget(),
             OopsWidget(),
           ],
         ),

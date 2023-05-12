@@ -1,5 +1,4 @@
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
-import 'package:chatapp_clone_whatsapp/info.dart';
 import 'package:flutter/material.dart';
 
 class SenderMessageCard extends StatelessWidget {
@@ -18,17 +17,22 @@ class SenderMessageCard extends StatelessWidget {
             BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 45),
         child: Card(
           elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(14),
+              bottomLeft: Radius.circular(14),
+              bottomRight: Radius.circular(14),
+            ),
           ),
-          color: messageColor,
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          color: senderMessageColor,
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Stack(children: [
             Padding(
-              padding: EdgeInsets.only(left: 10, right: 30, top: 5, bottom: 20),
+              padding: const EdgeInsets.only(
+                  left: 10, right: 30, top: 5, bottom: 20),
               child: Text(
                 message,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
             Positioned(
@@ -38,12 +42,12 @@ class SenderMessageCard extends StatelessWidget {
                 children: [
                   Text(
                     date,
-                    style: TextStyle(fontSize: 13, color: Colors.white60),
+                    style: const TextStyle(fontSize: 13, color: Colors.white60),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
-                  Icon(
+                  const Icon(
                     Icons.done_all,
                     size: 20,
                     color: Colors.white60,

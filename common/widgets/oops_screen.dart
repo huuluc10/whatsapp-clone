@@ -10,20 +10,20 @@ class OopsWidget extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
+        children: const [
+          Icon(
             Icons.info_outline,
             size: 100,
           ),
-          const Text(
+          Text(
             'Oops',
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.green,
               fontWeight: FontWeight.bold,
               fontSize: 50,
             ),
           ),
-          const Text('This feature is currently under development'),
+          Text('This feature is currently under development'),
         ],
       ),
     );

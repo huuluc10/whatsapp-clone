@@ -41,103 +41,110 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     return Row(
       children: [
         Expanded(
-          child: TextFormField(
-            controller: _messageController,
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                setState(() {
-                  isShowSendButton = true;
-                });
-              } else {
-                setState(() {
-                  isShowSendButton = false;
-                });
-              }
-            },
-            decoration: InputDecoration(
-              enabledBorder: const OutlineInputBorder(),
-              filled: true,
-              fillColor: mobileChatBoxColor,
-              prefixIcon: SizedBox(
-                width: 75,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: SizedBox(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              bottom: 5,
+              left: 5,
+            ),
+            child: TextFormField(
+              autofocus: false,
+              controller: _messageController,
+              onChanged: (value) {
+                if (value.isNotEmpty) {
+                  setState(() {
+                    isShowSendButton = true;
+                  });
+                } else {
+                  setState(() {
+                    isShowSendButton = false;
+                  });
+                }
+              },
+              decoration: InputDecoration(
+                enabledBorder: const OutlineInputBorder(),
+                filled: true,
+                fillColor: mobileChatBoxColor,
+                prefixIcon: SizedBox(
+                  width: 75,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.emoji_emotions,
+                              color: Colors.grey,
+                            ),
+                            iconSize: 18,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
                         width: 30,
                         height: 30,
                         child: IconButton(
                           onPressed: () {},
                           icon: const Icon(
-                            Icons.emoji_emotions,
+                            Icons.gif,
                             color: Colors.grey,
                           ),
                           iconSize: 18,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 30,
-                      height: 30,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.gif,
-                          color: Colors.grey,
-                        ),
-                        iconSize: 18,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              suffixIcon: SizedBox(
-                width: 70,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      width: 30,
-                      height: 30,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.camera_alt,
-                          color: Colors.grey,
-                        ),
-                        iconSize: 18,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: SizedBox(
+                suffixIcon: SizedBox(
+                  width: 70,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
                         width: 30,
                         height: 30,
                         child: IconButton(
                           onPressed: () {},
                           icon: const Icon(
-                            Icons.attach_file,
+                            Icons.camera_alt,
                             color: Colors.grey,
                           ),
                           iconSize: 18,
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.attach_file,
+                              color: Colors.grey,
+                            ),
+                            iconSize: 18,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: const BorderSide(
-                  width: 20,
-                  style: BorderStyle.none,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(64),
+                  borderSide: const BorderSide(
+                    width: 20,
+                    style: BorderStyle.none,
+                  ),
                 ),
+                hintText: "Nhập nội dung",
+                contentPadding: const EdgeInsets.all(5),
               ),
-              hintText: "Nhập nội dung",
-              contentPadding: const EdgeInsets.all(5),
             ),
           ),
         ),

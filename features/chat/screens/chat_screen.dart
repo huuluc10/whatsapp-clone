@@ -1,3 +1,4 @@
+import 'package:chatapp_clone_whatsapp/common/screens/custom_opacity_wallpaper_chat_screen.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/chat_list.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
@@ -6,30 +7,51 @@ import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contac
 import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/bottom_chat_field.dart';
 
-class ChatScreen extends ConsumerWidget {
+class ChatScreen extends ConsumerStatefulWidget {
+  const ChatScreen({Key? key, required this.name, required this.uid})
+      : super(key: key);
   static const String routeName = '/mobile-chat-screen';
   final String name;
   final String uid;
 
-  const ChatScreen({Key? key, required this.name, required this.uid})
-      : super(key: key);
+  @override
+  ConsumerState<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends ConsumerState<ChatScreen> {
+  double _currentSliderValue = 0.3;
+
+  void getValue() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    double? sliderValue = prefs.getDouble('sliderValue') ?? 0.3;
+    print(sliderValue);
+    _currentSliderValue = sliderValue;
+    setState(() {});
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+    getValue();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: StreamBuilder<UserModel>(
-            stream: ref.read(authControllerProvider).userDataById(uid),
+            stream: ref.read(authControllerProvider).userDataById(widget.uid),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Loader();
               }
               return Column(
                 children: [
-                  Text(name),
+                  Text(widget.name),
                   // Text(
                   //   snapshot.data!.isOnline ? 'online' : 'offline',
                   //   style:
@@ -54,8 +76,8 @@ class ChatScreen extends ConsumerWidget {
                   context,
                   ContactInfo.routeName,
                   arguments: {
-                    'uid': uid,
-                    'name': name,
+                    'uid': widget.uid,
+                    'name': widget.name,
                   },
                 );
               } else if (value == 'images') {
@@ -68,37 +90,55 @@ class ChatScreen extends ConsumerWidget {
               const PopupMenuItem(
                 value: "contact-info",
                 child: SizedBox(
-                  width: 100,
-                  child: Text('View contact'),
+                  width: 90,
+                  child: Text(
+                    'View contact',
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
               ),
               const PopupMenuItem(
                 value: 'images',
                 child: SizedBox(
-                  width: 100,
-                  child: Text('Images'),
+                  width: 90,
+                  child: Text(
+                    'Images',
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
               ),
               const PopupMenuItem(
                 value: 'clear',
                 child: SizedBox(
-                  width: 100,
-                  child: Text('Clear chat'),
+                  width: 90,
+                  child: Text(
+                    'Clear chat',
+                    style: TextStyle(fontSize: 14),
+                  ),
                 ),
               ),
             ],
           )
         ],
       ),
-      body: Column(
-        children: [
-          const Expanded(
-            child: ChatList(),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: const AssetImage('assets/wallpaper.jpg'),
+            fit: BoxFit.fill,
+            opacity: _currentSliderValue,
           ),
-          BottomChatField(
-            recieverUserId: uid,
-          )
-        ],
+        ),
+        child: Column(
+          children: [
+            const Expanded(
+              child: ChatList(),
+            ),
+            BottomChatField(
+              recieverUserId: widget.uid,
+            )
+          ],
+        ),
       ),
     );
   }

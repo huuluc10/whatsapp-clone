@@ -1,3 +1,4 @@
+import 'package:chatapp_clone_whatsapp/common/screens/custom_opacity_wallpaper_chat_screen.dart';
 import 'package:chatapp_clone_whatsapp/common/screens/main_screen_layout.dart';
 import 'package:chatapp_clone_whatsapp/common/screens/welcom_screen.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/error.dart';
@@ -8,6 +9,8 @@ import 'package:chatapp_clone_whatsapp/features/chat/screens/chat_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contact_info_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'common/screens/settings_options.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -58,6 +61,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final uid = arguments['uid'];
       return MaterialPageRoute(
         builder: (context) => ContactInfo(uid, name),
+      );
+    case CustomWallpaperScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const CustomWallpaperScreen(),
+      );
+    case SettingScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const SettingScreen(),
       );
     default:
       return MaterialPageRoute(
