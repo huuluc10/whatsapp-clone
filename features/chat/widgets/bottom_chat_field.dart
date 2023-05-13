@@ -19,8 +19,7 @@ class BottomChatField extends ConsumerStatefulWidget {
 class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   bool isShowSendButton = false;
   final TextEditingController _messageController = TextEditingController();
-  bool isShowEmojiContainer = false;
-  FocusNode focusNode = FocusNode();
+
 
   void sendTextMessage() async {
     if (isShowSendButton) {
@@ -71,6 +70,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     }
   }
 
+<<<<<<< HEAD
   void hideEmojiContainer() {
     setState(() {
       isShowEmojiContainer = false;
@@ -94,6 +94,8 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       showEmojiContainer();
     }
   }
+=======
+>>>>>>> origin/DisplayingCachedImages
 
   @override
   void dispose() {
@@ -110,7 +112,11 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
           children: [
             Expanded(
               child: TextFormField(
+<<<<<<< HEAD
                 focusNode: focusNode,
+=======
+
+>>>>>>> origin/DisplayingCachedImages
                 controller: _messageController,
                 onChanged: (value) {
                   if (value.isNotEmpty) {
@@ -134,7 +140,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                       child: Row(
                         children: [
                           IconButton(
-                            onPressed: toggleEmojiKeyBoardContainer,
+                            onPressed: (){},
                             icon: const Icon(
                               Icons.emoji_emotions,
                               color: Colors.grey,
@@ -199,6 +205,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             ),
           ],
         ),
+<<<<<<< HEAD
         isShowEmojiContainer
             ? SizedBox(
                 height: 310,
@@ -217,6 +224,8 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                 ),
               )
             : const SizedBox(),
+=======
+>>>>>>> origin/DisplayingCachedImages
       ],
     );
   }

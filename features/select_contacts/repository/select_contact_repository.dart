@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../models/user_model.dart';
 
 final selectContactRepositoryProvier = Provider(
@@ -39,7 +40,13 @@ class SelectContactRepository {
       bool isFound = false;
       for (var document in userCollection.docs) {
         var userData = UserModel.fromMap(document.data());
+<<<<<<< HEAD
         selectedPhoneNum = selectedContact.phones[0].number
+=======
+
+        selectedPhoneNum = selectedContact.phones[0].number
+
+>>>>>>> origin/DisplayingCachedImages
             .replaceAll(' ', '')
             .replaceFirst('0', '+84');
         if (selectedPhoneNum == userData.phoneNumber) {
