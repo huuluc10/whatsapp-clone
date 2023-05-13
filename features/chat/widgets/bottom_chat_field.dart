@@ -20,7 +20,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   bool isShowSendButton = false;
   final TextEditingController _messageController = TextEditingController();
 
-
   void sendTextMessage() async {
     if (isShowSendButton) {
       ref.read(chatControllerProvider).sendTextMessage(
@@ -70,33 +69,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     }
   }
 
-<<<<<<< HEAD
-  void hideEmojiContainer() {
-    setState(() {
-      isShowEmojiContainer = false;
-    });
-  }
-
-  void showEmojiContainer() {
-    setState(() {
-      isShowEmojiContainer = true;
-    });
-  }
-
-  void showKeyBoard() => focusNode.requestFocus();
-  void hideKeyBoard() => focusNode.unfocus();
-  void toggleEmojiKeyBoardContainer() {
-    if (isShowEmojiContainer) {
-      showKeyBoard();
-      hideEmojiContainer();
-    } else {
-      hideKeyBoard();
-      showEmojiContainer();
-    }
-  }
-=======
->>>>>>> origin/DisplayingCachedImages
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -112,11 +84,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
           children: [
             Expanded(
               child: TextFormField(
-<<<<<<< HEAD
-                focusNode: focusNode,
-=======
-
->>>>>>> origin/DisplayingCachedImages
                 controller: _messageController,
                 onChanged: (value) {
                   if (value.isNotEmpty) {
@@ -139,13 +106,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                       width: 100,
                       child: Row(
                         children: [
-                          IconButton(
-                            onPressed: (){},
-                            icon: const Icon(
-                              Icons.emoji_emotions,
-                              color: Colors.grey,
-                            ),
-                          ),
                           IconButton(
                             onPressed: () {},
                             icon: const Icon(
@@ -205,27 +165,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             ),
           ],
         ),
-<<<<<<< HEAD
-        isShowEmojiContainer
-            ? SizedBox(
-                height: 310,
-                child: EmojiPicker(
-                  onEmojiSelected: ((category, emoji) {
-                    setState(() {
-                      _messageController.text =
-                          _messageController.text + emoji.emoji;
-                    });
-                    if (!isShowSendButton) {
-                      setState(() {
-                        isShowSendButton = true;
-                      });
-                    }
-                  }),
-                ),
-              )
-            : const SizedBox(),
-=======
->>>>>>> origin/DisplayingCachedImages
       ],
     );
   }
