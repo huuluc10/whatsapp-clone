@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:enough_giphy_flutter/enough_giphy_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../common/utils/colors.dart';
@@ -69,9 +69,17 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     }
   }
 
+  void selectGIF() async {
+    final gif = await pickGIF(context);
+    if (gif != null) {
+      ref
+          .read(chatControllerProvider)
+          .sendGIFMessage(context, gif.url, widget.recieverUserId);
+    }
+  }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _messageController.dispose();
   }
@@ -83,74 +91,77 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
         Row(
           children: [
             Expanded(
-              child: TextFormField(
-                controller: _messageController,
-                onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    setState(() {
-                      isShowSendButton = true;
-                    });
-                  } else {
-                    setState(() {
-                      isShowSendButton = false;
-                    });
-                  }
-                },
-                decoration: InputDecoration(
-                  enabledBorder: const OutlineInputBorder(),
-                  filled: true,
-                  fillColor: mobileChatBoxColor,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: SizedBox(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: TextFormField(
+                  controller: _messageController,
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      setState(() {
+                        isShowSendButton = true;
+                      });
+                    } else {
+                      setState(() {
+                        isShowSendButton = false;
+                      });
+                    }
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: mobileChatBoxColor,
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: SizedBox(
+                        width: 100,
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: selectGIF,
+                              icon: const Icon(
+                                Icons.gif,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    suffixIcon: SizedBox(
                       width: 100,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: selectImage,
                             icon: const Icon(
-                              Icons.gif,
+                              Icons.camera_alt,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: selectVideo,
+                            icon: const Icon(
+                              Icons.attach_file,
                               color: Colors.grey,
                             ),
                           ),
                         ],
                       ),
                     ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(
+                            width: 20, style: BorderStyle.none)),
+                    hintText: "Enter text",
+                    contentPadding: const EdgeInsets.all(10),
                   ),
-                  suffixIcon: SizedBox(
-                    width: 100,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: selectImage,
-                          icon: const Icon(
-                            Icons.camera_alt,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: selectVideo,
-                          icon: const Icon(
-                            Icons.attach_file,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 20, style: BorderStyle.none)),
-                  hintText: "Enter text",
-                  contentPadding: const EdgeInsets.all(10),
                 ),
               ),
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(bottom: 2, left: 2, right: 2, top: 2),
+                  const EdgeInsets.only(bottom: 2, left: 2, right: 5, top: 2),
               child: CircleAvatar(
                 backgroundColor: const Color(0xFF128C7E),
                 radius: 25,

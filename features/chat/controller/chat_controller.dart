@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
@@ -47,21 +46,42 @@ class ChatController {
           ),
         );
   }
+
   void sendFileMessage(
-      BuildContext context,
-      File file,
-      String recieverUserId,
-      MessageEnum messageEnum,
-      ) {
+    BuildContext context,
+    File file,
+    String recieverUserId,
+    MessageEnum messageEnum,
+  ) {
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendFileMessage(
-        context: context,
-        file: file,
-        recieverUserId: recieverUserId,
-        senderUserData: value!,
-        messageEnum:  messageEnum,
-        ref: ref,
-      ),
-    );
+            context: context,
+            file: file,
+            recieverUserId: recieverUserId,
+            senderUserData: value!,
+            messageEnum: messageEnum,
+            ref: ref,
+          ),
+        );
+  }
+
+  void sendGIFMessage(
+    BuildContext context,
+    String gifUrl,
+    String recieverUserId,
+  ) {
+    //https://giphy.com/gifs/mumbaiindians-mumbai-indians-ipl-2023-arjun-tendulkar-xtLtPJDa3HCaRG4olK
+    //https://i.giphy.com/media/xtLtPJDa3HCaRG4olK/200.gif
+    int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
+    String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
+    String gifNewUrl = 'https://i.giphy.com/media/$gifUrlPart/200.gif';
+    ref
+        .read(userDataAuthProvider)
+        .whenData((value) => chatRepository.sendGIFMessage(
+              context: context,
+              gifUrl: gifNewUrl,
+              recieverUserId: recieverUserId,
+              senderUser: value!,
+            ));
   }
 }

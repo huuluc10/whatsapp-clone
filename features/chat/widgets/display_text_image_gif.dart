@@ -9,21 +9,25 @@ class DisplayTextImageGIF extends StatelessWidget {
   final MessageEnum type;
 
   const DisplayTextImageGIF(
-      {Key? key, required this.message, required this.type}) : super(key: key);
+      {Key? key, required this.message, required this.type})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return type == MessageEnum.text ? Text(
-      message,
-      style: const TextStyle(
-        fontSize: 16,
-      ),
-    ) : type == MessageEnum.video
-        ? VideoPlayerItem(
-          videoUrl:message
-        )
-        :CachedNetworkImage(
-          imageUrl: message,
-        );
+    print(message);
+    return type == MessageEnum.text
+        ? Text(
+            message,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+          )
+        : type == MessageEnum.video
+            ? VideoPlayerItem(videoUrl: message)
+            : type == MessageEnum.gif
+                ? CachedNetworkImage(imageUrl: '$message')
+                : CachedNetworkImage(
+                    imageUrl: message,
+                  );
   }
 }

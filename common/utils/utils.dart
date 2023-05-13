@@ -61,11 +61,12 @@ Future<GiphyGif?> pickGIF(BuildContext context) async {
   }
   return gif;
 }
-Future<File?> pickVideoFromGallery  (BuildContext context) async {
+
+Future<File?> pickVideoFromGallery(BuildContext context) async {
   File? video;
   try {
     final pickedVideo =
-    await ImagePicker().pickVideo(source: ImageSource.gallery);
+        await ImagePicker().pickVideo(source: ImageSource.gallery);
 
     if (pickedVideo != null) {
       video = File(pickedVideo.path);
@@ -75,4 +76,3 @@ Future<File?> pickVideoFromGallery  (BuildContext context) async {
   }
   return video;
 }
-
