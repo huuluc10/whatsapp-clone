@@ -181,7 +181,6 @@ class ChatRepository {
     }
   }
 
-
   void sendGIFMessage({
     required BuildContext context,
     required String gifUrl,
@@ -192,7 +191,7 @@ class ChatRepository {
       var timeSent = DateTime.now();
       UserModel recieverUserData;
       var userDataMap =
-      await firestore.collection('users').doc(recieverUserId).get();
+          await firestore.collection('users').doc(recieverUserId).get();
       recieverUserData = UserModel.fromMap(userDataMap.data()!);
       _saveDataToContactsSubcollection(
         senderUser,
@@ -214,7 +213,6 @@ class ChatRepository {
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
-
   }
 
   void sendFileMessage({
@@ -245,7 +243,7 @@ class ChatRepository {
         case MessageEnum.video:
           contactMsg = 'video';
           break;
-        case MessageEnum.image:
+        case MessageEnum.audio:
           contactMsg = 'audio';
           break;
         case MessageEnum.gif:
@@ -272,4 +270,5 @@ class ChatRepository {
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
-  }}
+  }
+}

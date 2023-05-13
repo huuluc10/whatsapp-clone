@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
@@ -37,7 +36,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     }
   }
 
-
   void sendFileMessage(
     File file,
     MessageEnum messageEnum,
@@ -56,18 +54,30 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       sendFileMessage(image, MessageEnum.image);
     }
   }
+
   void selectVideo() async {
     File? video = await pickVideoFromGallery(context);
     if (video != null) {
-      sendFileMessage(video, MessageEnum.video);
+      int sizeInBytes = await video.lengthSync();
+      double sizeInMb = sizeInBytes / (1024 * 1024);
+      if (sizeInMb > 104.8) {
+        showSnackBar(
+            context: context,
+            content:
+                "Sorry, you can only select videos that are less than or equal to 104MB.");
+      } else {
+        sendFileMessage(video, MessageEnum.video);
+      }
     }
   }
-  void hideEmojiContainer(){
+
+  void hideEmojiContainer() {
     setState(() {
       isShowEmojiContainer = false;
     });
   }
-  void showEmojiContainer(){
+
+  void showEmojiContainer() {
     setState(() {
       isShowEmojiContainer = true;
     });
@@ -75,17 +85,15 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
 
   void showKeyBoard() => focusNode.requestFocus();
   void hideKeyBoard() => focusNode.unfocus();
-  void toggleEmojiKeyBoardContainer(){
-    if(isShowEmojiContainer){
+  void toggleEmojiKeyBoardContainer() {
+    if (isShowEmojiContainer) {
       showKeyBoard();
       hideEmojiContainer();
-    }else{
+    } else {
       hideKeyBoard();
       showEmojiContainer();
     }
   }
-
-
 
   @override
   void dispose() {
@@ -102,7 +110,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
           children: [
             Expanded(
               child: TextFormField(
-                focusNode : focusNode,
+                focusNode: focusNode,
                 controller: _messageController,
                 onChanged: (value) {
                   if (value.isNotEmpty) {
@@ -133,7 +141,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                             ),
                           ),
                           IconButton(
-                            onPressed: (){},
+                            onPressed: () {},
                             icon: const Icon(
                               Icons.gif,
                               color: Colors.grey,
@@ -175,7 +183,8 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 2, left: 2, right: 2, top: 2),
+              padding:
+                  const EdgeInsets.only(bottom: 2, left: 2, right: 2, top: 2),
               child: CircleAvatar(
                 backgroundColor: const Color(0xFF128C7E),
                 radius: 25,
@@ -190,21 +199,24 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             ),
           ],
         ),
-        isShowEmojiContainer ? SizedBox(
-          height: 310,
-          child: EmojiPicker(
-            onEmojiSelected: ((category, emoji){
-              setState(() {
-                _messageController.text = _messageController.text + emoji.emoji;
-              });
-              if(!isShowSendButton){
-                setState(() {
-                  isShowSendButton = true;
-                });
-              }
-            }),
-          ),
-        ) : const SizedBox(),
+        isShowEmojiContainer
+            ? SizedBox(
+                height: 310,
+                child: EmojiPicker(
+                  onEmojiSelected: ((category, emoji) {
+                    setState(() {
+                      _messageController.text =
+                          _messageController.text + emoji.emoji;
+                    });
+                    if (!isShowSendButton) {
+                      setState(() {
+                        isShowSendButton = true;
+                      });
+                    }
+                  }),
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }

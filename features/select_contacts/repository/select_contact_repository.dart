@@ -39,12 +39,7 @@ class SelectContactRepository {
       bool isFound = false;
       for (var document in userCollection.docs) {
         var userData = UserModel.fromMap(document.data());
-<<<<<<< HEAD
         selectedPhoneNum = selectedContact.phones[0].number
-=======
-
-        String selectedPhoneNum = selectedContact.phones[0].number
->>>>>>> origin/DisplayingCachedImages
             .replaceAll(' ', '')
             .replaceFirst('0', '+84');
         if (selectedPhoneNum == userData.phoneNumber) {
@@ -60,7 +55,7 @@ class SelectContactRepository {
             context: context, content: 'This number is not exist on this app.');
         String? confirm = await showConfirmDialog(
             context, "Do you want to share this app to your friend ");
-        print(confirm);
+        // print(confirm);
         if (confirm == 'ok') {
           final Uri smsLaunchUri = Uri(
             scheme: 'sms',
@@ -73,7 +68,7 @@ class SelectContactRepository {
           if (await canLaunchUrl(smsLaunchUri)) {
             await launchUrl(smsLaunchUri);
           } else {
-            print('Can not to send message');
+            // print('Can not to send message');
             showSnackBar(context: context, content: "Can not to send message");
           }
         }
