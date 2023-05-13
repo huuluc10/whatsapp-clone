@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/user_model.dart';
 
@@ -33,13 +34,15 @@ class SelectContactRepository {
   }
 
   void selectContact(Contact selectedContact, BuildContext context) async {
+    String selectedPhoneNum = '';
     try {
       var userCollection = await firestore.collection('users').get();
       bool isFound = false;
       for (var document in userCollection.docs) {
         var userData = UserModel.fromMap(document.data());
 
-        String selectedPhoneNum = selectedContact.phones[0].number
+        selectedPhoneNum = selectedContact.phones[0].number
+
             .replaceAll(' ', '')
             .replaceFirst('0', '+84');
         if (selectedPhoneNum == userData.phoneNumber) {
@@ -53,6 +56,25 @@ class SelectContactRepository {
       if (!isFound) {
         showSnackBar(
             context: context, content: 'This number is not exist on this app.');
+        String? confirm = await showConfirmDialog(
+            context, "Do you want to share this app to your friend ");
+        print(confirm);
+        if (confirm == 'ok') {
+          final Uri smsLaunchUri = Uri(
+            scheme: 'sms',
+            path: selectedPhoneNum,
+            queryParameters: <String, String>{
+              'body': Uri.encodeComponent(
+                  'I am using this app to chat, you can download and instal to use with me at https://drive.google.com/drive/folders/10EIZybrPR83rPOKWqMw1USqFIZgQZAfe?usp=sharing'),
+            },
+          );
+          if (await canLaunchUrl(smsLaunchUri)) {
+            await launchUrl(smsLaunchUri);
+          } else {
+            print('Can not to send message');
+            showSnackBar(context: context, content: "Can not to send message");
+          }
+        }
       }
     } catch (e) {
       showSnackBar(context: context, content: e.toString());

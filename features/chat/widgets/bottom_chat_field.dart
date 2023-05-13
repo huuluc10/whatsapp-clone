@@ -20,8 +20,7 @@ class BottomChatField extends ConsumerStatefulWidget {
 class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   bool isShowSendButton = false;
   final TextEditingController _messageController = TextEditingController();
-  bool isShowEmojiContainer = false;
-  FocusNode focusNode = FocusNode();
+
 
   void sendTextMessage() async {
     if (isShowSendButton) {
@@ -62,29 +61,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       sendFileMessage(video, MessageEnum.video);
     }
   }
-  void hideEmojiContainer(){
-    setState(() {
-      isShowEmojiContainer = false;
-    });
-  }
-  void showEmojiContainer(){
-    setState(() {
-      isShowEmojiContainer = true;
-    });
-  }
-
-  void showKeyBoard() => focusNode.requestFocus();
-  void hideKeyBoard() => focusNode.unfocus();
-  void toggleEmojiKeyBoardContainer(){
-    if(isShowEmojiContainer){
-      showKeyBoard();
-      hideEmojiContainer();
-    }else{
-      hideKeyBoard();
-      showEmojiContainer();
-    }
-  }
-
 
 
   @override
@@ -102,7 +78,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
           children: [
             Expanded(
               child: TextFormField(
-                focusNode : focusNode,
+
                 controller: _messageController,
                 onChanged: (value) {
                   if (value.isNotEmpty) {
@@ -126,7 +102,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                       child: Row(
                         children: [
                           IconButton(
-                            onPressed: toggleEmojiKeyBoardContainer,
+                            onPressed: (){},
                             icon: const Icon(
                               Icons.emoji_emotions,
                               color: Colors.grey,
@@ -190,21 +166,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             ),
           ],
         ),
-        isShowEmojiContainer ? SizedBox(
-          height: 310,
-          child: EmojiPicker(
-            onEmojiSelected: ((category, emoji){
-              setState(() {
-                _messageController.text = _messageController.text + emoji.emoji;
-              });
-              if(!isShowSendButton){
-                setState(() {
-                  isShowSendButton = true;
-                });
-              }
-            }),
-          ),
-        ) : const SizedBox(),
       ],
     );
   }

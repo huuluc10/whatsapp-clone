@@ -40,7 +40,6 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print(state);
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.resumed:
