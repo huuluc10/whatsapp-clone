@@ -19,6 +19,7 @@ class MainScreenLayout extends ConsumerStatefulWidget {
   @override
   ConsumerState<MainScreenLayout> createState() => _MainScreenLayoutState();
 }
+
 class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
     with WidgetsBindingObserver {
   @override
@@ -127,7 +128,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             ContactsList(),
             OopsWidget(),

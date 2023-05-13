@@ -238,19 +238,19 @@ class ChatRepository {
       String contactMsg;
       switch (messageEnum) {
         case MessageEnum.image:
-          contactMsg = 'image';
+          contactMsg = '📷 Photo';
           break;
         case MessageEnum.video:
-          contactMsg = 'video';
+          contactMsg = '📸 Video';
           break;
         case MessageEnum.audio:
-          contactMsg = 'audio';
+          contactMsg = '🎵 Audio';
           break;
         case MessageEnum.gif:
-          contactMsg = 'gif';
+          contactMsg = 'GIF';
           break;
         default:
-          contactMsg = 'gif';
+          contactMsg = 'GIF';
       }
       _saveDataToContactsSubcollection(
         senderUserData,
