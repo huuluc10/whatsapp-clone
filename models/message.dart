@@ -10,8 +10,14 @@ class Message {
   final DateTime timeSent;
   final String messageId;
   final bool isSeen;
+  final String repliedMessage;
+  final String repliedTo;
+  final MessageEnum repliedMessageType;
 
   Message({
+    required this.repliedMessage,
+    required this.repliedTo,
+    required this.repliedMessageType,
     required this.senderId,
     required this.recieverId,
     required this.text,
@@ -22,31 +28,33 @@ class Message {
   });
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'senderId': senderId,
-      'recieverId': recieverId,
-      'text': text,
-      'type': type.type,
-      'timeSent': timeSent.millisecondsSinceEpoch,
-      'messageId': messageId,
-      'isSeen': isSeen,
+    return {
+      "senderId": senderId,
+      "recieverId": recieverId,
+      "text": text,
+      "type": type.type,
+      "timeSent": timeSent.millisecondsSinceEpoch,
+      "messageId": messageId,
+      "isSeen": isSeen,
+      "repliedMessage": repliedMessage,
+      "repliedTo": repliedTo,
+      "repliedMessageType": repliedMessageType.type,
     };
   }
 
-  factory Message.fromMap(Map<String, dynamic> map) {
+  factory Message.fromMap(Map<String, dynamic> json) {
     return Message(
-      senderId: map['senderId'] as String,
-      recieverId: map['recieverId'] as String,
-      text: map['text'] as String,
-      type: (map['type'] as String).toEnum(),
-      timeSent: DateTime.fromMillisecondsSinceEpoch(map['timeSent'] as int),
-      messageId: map['messageId'] as String,
-      isSeen: map['isSeen'] as bool,
+      senderId: json["senderId"],
+      recieverId: json["recieverId"],
+      text: json["text"],
+      type: (json["type"] as String).toEnum(),
+      timeSent: DateTime.parse(json["timeSent"]),
+      messageId: json["messageId"],
+      isSeen: json["isSeen"].toLowerCase() == 'true',
+      repliedMessage: json["repliedMessage"],
+      repliedTo: json["repliedTo"],
+      repliedMessageType: (json["repliedMessageType"] as String).toEnum(),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Message.fromJson(String source) =>
-      Message.fromMap(json.decode(source) as Map<String, dynamic>);
+//
 }

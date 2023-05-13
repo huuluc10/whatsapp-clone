@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
+import 'package:chatapp_clone_whatsapp/common/providers/message_reply_provider.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
@@ -37,14 +38,17 @@ class ChatController {
     String text,
     String recieverUserId,
   ) {
+    final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendTextMessage(
             context: context,
             text: text,
             recieverUserId: recieverUserId,
             senderUser: value!,
+            messageReply: messageReply,
           ),
         );
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 
   void sendFileMessage(
@@ -53,6 +57,8 @@ class ChatController {
     String recieverUserId,
     MessageEnum messageEnum,
   ) {
+    final messageReply = ref.read(messageReplyProvider);
+
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendFileMessage(
             context: context,
@@ -61,8 +67,10 @@ class ChatController {
             senderUserData: value!,
             messageEnum: messageEnum,
             ref: ref,
+            messageReply: messageReply,
           ),
         );
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 
   void sendGIFMessage(
@@ -72,6 +80,8 @@ class ChatController {
   ) {
     //https://giphy.com/gifs/mumbaiindians-mumbai-indians-ipl-2023-arjun-tendulkar-xtLtPJDa3HCaRG4olK
     //https://i.giphy.com/media/xtLtPJDa3HCaRG4olK/200.gif
+    final messageReply = ref.read(messageReplyProvider);
+
     int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
     String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
     String gifNewUrl = 'https://i.giphy.com/media/$gifUrlPart/200.gif';
@@ -82,6 +92,8 @@ class ChatController {
               gifUrl: gifNewUrl,
               recieverUserId: recieverUserId,
               senderUser: value!,
+              messageReply: messageReply,
             ));
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 }

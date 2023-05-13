@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
+import 'package:chatapp_clone_whatsapp/common/providers/message_reply_provider.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/message_reply_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
@@ -128,8 +130,11 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
 
   @override
   Widget build(BuildContext context) {
+    final messageReply = ref.watch(messageReplyProvider);
+    final isShowMessageReply = messageReply != null;
     return Column(
       children: [
+        isShowMessageReply ? const MessageReplyPreview(): const SizedBox(),
         Row(
           children: [
             Expanded(
