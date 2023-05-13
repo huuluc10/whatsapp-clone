@@ -61,7 +61,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
         appBar: AppBar(
           elevation: 1,
           title: const Text(
-            "Chat App",
+            "Ứng dụng nhắn tin",
             style: TextStyle(
               color: Colors.grey,
               fontSize: 20,
@@ -95,7 +95,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
                   child: SizedBox(
                     width: 90,
                     child: Text(
-                      'New group',
+                      'Tạo nhóm',
                       style: TextStyle(fontSize: 14),
                     ),
                   ),
@@ -105,7 +105,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
                   child: SizedBox(
                     width: 90,
                     child: Text(
-                      'Settings',
+                      'Cài đặt',
                       style: TextStyle(fontSize: 14),
                     ),
                   ),
@@ -120,10 +120,10 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
             tabs: [
               Tab(
-                text: 'Chats',
+                text: 'Trò chuyện',
               ),
               Tab(
-                text: 'Calls',
+                text: 'Cuộc gọi',
               ),
             ],
           ),

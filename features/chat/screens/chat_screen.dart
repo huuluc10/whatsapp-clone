@@ -41,26 +41,30 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isOnline = false;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: StreamBuilder<UserModel>(
-            stream: ref.read(authControllerProvider).userDataById(widget.uid),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Loader();
-              }
+          stream: ref.read(authControllerProvider).userDataById(widget.uid),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Loader();
+            } else {
+              isOnline = snapshot.data!.isOnline;
               return Column(
                 children: [
                   Text(widget.name),
                   Text(
-                    snapshot.data!.isOnline ? 'online' : 'offline',
+                    snapshot.data!.isOnline ? 'Đang hoạt động' : 'Ngoại tuyến',
                     style: const TextStyle(
                         fontSize: 13, fontWeight: FontWeight.normal),
                   ),
                 ],
               );
-            }),
+            }
+          },
+        ),
         centerTitle: false,
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.video_call)),
@@ -79,6 +83,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   arguments: {
                     'uid': widget.uid,
                     'name': widget.name,
+                    'isOnline': isOnline,
                   },
                 );
               } else if (value == 'media') {
@@ -95,9 +100,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               const PopupMenuItem(
                 value: "contact-info",
                 child: SizedBox(
-                  width: 90,
+                  width: 130,
                   child: Text(
-                    'View contact',
+                    'Xem thông tin liên hệ',
                     style: TextStyle(fontSize: 14),
                   ),
                 ),
@@ -105,9 +110,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               const PopupMenuItem(
                 value: 'media',
                 child: SizedBox(
-                  width: 90,
+                  width: 130,
                   child: Text(
-                    'Media',
+                    'Đa phương tiện',
                     style: TextStyle(fontSize: 14),
                   ),
                 ),
@@ -115,9 +120,9 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               const PopupMenuItem(
                 value: 'clear',
                 child: SizedBox(
-                  width: 90,
+                  width: 130,
                   child: Text(
-                    'Clear chat',
+                    'Xóa cuộc trò chuyện',
                     style: TextStyle(fontSize: 14),
                   ),
                 ),

@@ -54,20 +54,20 @@ class AuthRepository {
             switch (e.code) {
               case 'invalid-phone-number':
                 error =
-                    'Invalid phone number. Please check your phone number and retry.';
+                    'Số điện thoại không hợp lệ. Vui lòng kiểm tra số điện thoại của bạn và thử lại.';
                 break;
               case 'session-expired':
-                error = 'Authentication time has expired.';
+                error = 'Hết thời gian xác thực.';
                 break;
               case 'too-many-requests':
                 error =
-                    'Too many requests to send verification messages in a short time.';
+                    'Quá nhiều yêu cầu xác thực. Vui lòng thứ lại vào ngày mai.';
                 break;
               case 'user-disabled':
-                error = 'User disabled or locked account.';
+                error = 'Tài khoản đã bị vô hiệu hóa.';
                 break;
               default:
-                error = 'An unknown error occurred';
+                error = 'Có lỗi xảy ra.';
                 break;
             }
             showSnackBar(context: context, content: error);

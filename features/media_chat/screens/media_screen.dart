@@ -24,22 +24,22 @@ class MediaScreen extends StatelessWidget {
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
             tabs: [
               Tab(
-                text: 'Images',
+                text: 'Hình ảnh',
               ),
               Tab(
                 text: 'Videos',
               ),
               Tab(
-                text: 'Audio',
+                text: 'Âm thanh',
               ),
             ],
           ),
         ),
         body: const TabBarView(
           children: [
-            Text('Images will show hear'),
-            Text('Videos will show hear'),
-            Text('Audio will show hear'),
+            Text('Hình ảnh sẽ hiển thị ở đây'),
+            Text('Video sẽ hiển thị ở đây'),
+            Text('Âm thanh sẽ hiển thị ở đây'),
           ],
         ),
       ),

@@ -34,7 +34,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           .signInWithPhone(context, '+84$phoneNumber');
     } else {
       showSnackBar(
-          context: context, content: 'Fill out the phone number field.');
+          context: context, content: 'Xin hãy nhập vào số điện thoại.');
     }
   }
 
@@ -43,7 +43,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Enter your phone number"),
+        title: const Text("Nhập số điện thoại"),
         elevation: 0,
         backgroundColor: backgroundColor,
         centerTitle: true,
@@ -53,7 +53,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text('Application will need to verify your phone number'),
+            const Text('Ứng dụng sẽ cần xác minh số điện thoại của bạn'),
             const SizedBox(height: 10),
             Center(
               child: Row(
@@ -66,10 +66,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       controller: phoneController,
                       keyboardType: TextInputType.number,
                       decoration:
-                          const InputDecoration(hintText: 'Phone number'),
+                          const InputDecoration(hintText: 'Số điện thoại'),
                     ),
                   )
                 ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Text(
+                'Hiện tại ứng dụng chỉ hỗ trợ ở Việt Nam. Xin thứ lỗi vì sự bất tiện này.',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Expanded(child: Container()),
@@ -78,7 +89,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               child: Center(
                   child: CustomButton(
                 onPress: sendPhoneNumber,
-                text: "Next",
+                text: "Tiếp tục",
               )),
             ),
           ],

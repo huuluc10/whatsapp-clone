@@ -10,7 +10,7 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('Cài đặt'),
       ),
       body: Column(
         children: [
@@ -29,7 +29,7 @@ class SettingScreen extends StatelessWidget {
                       size: 30,
                     ),
                     SizedBox(width: 15),
-                    Text('Profile')
+                    Text('Thông tin cá nhân')
                   ],
                 ),
               ),
@@ -51,7 +51,7 @@ class SettingScreen extends StatelessWidget {
                       size: 30,
                     ),
                     SizedBox(width: 15),
-                    Text('Custom wallpaper')
+                    Text('Chỉnh nền trò chuyện')
                   ],
                 ),
               ),

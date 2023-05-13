@@ -11,10 +11,12 @@ class ContactInfo extends ConsumerWidget {
   static const routeName = 'contact-info';
   final String uid;
   final String name;
+  final bool isOnline;
 
   const ContactInfo(
     this.uid,
     this.name,
+    this.isOnline,
   );
 
   @override
@@ -51,10 +53,10 @@ class ContactInfo extends ConsumerWidget {
                                     fontSize: 24, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            //TODO: hiển thị thời gian
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: const Text('isOnline'),
+                              child: Text(
+                                  isOnline ? 'Đang hoạt động' : 'Ngoại tuyến'),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 5),
@@ -87,7 +89,7 @@ class ContactInfo extends ConsumerWidget {
                             ),
                           ),
                           const Text(
-                            'Audio',
+                            'Gọi',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.green,
@@ -106,7 +108,7 @@ class ContactInfo extends ConsumerWidget {
                             ),
                           ),
                           const Text(
-                            'Video',
+                            'Gọi video',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.green,
@@ -138,7 +140,7 @@ class ContactInfo extends ConsumerWidget {
                           ),
                           const SizedBox(width: 20),
                           Text(
-                            'Create group with $name',
+                            'Tạo nhóm với $name',
                             style: TextStyle(fontSize: 16),
                           ),
                         ],

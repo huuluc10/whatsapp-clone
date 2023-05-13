@@ -35,14 +35,14 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   void openAudio() async {
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
-      throw RecordingPermissionException('Mic permission not allowed');
+      throw RecordingPermissionException(
+          'Quyền microphone không được cấp phép');
     }
     await _soundRecorder!.openRecorder();
     isRecorderInit = true;
   }
 
   void sendTextMessage() async {
-    print(!isRecording);
     if (isShowSendButton) {
       ref.read(chatControllerProvider).sendTextMessage(
             context,
@@ -101,8 +101,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       if (sizeInMb > 104.8) {
         showSnackBar(
             context: context,
-            content:
-                "Sorry, you can only select videos that are less than or equal to 104MB.");
+            content: "Xin lỗi, bạn chỉ có thể gửi tập tin dưới 104MB.");
       } else {
         sendFileMessage(video, MessageEnum.video);
       }
@@ -195,7 +194,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                         borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(
                             width: 20, style: BorderStyle.none)),
-                    hintText: "Enter text",
+                    hintText: "Aa",
                     contentPadding: const EdgeInsets.all(10),
                   ),
                 ),

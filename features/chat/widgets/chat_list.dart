@@ -48,11 +48,19 @@ class _ChatListState extends ConsumerState<ChatList> {
               var timeSent = DateFormat.Hm().format(messageData.timeSent);
               if (messageData.senderId ==
                   FirebaseAuth.instance.currentUser!.uid) {
-                return MyMessageCard(message: messageData.text, date: timeSent,type: messageData.type,);
+                return MyMessageCard(
+                  message: messageData.text,
+                  date: timeSent,
+                  type: messageData.type,
+                  messageId: messageData.messageId,
+                );
               }
-                return SenderMessageCard(
-                    message: messageData.text, date: timeSent, type: messageData.type,);
-
+              return SenderMessageCard(
+                message: messageData.text,
+                date: timeSent,
+                type: messageData.type,
+                messageId: messageData.messageId,
+              );
             },
           );
         });

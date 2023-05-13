@@ -1,5 +1,4 @@
 import 'package:cached_video_player/cached_video_player.dart';
-import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class VideoPlayerItem extends StatefulWidget {

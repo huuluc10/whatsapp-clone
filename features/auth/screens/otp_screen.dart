@@ -31,7 +31,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Verifying your phone number"),
+        title: const Text("Đang xác minh số điện thoại của bạn"),
         elevation: 0,
         backgroundColor: backgroundColor,
         centerTitle: true,
@@ -40,7 +40,7 @@ class _OTPScreenState extends ConsumerState<OTPScreen> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            const Text('We have sent an SMS with a code'),
+            const Text('Chúng tôi đã gửi một tin nhắn SMS có mã'),
             SizedBox(
               width: size.width * 0.5,
               child: TextField(

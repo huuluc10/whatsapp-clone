@@ -22,7 +22,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05),
             const Text(
-              'WELCOME',
+              'CHÀO MỪNG',
               style: TextStyle(
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
@@ -35,7 +35,7 @@ class WelcomeScreen extends StatelessWidget {
                   Navigator.pushNamed(context, LoginScreen.routeName);
                 },
                 child: const Text(
-                  'Login',
+                  'Đăng nhập',
                   style: TextStyle(fontSize: 16, color: Colors.green),
                 )),
           ],
