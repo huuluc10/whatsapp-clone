@@ -1,6 +1,8 @@
+
 import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../common/utils/colors.dart';
@@ -18,6 +20,8 @@ class BottomChatField extends ConsumerStatefulWidget {
 class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   bool isShowSendButton = false;
   final TextEditingController _messageController = TextEditingController();
+  bool isShowEmojiContainer = false;
+  FocusNode focusNode = FocusNode();
 
   void sendTextMessage() async {
     if (isShowSendButton) {
@@ -32,6 +36,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       });
     }
   }
+
 
   void sendFileMessage(
     File file,
@@ -51,17 +56,36 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       sendFileMessage(image, MessageEnum.image);
     }
   }
-
-  void selectGIF() async {
-    final gif = await pickGIF(context);
-    // if (gif != null) {
-    //   ref.read(chatControllerProvider).sendGIFMessage(
-    //         context,
-    //         gif.url,
-    //         widget.recieverUserId,
-    //       );
-    // }
+  void selectVideo() async {
+    File? video = await pickVideoFromGallery(context);
+    if (video != null) {
+      sendFileMessage(video, MessageEnum.video);
+    }
   }
+  void hideEmojiContainer(){
+    setState(() {
+      isShowEmojiContainer = false;
+    });
+  }
+  void showEmojiContainer(){
+    setState(() {
+      isShowEmojiContainer = true;
+    });
+  }
+
+  void showKeyBoard() => focusNode.requestFocus();
+  void hideKeyBoard() => focusNode.unfocus();
+  void toggleEmojiKeyBoardContainer(){
+    if(isShowEmojiContainer){
+      showKeyBoard();
+      hideEmojiContainer();
+    }else{
+      hideKeyBoard();
+      showEmojiContainer();
+    }
+  }
+
+
 
   @override
   void dispose() {
@@ -72,95 +96,115 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: TextFormField(
-            controller: _messageController,
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                setState(() {
-                  isShowSendButton = true;
-                });
-              } else {
-                setState(() {
-                  isShowSendButton = false;
-                });
-              }
-            },
-            decoration: InputDecoration(
-              enabledBorder: const OutlineInputBorder(),
-              filled: true,
-              fillColor: mobileChatBoxColor,
-              prefixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: SizedBox(
-                  width: 100,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.emoji_emotions,
-                          color: Colors.grey,
-                        ),
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                focusNode : focusNode,
+                controller: _messageController,
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    setState(() {
+                      isShowSendButton = true;
+                    });
+                  } else {
+                    setState(() {
+                      isShowSendButton = false;
+                    });
+                  }
+                },
+                decoration: InputDecoration(
+                  enabledBorder: const OutlineInputBorder(),
+                  filled: true,
+                  fillColor: mobileChatBoxColor,
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: SizedBox(
+                      width: 100,
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: toggleEmojiKeyBoardContainer,
+                            icon: const Icon(
+                              Icons.emoji_emotions,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: (){},
+                            icon: const Icon(
+                              Icons.gif,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        onPressed: selectGIF,
-                        icon: const Icon(
-                          Icons.gif,
-                          color: Colors.grey,
+                    ),
+                  ),
+                  suffixIcon: SizedBox(
+                    width: 100,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: selectImage,
+                          icon: const Icon(
+                            Icons.camera_alt,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                    ],
+                        IconButton(
+                          onPressed: selectVideo,
+                          icon: const Icon(
+                            Icons.attach_file,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(width: 20, style: BorderStyle.none)),
+                  hintText: "Enter text",
+                  contentPadding: const EdgeInsets.all(10),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 2, left: 2, right: 2, top: 2),
+              child: CircleAvatar(
+                backgroundColor: const Color(0xFF128C7E),
+                radius: 25,
+                child: GestureDetector(
+                  onTap: sendTextMessage,
+                  child: Icon(
+                    isShowSendButton ? Icons.send : Icons.mic,
+                    color: Colors.white,
                   ),
                 ),
               ),
-              suffixIcon: SizedBox(
-                width: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: selectImage,
-                      icon: const Icon(
-                        Icons.camera_alt,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.attach_file,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide:
-                      const BorderSide(width: 20, style: BorderStyle.none)),
-              hintText: "Enter text",
-              contentPadding: const EdgeInsets.all(10),
             ),
-          ),
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 2, left: 2, right: 2, top: 2),
-          child: CircleAvatar(
-            backgroundColor: const Color(0xFF128C7E),
-            radius: 25,
-            child: GestureDetector(
-              onTap: sendTextMessage,
-              child: Icon(
-                isShowSendButton ? Icons.send : Icons.mic,
-                color: Colors.white,
-              ),
-            ),
+        isShowEmojiContainer ? SizedBox(
+          height: 310,
+          child: EmojiPicker(
+            onEmojiSelected: ((category, emoji){
+              setState(() {
+                _messageController.text = _messageController.text + emoji.emoji;
+              });
+              if(!isShowSendButton){
+                setState(() {
+                  isShowSendButton = true;
+                });
+              }
+            }),
           ),
-        )
+        ) : const SizedBox(),
       ],
     );
   }

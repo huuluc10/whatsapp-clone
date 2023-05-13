@@ -181,6 +181,42 @@ class ChatRepository {
     }
   }
 
+
+  void sendGIFMessage({
+    required BuildContext context,
+    required String gifUrl,
+    required String recieverUserId,
+    required UserModel senderUser,
+  }) async {
+    try {
+      var timeSent = DateTime.now();
+      UserModel recieverUserData;
+      var userDataMap =
+      await firestore.collection('users').doc(recieverUserId).get();
+      recieverUserData = UserModel.fromMap(userDataMap.data()!);
+      _saveDataToContactsSubcollection(
+        senderUser,
+        recieverUserData,
+        'GIF',
+        timeSent,
+        recieverUserId,
+      );
+      var messageId = const Uuid().v1();
+      _saveMessageToMessageSubcollection(
+        recieverUserId: recieverUserId,
+        text: gifUrl,
+        timeSent: timeSent,
+        messageId: messageId,
+        username: senderUser.name,
+        recieverUsername: recieverUserData.name,
+        messageType: MessageEnum.gif,
+      );
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+
+  }
+
   void sendFileMessage({
     required BuildContext context,
     required File file,
@@ -191,8 +227,7 @@ class ChatRepository {
   }) async {
     try {
       var timeSent = DateTime.now();
-      var messageId;
-      const Uuid().v1();
+      var messageId = const Uuid().v1();
       String imageUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
           .storeFileToFirebase(
@@ -200,24 +235,24 @@ class ChatRepository {
               file);
       UserModel recieverUserData;
       var userDataMap =
-          await firestore.collection('user').doc(recieverUserId).get();
+          await firestore.collection('users').doc(recieverUserId).get();
       recieverUserData = UserModel.fromMap(userDataMap.data()!);
       String contactMsg;
       switch (messageEnum) {
         case MessageEnum.image:
-          contactMsg = 'Photo';
+          contactMsg = 'image';
           break;
         case MessageEnum.video:
-          contactMsg = 'Video';
+          contactMsg = 'video';
           break;
         case MessageEnum.image:
-          contactMsg = 'Audio';
+          contactMsg = 'audio';
           break;
         case MessageEnum.gif:
-          contactMsg = 'GIF';
+          contactMsg = 'gif';
           break;
         default:
-          contactMsg = 'GIF';
+          contactMsg = 'gif';
       }
       _saveDataToContactsSubcollection(
         senderUserData,
@@ -237,5 +272,4 @@ class ChatRepository {
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
-  }
-}
+  }}

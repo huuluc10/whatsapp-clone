@@ -39,7 +39,12 @@ class SelectContactRepository {
       bool isFound = false;
       for (var document in userCollection.docs) {
         var userData = UserModel.fromMap(document.data());
+<<<<<<< HEAD
         selectedPhoneNum = selectedContact.phones[0].number
+=======
+
+        String selectedPhoneNum = selectedContact.phones[0].number
+>>>>>>> origin/DisplayingCachedImages
             .replaceAll(' ', '')
             .replaceFirst('0', '+84');
         if (selectedPhoneNum == userData.phoneNumber) {
