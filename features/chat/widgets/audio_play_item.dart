@@ -16,6 +16,28 @@ class AudioPlayerItem extends StatefulWidget {
 class _AudioPlayerItemState extends State<AudioPlayerItem> {
   bool isPlaying = false;
   final AudioPlayer audioPlayer = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer.onPlayerStateChanged.listen((event) {
+      switch (event) {
+        case PlayerState.stopped:
+          setState(() {
+            isPlaying = false;
+          });
+          break;
+        case PlayerState.completed:
+          setState(() {
+            isPlaying = false;
+          });
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
