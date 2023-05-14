@@ -53,6 +53,7 @@ class _ChatListState extends ConsumerState<ChatList> {
                   date: timeSent,
                   type: messageData.type,
                   messageId: messageData.messageId,
+                  recieverUserId: widget.recieverUserId,
                 );
               }
               return SenderMessageCard(
@@ -60,6 +61,7 @@ class _ChatListState extends ConsumerState<ChatList> {
                 date: timeSent,
                 type: messageData.type,
                 messageId: messageData.messageId,
+                recieverUserId: widget.recieverUserId,
               );
             },
           );

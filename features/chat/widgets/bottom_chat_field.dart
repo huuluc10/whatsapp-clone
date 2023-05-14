@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
+import 'package:chatapp_clone_whatsapp/common/enums/source_file_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +23,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   bool isShowSendButton = false;
   bool isRecorderInit = false;
   bool isRecording = false;
+  bool showToggle = false;
   final TextEditingController _messageController = TextEditingController();
   FlutterSoundRecorder? _soundRecorder;
 
@@ -86,15 +88,26 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
         );
   }
 
-  void selectImage() async {
-    File? image = await pickImageFromGalary(context);
+  void selectImage(SourceFile source) async {
+    File? image;
+    if (source == SourceFile.gallary) {
+      image = await pickImage(context, SourceFile.gallary);
+    } else {
+      image = await pickImage(context, SourceFile.camera);
+    }
     if (image != null) {
       sendFileMessage(image, MessageEnum.image);
     }
   }
 
-  void selectVideo() async {
-    File? video = await pickVideoFromGallery(context);
+  void selectVideo(SourceFile source) async {
+    File? video;
+    if (source == SourceFile.gallary) {
+      video = await pickVideo(context, SourceFile.gallary);
+    } else {
+      video = await pickVideo(context, SourceFile.camera);
+    }
+
     if (video != null) {
       int sizeInBytes = await video.lengthSync();
       double sizeInMb = sizeInBytes / (1024 * 1024);
@@ -108,12 +121,26 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     }
   }
 
+  void selectDocument() async {
+    final file = await pickDocument(context);
+    if (file != null) {
+      sendFileMessage(file, MessageEnum.doc);
+    }
+  }
+
   void selectGIF() async {
     final gif = await pickGIF(context);
     if (gif != null) {
       ref
           .read(chatControllerProvider)
           .sendGIFMessage(context, gif.url, widget.recieverUserId);
+    }
+  }
+
+  void selectAudio() async {
+    final audio = await pickAudio(context);
+    if (audio != null) {
+      sendFileMessage(audio, MessageEnum.audio);
     }
   }
 
@@ -164,6 +191,70 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                                 color: Colors.grey,
                               ),
                             ),
+                            PopupMenuButton<String>(
+                              onSelected: (value) {
+                                switch (value) {
+                                  case 'video':
+                                    selectVideo(SourceFile.camera);
+                                    break;
+                                  case 'image':
+                                    selectImage(SourceFile.camera);
+                                    break;
+                                  case 'audio':
+                                    selectAudio();
+                                    break;
+                                  default:
+                                    selectDocument();
+                                    break;
+                                }
+                              },
+                              icon: const Icon(
+                                Icons.attach_file,
+                                color: Colors.grey,
+                              ),
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  value: 'audio',
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.audio_file),
+                                      SizedBox(width: 7),
+                                      Text('Âm thanh'),
+                                    ],
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'document',
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.file_open),
+                                      SizedBox(width: 7),
+                                      Text('Tập tin'),
+                                    ],
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'image',
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.camera_alt),
+                                      SizedBox(width: 7),
+                                      Text('Hình ảnh'),
+                                    ],
+                                  ),
+                                ),
+                                PopupMenuItem(
+                                  value: 'video',
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.camera_alt),
+                                      SizedBox(width: 7),
+                                      Text('Video'),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -174,16 +265,20 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           IconButton(
-                            onPressed: selectImage,
+                            onPressed: () async {
+                              selectImage(SourceFile.gallary);
+                            },
                             icon: const Icon(
-                              Icons.camera_alt,
+                              Icons.image,
                               color: Colors.grey,
                             ),
                           ),
                           IconButton(
-                            onPressed: selectVideo,
+                            onPressed: () async {
+                              selectVideo(SourceFile.gallary);
+                            },
                             icon: const Icon(
-                              Icons.attach_file,
+                              Icons.video_collection,
                               color: Colors.grey,
                             ),
                           ),

@@ -1,9 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:chatapp_clone_whatsapp/features/view_contact_info/controller/view_contact_info_controller.dart';
 import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 
@@ -13,11 +10,12 @@ class ContactInfo extends ConsumerWidget {
   final String name;
   final bool isOnline;
 
-  const ContactInfo(
-    this.uid,
-    this.name,
-    this.isOnline,
-  );
+  const ContactInfo({
+    super.key,
+    required this.uid,
+    required this.name,
+    required this.isOnline,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -141,7 +139,7 @@ class ContactInfo extends ConsumerWidget {
                           const SizedBox(width: 20),
                           Text(
                             'Tạo nhóm với $name',
-                            style: TextStyle(fontSize: 16),
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ],
                       ),

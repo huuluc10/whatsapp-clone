@@ -65,7 +65,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final uid = arguments['uid'];
       final isOnline = arguments['isOnline'];
       return MaterialPageRoute(
-        builder: (context) => ContactInfo(uid, name, isOnline),
+        builder: (context) =>
+            ContactInfo(uid: uid, name: name, isOnline: isOnline),
       );
     case CustomWallpaperScreen.routeName:
       return MaterialPageRoute(

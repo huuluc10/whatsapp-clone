@@ -72,7 +72,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ],
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 10),
               child: Text(
                 'Hiện tại ứng dụng chỉ hỗ trợ ở Việt Nam. Xin thứ lỗi vì sự bất tiện này.',
@@ -81,6 +81,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   color: Colors.red,
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
             Expanded(child: Container()),

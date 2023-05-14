@@ -3,6 +3,7 @@ import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
+import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../repository/chat_repository.dart';
@@ -30,6 +31,25 @@ class ChatController {
 
   Stream<List<Message>> chatStream(String recieverUserId) {
     return chatRepository.getChatStream(recieverUserId);
+  }
+
+  Future<Map<String, dynamic>> getFileMetadata({
+    required BuildContext context,
+    required String recieverUserId,
+    required MessageEnum messageEnum,
+    required String messageId,
+  }) async {
+    UserModel? userSender;
+    await ref.read(userDataAuthProvider).whenData((value) {
+      userSender = value!;
+    });
+    return chatRepository.getFileMetadata(
+        context: context,
+        recieverUserId: recieverUserId,
+        senderUserData: userSender,
+        ref: ref,
+        messageEnum: messageEnum,
+        messageId: messageId);
   }
 
   void sendTextMessage(

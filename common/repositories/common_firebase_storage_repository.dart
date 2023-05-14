@@ -18,4 +18,29 @@ class CommonFirebaseStorageRepository {
     String downloadUrl = await snap.ref.getDownloadURL();
     return downloadUrl;
   }
+
+  Future<Map<String, dynamic>> getFileMetadata(String ref) async {
+    Map<String, dynamic> info = {};
+    Reference reference = firebaseStorage.ref().child(ref);
+    FullMetadata metadata = await reference.getMetadata();
+    info['name'] = metadata.name;
+
+    double size = metadata.size!.toDouble();
+    String unit = 'bytes';
+    if (metadata.size! < 1024) {
+      // bytes
+    } else if (metadata.size! < (1024 * 1024)) {
+      size /= 1024;
+      unit = 'KB';
+    } else if (metadata.size! < (1024 * 1024 * 1024)) {
+      size /= (1024 * 1024);
+      unit = "MB";
+    } else {
+      size /= (1024 * 1024 * 1024);
+      unit = "GB";
+    }
+    info['size'] =
+        "${size.toString().substring(0, size.toString().indexOf('.') + 1)} $unit";
+    return info;
+  }
 }

@@ -1,19 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/display_text_image_gif.dart';
-import 'package:flutter/material.dart';
 
 class MyMessageCard extends StatelessWidget {
   final String message;
   final String date;
   final MessageEnum type;
   final String messageId;
+  final String recieverUserId;
   const MyMessageCard({
     Key? key,
     required this.message,
     required this.date,
     required this.type,
     required this.messageId,
+    required this.recieverUserId,
   }) : super(key: key);
 
   @override
@@ -55,6 +59,7 @@ class MyMessageCard extends StatelessWidget {
                 message: message,
                 type: type,
                 messageId: messageId,
+                recieverUserId: recieverUserId,
               ),
             ),
             Positioned(

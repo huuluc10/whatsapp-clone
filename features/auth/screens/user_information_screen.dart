@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chatapp_clone_whatsapp/common/enums/source_file_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/custom_button.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
@@ -27,7 +28,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
   }
 
   void selectImage() async {
-    image = await pickImageFromGalary(context);
+    image = await pickImage(context, SourceFile.gallary);
     setState(() {});
   }
 
@@ -209,7 +210,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
             child: Padding(
               padding: const EdgeInsets.only(top: 14),
               child: SizedBox(
-                width: 88,
+                width: 100,
                 child: CustomButton(text: 'Đăng nhập', onPress: logout),
               ),
             ),

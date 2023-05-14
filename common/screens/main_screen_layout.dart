@@ -1,12 +1,8 @@
 import 'package:chatapp_clone_whatsapp/common/screens/settings_options.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
-import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/oops_screen.dart';
-
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
-
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/contacts_list.dart';
-
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -54,6 +50,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
@@ -69,13 +66,6 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
             ),
           ),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.search,
-                color: Colors.grey,
-              ),
-            ),
             PopupMenuButton<String>(
               color: appBarColor,
               icon: const Icon(

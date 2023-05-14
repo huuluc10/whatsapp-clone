@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:chatapp_clone_whatsapp/common/screens/main_screen_layout.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/error.dart';
@@ -8,7 +9,6 @@ import 'package:chatapp_clone_whatsapp/router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'common/screens/welcom_screen.dart';
 
 // Variant: debugAndroidTest

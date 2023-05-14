@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:http/http.dart' as http;
 
 class VideoImageScreen extends StatefulWidget {
   const VideoImageScreen({
@@ -23,17 +22,12 @@ class _VideoImageScreenState extends State<VideoImageScreen> {
   bool isHide = false;
 
   Future<File?> downloadFile(String url) async {
-    File? file;
-    var response = await http.get(Uri.parse(url));
-    var filePath = '/storage/emulated/0/Download/${widget.messageId}.jpg';
-    try {
-      file = await File(filePath).writeAsBytes(response.bodyBytes);
-    } catch (e) {
-      showSnackBar(
-        context: context,
-        content: e.toString(),
-      );
-    }
+    File? file = await downloadFileFromServer(
+      context,
+      widget.message,
+      '${widget.messageId}.jpg',
+    );
+
     return file;
   }
 

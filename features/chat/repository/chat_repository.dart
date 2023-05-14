@@ -215,6 +215,21 @@ class ChatRepository {
     }
   }
 
+  Future<Map<String, dynamic>> getFileMetadata({
+    required BuildContext context,
+    required String recieverUserId,
+    UserModel? senderUserData,
+    required ProviderRef ref,
+    required MessageEnum messageEnum,
+    required String messageId,
+  }) async {
+    Map<String, dynamic> info = await ref
+        .read(commonFirebaseStorageRepositoryProvider)
+        .getFileMetadata(
+            'chat/${messageEnum.type}/${senderUserData!.uid}/$recieverUserId/$messageId');
+    return info;
+  }
+
   void sendFileMessage({
     required BuildContext context,
     required File file,
@@ -226,6 +241,9 @@ class ChatRepository {
     try {
       var timeSent = DateTime.now();
       var messageId = const Uuid().v1();
+      if (messageEnum == MessageEnum.doc) {
+        messageId = file.path.substring(file.path.lastIndexOf('/') + 1);
+      }
       String imageUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
           .storeFileToFirebase(
@@ -238,19 +256,19 @@ class ChatRepository {
       String contactMsg;
       switch (messageEnum) {
         case MessageEnum.image:
-          contactMsg = '📷 Photo';
+          contactMsg = '📷 Hình ảnh';
           break;
         case MessageEnum.video:
-          contactMsg = '📸 Video';
+          contactMsg = '🎞️ Video';
           break;
         case MessageEnum.audio:
-          contactMsg = '🎵 Audio';
+          contactMsg = '🎵 Âm thanh';
           break;
         case MessageEnum.gif:
-          contactMsg = 'GIF';
+          contactMsg = '🎦 GIF';
           break;
         default:
-          contactMsg = 'GIF';
+          contactMsg = '📄 Tập tin';
       }
       _saveDataToContactsSubcollection(
         senderUserData,
@@ -260,13 +278,14 @@ class ChatRepository {
         recieverUserId,
       );
       _saveMessageToMessageSubcollection(
-          recieverUserId: recieverUserId,
-          text: imageUrl,
-          timeSent: timeSent,
-          messageId: messageId,
-          username: senderUserData.name,
-          recieverUsername: recieverUserData.name,
-          messageType: messageEnum);
+        recieverUserId: recieverUserId,
+        text: imageUrl,
+        timeSent: timeSent,
+        messageId: messageId,
+        username: senderUserData.name,
+        recieverUsername: recieverUserData.name,
+        messageType: messageEnum,
+      );
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
