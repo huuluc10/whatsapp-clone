@@ -14,53 +14,45 @@ class CustomIconTypeFile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TypeFile formatTypeName = typeName.toLowerCase().toEnum();
-    print(formatTypeName);
-    return formatTypeName == TypeFile.doc
-        ? const FaIcon(
-            FontAwesomeIcons.fileWord,
-            size: 25,
-            color: Colors.white,
-          )
-        : formatTypeName == TypeFile.docx
-            ? const FaIcon(
-                FontAwesomeIcons.fileWord,
-                size: 25,
-                color: Colors.white,
-              )
-            : formatTypeName == TypeFile.xlsx
-                ? FaIcon(
-                    FontAwesomeIcons.fileExcel,
-                    size: 25,
-                    color: Colors.white,
-                  )
-                : formatTypeName == TypeFile.pdf
-                    ? const FaIcon(
-                        FontAwesomeIcons.filePdf,
-                        size: 25,
-                        color: Colors.white,
-                      )
-                    : formatTypeName == TypeFile.pptx
-                        ? const FaIcon(
-                            FontAwesomeIcons.solidFilePowerpoint,
-                            size: 25,
-                            color: Colors.white,
-                          )
-                        : formatTypeName == TypeFile.rar
-                            ? const FaIcon(
-                                FontAwesomeIcons.fileZipper,
-                                size: 25,
-                                color: Colors.white,
-                              )
-                            : formatTypeName == TypeFile.zip
-                                ? const FaIcon(
-                                    FontAwesomeIcons.fileZipper,
-                                    size: 25,
-                                    color: Colors.white,
-                                  )
-                                : const FaIcon(
-                                    FontAwesomeIcons.fileCode,
-                                    size: 25,
-                                    color: Colors.white,
-                                  );
+    switch (formatTypeName) {
+      case TypeFile.doc:
+      case TypeFile.docx:
+        return const FaIcon(
+          FontAwesomeIcons.fileWord,
+          size: 25,
+          color: Colors.white,
+        );
+      case TypeFile.xlsx:
+        return const FaIcon(
+          FontAwesomeIcons.fileExcel,
+          size: 25,
+          color: Colors.white,
+        );
+      case TypeFile.pdf:
+        return const FaIcon(
+          FontAwesomeIcons.filePdf,
+          size: 25,
+          color: Colors.white,
+        );
+      case TypeFile.pptx:
+        return const FaIcon(
+          FontAwesomeIcons.solidFilePowerpoint,
+          size: 25,
+          color: Colors.white,
+        );
+      case TypeFile.rar:
+      case TypeFile.zip:
+        return const FaIcon(
+          FontAwesomeIcons.fileZipper,
+          size: 25,
+          color: Colors.white,
+        );
+      default:
+        return const FaIcon(
+          FontAwesomeIcons.fileCode,
+          size: 25,
+          color: Colors.white,
+        );
+    }
   }
 }
