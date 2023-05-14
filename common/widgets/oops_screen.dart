@@ -23,7 +23,7 @@ class OopsWidget extends StatelessWidget {
               fontSize: 50,
             ),
           ),
-          Text('This feature is currently under development'),
+          Text('Tính năng này đang phát triển'),
         ],
       ),
     );

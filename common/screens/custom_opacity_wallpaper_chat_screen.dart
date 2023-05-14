@@ -1,4 +1,5 @@
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
+import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/custom_button.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/my_message_card.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/sender_message_card.dart';
@@ -26,6 +27,7 @@ class _CustomWallpaperScreenState extends State<CustomWallpaperScreen> {
   void setValue() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setDouble('sliderValue', _currentSliderValue);
+    showSnackBar(context: context, content: 'Đã thay đổi thành công');
   }
 
   @override
@@ -37,7 +39,7 @@ class _CustomWallpaperScreenState extends State<CustomWallpaperScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Custom Wallpaper')),
+      appBar: AppBar(title: const Text('Điều chỉnh')),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
