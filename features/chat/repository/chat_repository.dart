@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/repositories/common_firebase_storage_repository.dart';
+import 'package:chatapp_clone_whatsapp/common/screens/main_screen_layout.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
@@ -226,7 +227,7 @@ class ChatRepository {
     Map<String, dynamic> info = await ref
         .read(commonFirebaseStorageRepositoryProvider)
         .getFileMetadata(
-            'chat/${messageEnum.type}/${senderUserData!.uid}/$recieverUserId/$messageId');
+            'chats/${messageEnum.type}/${senderUserData!.uid}/$recieverUserId/$messageId');
     return info;
   }
 
@@ -247,7 +248,7 @@ class ChatRepository {
       String imageUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
           .storeFileToFirebase(
-              'chat/${messageEnum.type}/${senderUserData.uid}/$recieverUserId/$messageId',
+              'chats/${messageEnum.type}/${senderUserData.uid}/$recieverUserId/$messageId',
               file);
       UserModel recieverUserData;
       var userDataMap =
@@ -286,6 +287,30 @@ class ChatRepository {
         recieverUsername: recieverUserData.name,
         messageType: messageEnum,
       );
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
+
+  void setChatStatusSeen(
+      BuildContext context, String uid, String messageId) async {
+    try {
+      await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('chats')
+          .doc(uid)
+          .collection('messages')
+          .doc(messageId)
+          .update({'isSeen': true});
+      await firestore
+          .collection('users')
+          .doc(uid)
+          .collection('chats')
+          .doc(auth.currentUser!.uid)
+          .collection('messages')
+          .doc(messageId)
+          .set({'isSeen': true});
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }

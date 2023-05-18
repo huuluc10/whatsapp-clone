@@ -11,7 +11,6 @@ import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_c
 import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contact_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'common/screens/settings_options.dart';
-import 'features/media_chat/screens/media_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -75,12 +74,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case SettingScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const SettingScreen(),
-      );
-    case MediaScreen.routeName:
-      final arguments = settings.arguments as Map<String, dynamic>;
-      final name = arguments['name'];
-      return MaterialPageRoute(
-        builder: (context) => MediaScreen(name: name),
       );
     case VideoImageScreen.routeName:
       final arguments = settings.arguments as Map<String, String>;

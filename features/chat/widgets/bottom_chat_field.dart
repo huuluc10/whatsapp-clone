@@ -51,7 +51,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
             _messageController.text.trim(),
             widget.recieverUserId,
           );
-
+      isShowSendButton = false;
       setState(() {
         _messageController.text = '';
       });
@@ -191,70 +191,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                                 color: Colors.grey,
                               ),
                             ),
-                            PopupMenuButton<String>(
-                              onSelected: (value) {
-                                switch (value) {
-                                  case 'video':
-                                    selectVideo(SourceFile.camera);
-                                    break;
-                                  case 'image':
-                                    selectImage(SourceFile.camera);
-                                    break;
-                                  case 'audio':
-                                    selectAudio();
-                                    break;
-                                  default:
-                                    selectDocument();
-                                    break;
-                                }
-                              },
-                              icon: const Icon(
-                                Icons.attach_file,
-                                color: Colors.grey,
-                              ),
-                              itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  value: 'audio',
-                                  child: Row(
-                                    children: const [
-                                      Icon(Icons.audio_file),
-                                      SizedBox(width: 7),
-                                      Text('Âm thanh'),
-                                    ],
-                                  ),
-                                ),
-                                PopupMenuItem(
-                                  value: 'document',
-                                  child: Row(
-                                    children: const [
-                                      Icon(Icons.file_open),
-                                      SizedBox(width: 7),
-                                      Text('Tập tin'),
-                                    ],
-                                  ),
-                                ),
-                                PopupMenuItem(
-                                  value: 'image',
-                                  child: Row(
-                                    children: const [
-                                      Icon(Icons.camera_alt),
-                                      SizedBox(width: 7),
-                                      Text('Hình ảnh'),
-                                    ],
-                                  ),
-                                ),
-                                PopupMenuItem(
-                                  value: 'video',
-                                  child: Row(
-                                    children: const [
-                                      Icon(Icons.camera_alt),
-                                      SizedBox(width: 7),
-                                      Text('Video'),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                            PopupMenuButtonBottomChat(),
                           ],
                         ),
                       ),
@@ -286,9 +223,12 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                       ),
                     ),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: const BorderSide(
-                            width: 20, style: BorderStyle.none)),
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(
+                        width: 20,
+                        style: BorderStyle.none,
+                      ),
+                    ),
                     hintText: "Aa",
                     contentPadding: const EdgeInsets.all(10),
                   ),
@@ -315,6 +255,73 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  PopupMenuButton<String> PopupMenuButtonBottomChat() {
+    return PopupMenuButton<String>(
+      onSelected: (value) {
+        switch (value) {
+          case 'video':
+            selectVideo(SourceFile.camera);
+            break;
+          case 'image':
+            selectImage(SourceFile.camera);
+            break;
+          case 'audio':
+            selectAudio();
+            break;
+          default:
+            selectDocument();
+            break;
+        }
+      },
+      icon: const Icon(
+        Icons.attach_file,
+        color: Colors.grey,
+      ),
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: 'audio',
+          child: Row(
+            children: const [
+              Icon(Icons.audio_file),
+              SizedBox(width: 7),
+              Text('Âm thanh'),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'document',
+          child: Row(
+            children: const [
+              Icon(Icons.file_open),
+              SizedBox(width: 7),
+              Text('Tập tin'),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'image',
+          child: Row(
+            children: const [
+              Icon(Icons.camera_alt),
+              SizedBox(width: 7),
+              Text('Hình ảnh'),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'video',
+          child: Row(
+            children: const [
+              Icon(Icons.camera_alt),
+              SizedBox(width: 7),
+              Text('Video'),
+            ],
+          ),
         ),
       ],
     );

@@ -2,7 +2,6 @@ import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/chat_list.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
-import 'package:chatapp_clone_whatsapp/features/media_chat/screens/media_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contact_info_screen.dart';
 import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:flutter/material.dart';
@@ -84,14 +83,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     'isOnline': isOnline,
                   },
                 );
-              } else if (value == 'media') {
-                Navigator.pushNamed(
-                  context,
-                  MediaScreen.routeName,
-                  arguments: widget.name,
-                );
-              } else {
-                //TODO: xóa cuộc trò chuyện
               }
             },
             itemBuilder: (context) => <PopupMenuEntry<String>>[
@@ -111,16 +102,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                   width: 130,
                   child: Text(
                     'Đa phương tiện',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ),
-              ),
-              const PopupMenuItem(
-                value: 'clear',
-                child: SizedBox(
-                  width: 130,
-                  child: Text(
-                    'Xóa cuộc trò chuyện',
                     style: TextStyle(fontSize: 14),
                   ),
                 ),

@@ -53,56 +53,63 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: const Text('Trang cá nhân')),
-      body: ListView(
-        children: [
-          Center(
-            child: Stack(
-              children: [
-                image == null
-                    ? const CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'),
-                        radius: 64,
-                      )
-                    : CircleAvatar(
-                        backgroundImage: FileImage(image!),
-                        radius: 64,
+      body: FutureBuilder(
+        future: ref.read(authControllerProvider).getUserData(),
+        builder: (context, snapshot) {
+          String username;
+          String phoneNumber = 'Dữ liệu đang lấy...';
+          String? profilePic;
+          if (snapshot.hasData) {
+            username = snapshot.data!.name;
+            if (username.isNotEmpty) {
+              nameController.text = username;
+            }
+            phoneNumber = snapshot.data!.phoneNumber;
+            profilePic = snapshot.data!.profilePic;
+          }
+          return ListView(
+            children: [
+              Center(
+                child: Stack(
+                  children: [
+                    profilePic != null
+                        ? CircleAvatar(
+                            backgroundImage: NetworkImage(profilePic),
+                            radius: 64,
+                          )
+                        : image == null
+                            ? const CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    'https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'),
+                                radius: 64,
+                              )
+                            : CircleAvatar(
+                                backgroundImage: FileImage(image!),
+                                radius: 64,
+                              ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.green,
+                        ),
+                        width: 50,
+                        height: 40,
+                        child: IconButton(
+                          onPressed: selectImage,
+                          icon: const Icon(
+                            Icons.add_a_photo,
+                            size: 18,
+                          ),
+                        ),
                       ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.green,
                     ),
-                    width: 50,
-                    height: 40,
-                    child: IconButton(
-                      onPressed: selectImage,
-                      icon: const Icon(
-                        Icons.add_a_photo,
-                        size: 18,
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          FutureBuilder(
-            future: ref.read(authControllerProvider).getUserData(),
-            builder: (context, snapshot) {
-              String username;
-              String phoneNumber = 'Dữ liệu đang lấy...';
-              if (snapshot.hasData) {
-                username = snapshot.data!.name;
-                if (username.isNotEmpty) {
-                  nameController.text = username;
-                }
-                phoneNumber = snapshot.data!.phoneNumber;
-              }
-              return Column(
+              ),
+              Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -201,21 +208,20 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
                       ],
                     ),
                   ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 14),
+                      child: SizedBox(
+                        width: 100,
+                        child: CustomButton(text: 'Đăng nhập', onPress: logout),
+                      ),
+                    ),
+                  ),
                 ],
-              );
-            },
-          ),
-          // Expanded(child: Container()),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 14),
-              child: SizedBox(
-                width: 100,
-                child: CustomButton(text: 'Đăng nhập', onPress: logout),
-              ),
-            ),
-          ),
-        ],
+              )
+            ],
+          );
+        },
       ),
     );
   }
