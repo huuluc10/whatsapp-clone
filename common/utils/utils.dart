@@ -5,6 +5,7 @@ import 'package:enough_giphy_flutter/enough_giphy_flutter.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 void showSnackBar({required BuildContext context, required String content}) {
   ScaffoldMessenger.of(context).showSnackBar(
@@ -144,7 +145,7 @@ Future<File?> pickDocument(BuildContext context) async {
 Future<File?> downloadFileFromServer(
     BuildContext context, String url, String fileName) async {
   File? file;
-  var http;
+  print(url);
   var response = await http.get(Uri.parse(url));
   var filePath = '/storage/emulated/0/Download/$fileName';
   try {

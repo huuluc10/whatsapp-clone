@@ -1,10 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cached_video_player/cached_video_player.dart';
 import 'package:flutter/material.dart';
-
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 
@@ -28,10 +26,13 @@ class _VideoImageScreenState extends State<VideoImageScreen> {
   bool isHide = false;
 
   Future<File?> downloadFile(String url) async {
+    showSnackBar(context: context, content: "Đang tải");
     File? file = await downloadFileFromServer(
       context,
       widget.message,
-      '${widget.messageId}.jpg',
+      widget.messageEnum == MessageEnum.image
+          ? '${widget.messageId}.jpg'
+          : '${widget.messageId}.mp4',
     );
 
     return file;
@@ -45,11 +46,15 @@ class _VideoImageScreenState extends State<VideoImageScreen> {
     if (widget.messageEnum == MessageEnum.video) {
       videoPlayerController =
           CachedVideoPlayerController.network(widget.message)
-            ..initialize().then((value) {
-              // showSnackBar(context: context, content: widget.videoUrl);
-              videoPlayerController!.setVolume(1);
-              videoPlayerController!.setLooping(true);
-            });
+            ..initialize().then(
+              (value) {
+                // showSnackBar(context: context, content: widget.videoUrl);
+                videoPlayerController!.setVolume(1);
+                videoPlayerController!.setLooping(false);
+
+                // videoPlayerController!.se
+              },
+            );
     }
   }
 
@@ -119,14 +124,19 @@ class _VideoImageScreenState extends State<VideoImageScreen> {
                                         content: 'Tải thất bại');
                                   }
                                 },
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Lưu',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.save_alt_sharp),
+                                      Text(
+                                        'Lưu',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -228,7 +238,7 @@ class _VideoImageScreenState extends State<VideoImageScreen> {
                                 if (file != null) {
                                   showSnackBar(
                                       context: context,
-                                      content: 'Tải hình ảnh thành công');
+                                      content: 'Tải video thành công');
                                 } else {
                                   showSnackBar(
                                       context: context,
