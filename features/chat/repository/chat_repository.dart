@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/repositories/common_firebase_storage_repository.dart';
-import 'package:chatapp_clone_whatsapp/common/screens/main_screen_layout.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
@@ -227,7 +226,7 @@ class ChatRepository {
     Map<String, dynamic> info = await ref
         .read(commonFirebaseStorageRepositoryProvider)
         .getFileMetadata(
-            'chats/${messageEnum.type}/${senderUserData!.uid}/$recieverUserId/$messageId');
+            'chat/${messageEnum.type}/${senderUserData!.uid}/$recieverUserId/$messageId');
     return info;
   }
 
@@ -248,7 +247,7 @@ class ChatRepository {
       String imageUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
           .storeFileToFirebase(
-              'chats/${messageEnum.type}/${senderUserData.uid}/$recieverUserId/$messageId',
+              'chat/${messageEnum.type}/${senderUserData.uid}/$recieverUserId/$messageId',
               file);
       UserModel recieverUserData;
       var userDataMap =
@@ -310,7 +309,7 @@ class ChatRepository {
           .doc(auth.currentUser!.uid)
           .collection('messages')
           .doc(messageId)
-          .set({'isSeen': true});
+          .update({'isSeen': true});
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
