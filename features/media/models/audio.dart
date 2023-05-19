@@ -9,6 +9,12 @@ class Audio {
   Audio._internal();
 
   void addList(String string) {
-    audio.add(string);
+    if (!audio.contains(string)) {
+      audio.add(string);
+    }
+  }
+
+  void removeList() {
+    audio = [];
   }
 }

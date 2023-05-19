@@ -3,6 +3,10 @@ import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/oops_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/contacts_list.dart';
+import 'package:chatapp_clone_whatsapp/features/media/models/audio.dart';
+import 'package:chatapp_clone_whatsapp/features/media/models/document.dart';
+import 'package:chatapp_clone_whatsapp/features/media/models/image.dart';
+import 'package:chatapp_clone_whatsapp/features/media/models/video.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,6 +27,14 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
     super.initState();
     setOnline();
     WidgetsBinding.instance.addObserver(this);
+    Audio audios = Audio();
+    audios.removeList();
+    Document documents = Document();
+    documents.removeList();
+    Img images = Img();
+    images.removeList();
+    Video video = Video();
+    video.removeList();
   }
 
   @override

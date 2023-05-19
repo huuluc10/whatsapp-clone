@@ -2,6 +2,8 @@ class Img {
   static final Img _singleton = Img._internal();
   List<String> images = [];
 
+  List<String> get link => images;
+
   factory Img() {
     return _singleton;
   }
@@ -9,6 +11,12 @@ class Img {
   Img._internal();
 
   void addList(String string) {
-    images.add(string);
+    if (!images.contains(string)) {
+      images.add(string);
+    }
+  }
+
+  void removeList() {
+    images = [];
   }
 }

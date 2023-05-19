@@ -2,6 +2,7 @@ import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/chat_list.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
+import 'package:chatapp_clone_whatsapp/features/media/screens/media_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contact_info_screen.dart';
 import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,14 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     'uid': widget.uid,
                     'name': widget.name,
                     'isOnline': isOnline,
+                  },
+                );
+              } else {
+                Navigator.pushNamed(
+                  context,
+                  MediaScreen.routeName,
+                  arguments: {
+                    'name': widget.name,
                   },
                 );
               }

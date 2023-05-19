@@ -1,5 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
+import 'package:chatapp_clone_whatsapp/features/media/widgets/audio_tabbar_view.dart';
+import 'package:chatapp_clone_whatsapp/features/media/widgets/document_tabbar_view.dart';
+import 'package:chatapp_clone_whatsapp/features/media/widgets/image_tabbar_view.dart';
+import 'package:chatapp_clone_whatsapp/features/media/widgets/video_tabbar_view.dart';
 import 'package:flutter/material.dart';
 
 class MediaScreen extends StatelessWidget {
@@ -13,7 +17,7 @@ class MediaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(name),
@@ -32,14 +36,18 @@ class MediaScreen extends StatelessWidget {
               Tab(
                 text: 'Âm thanh',
               ),
+              Tab(
+                text: 'Tập tin',
+              ),
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            Text('Hình ảnh sẽ hiển thị ở đây'),
-            Text('Video sẽ hiển thị ở đây'),
-            Text('Âm thanh sẽ hiển thị ở đây'),
+            ImageTabarView(),
+            VideoTabarView(),
+            AudioTabarView(),
+            DocumentTabarView(),
           ],
         ),
       ),

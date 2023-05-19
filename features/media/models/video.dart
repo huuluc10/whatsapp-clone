@@ -9,6 +9,12 @@ class Video {
   Video._internal();
 
   void addList(String string) {
-    videos.add(string);
+    if (!videos.contains(string)) {
+      videos.add(string);
+    }
+  }
+
+  void removeList() {
+    videos = [];
   }
 }

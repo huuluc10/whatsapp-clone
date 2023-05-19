@@ -53,6 +53,7 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
     return Container(
       constraints: const BoxConstraints(
         minWidth: 80,
+        maxHeight: 100,
       ),
       child: SizedBox(
         width: 150,
