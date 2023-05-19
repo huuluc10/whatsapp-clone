@@ -64,10 +64,9 @@ class _DocumentItemState extends ConsumerState<DocumentItem> {
         final sizeFile = info['size'];
         final typeFile = info['type'];
         return Container(
-          constraints: const BoxConstraints(
-            minWidth: 70,
-          ),
+          constraints: const BoxConstraints(minWidth: 70),
           child: Container(
+            width: 280,
             decoration: BoxDecoration(
               color: Colors.grey.withAlpha(60),
               borderRadius: BorderRadius.circular(14),
@@ -77,16 +76,20 @@ class _DocumentItemState extends ConsumerState<DocumentItem> {
               child: Row(
                 children: [
                   CustomIconTypeFile(typeName: typeFile),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(nameFile),
-                      const SizedBox(height: 5),
-                      Text('$sizeFile  -  $typeFile'),
-                    ],
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          nameFile,
+                          overflow: TextOverflow.clip,
+                          maxLines: 1,
+                        ),
+                        const SizedBox(height: 5),
+                        Text('$sizeFile - $typeFile'),
+                      ],
+                    ),
                   ),
                 ],
               ),

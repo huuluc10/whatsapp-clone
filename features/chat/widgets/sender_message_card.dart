@@ -75,11 +75,6 @@ class SenderMessageCard extends StatelessWidget {
                   const SizedBox(
                     width: 5,
                   ),
-                  const Icon(
-                    Icons.done_all,
-                    size: 20,
-                    color: Colors.white60,
-                  ),
                 ],
               ),
             ),

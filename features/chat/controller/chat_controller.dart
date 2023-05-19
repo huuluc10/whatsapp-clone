@@ -104,4 +104,9 @@ class ChatController {
               senderUser: value!,
             ));
   }
+
+  void setChatStatusSeen(
+      BuildContext context, String uid, String messageId) async {
+    chatRepository.setChatStatusSeen(context, uid, messageId);
+  }
 }

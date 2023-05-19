@@ -22,6 +22,16 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
     super.initState();
     audioPlayer.onPlayerStateChanged.listen((event) {
       switch (event) {
+        case PlayerState.playing:
+          setState(() {
+            isPlaying = true;
+          });
+          break;
+        case PlayerState.paused:
+          setState(() {
+            isPlaying = false;
+          });
+          break;
         case PlayerState.stopped:
           setState(() {
             isPlaying = false;
@@ -67,14 +77,8 @@ class _AudioPlayerItemState extends State<AudioPlayerItem> {
                 onPressed: () async {
                   if (isPlaying) {
                     await audioPlayer.pause();
-                    setState(() {
-                      isPlaying = false;
-                    });
                   } else {
                     await audioPlayer.play(UrlSource(widget.message));
-                    setState(() {
-                      isPlaying = true;
-                    });
                   }
                 },
                 icon: Icon(

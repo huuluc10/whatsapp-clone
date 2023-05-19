@@ -59,6 +59,7 @@ class _CustomWallpaperScreenState extends State<CustomWallpaperScreen> {
                   type: MessageEnum.text,
                   messageId: '',
                   recieverUserId: '',
+                  isSeen: true,
                 ),
                 SenderMessageCard(
                   message: 'Tin nhắn 2',
