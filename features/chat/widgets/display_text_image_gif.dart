@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chatapp_clone_whatsapp/features/media/models/image.dart';
 import 'package:flutter/material.dart';
-
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/screens/video_image_sceen.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/audio_play_item.dart';
@@ -33,6 +33,8 @@ class DisplayTextImageGIF extends StatelessWidget {
           ),
         );
       case MessageEnum.image:
+        Img images = Img();
+        images.addList(message);
         return InkWell(
           onTap: () {
             Navigator.pushNamed(
@@ -41,6 +43,7 @@ class DisplayTextImageGIF extends StatelessWidget {
               arguments: {
                 'message': message,
                 'messageId': messageId,
+                'messageEnum': type,
               },
             );
           },
@@ -53,7 +56,20 @@ class DisplayTextImageGIF extends StatelessWidget {
           return AudioPlayerItem(message: message);
         });
       case MessageEnum.video:
-        return VideoPlayerItem(videoUrl: message);
+        return InkWell(
+          onDoubleTap: () {
+            Navigator.pushNamed(
+              context,
+              VideoImageScreen.routeName,
+              arguments: {
+                'message': message,
+                'messageId': messageId,
+                'messageEnum': type,
+              },
+            );
+          },
+          child: VideoPlayerItem(videoUrl: message),
+        );
       case MessageEnum.doc:
         return DocumentItem(
           mesage: message,

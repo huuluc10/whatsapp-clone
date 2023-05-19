@@ -1,3 +1,4 @@
+import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/screens/custom_opacity_wallpaper_chat_screen.dart';
 import 'package:chatapp_clone_whatsapp/common/screens/main_screen_layout.dart';
 import 'package:chatapp_clone_whatsapp/common/screens/video_image_sceen.dart';
@@ -9,6 +10,7 @@ import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_sc
 import 'package:chatapp_clone_whatsapp/features/chat/screens/chat_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contact_info_screen.dart';
+import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:flutter/material.dart';
 import 'common/screens/settings_options.dart';
 import 'features/media_chat/screens/media_screen.dart';
@@ -83,13 +85,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => MediaScreen(name: name),
       );
     case VideoImageScreen.routeName:
-      final arguments = settings.arguments as Map<String, String>;
+      final arguments = settings.arguments as Map<String, dynamic>;
       final message = arguments['message'] as String;
       final messageId = arguments['messageId'] as String;
+      final messageEnum = arguments['messageEnum'] as MessageEnum;
       return MaterialPageRoute(
         builder: (context) => VideoImageScreen(
           message: message,
           messageId: messageId,
+          messageEnum: messageEnum,
         ),
       );
     default:
