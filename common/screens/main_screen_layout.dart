@@ -113,7 +113,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
                 text: 'Trò chuyện',
               ),
               Tab(
-                text: 'Cuộc gọi',
+                text: 'Nhóm',
               ),
             ],
           ),
