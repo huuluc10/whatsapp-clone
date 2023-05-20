@@ -3,6 +3,7 @@ import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/repositories/common_firebase_storage_repository.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
+import 'package:chatapp_clone_whatsapp/models/group.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -51,6 +52,19 @@ class ChatRepository {
         );
       }
       return contacts;
+    });
+  }
+
+  Stream<List<Group>> getChatGroups() {
+    return firestore.collection('groups').snapshots().asyncMap((event) async {
+      List<Group> groups = [];
+      for (var document in event.docs) {
+        var group = Group.fromMap(document.data());
+        if (group.listMemberId.contains(auth.currentUser!.uid)) {
+          groups.add(group);
+        }
+      }
+      return groups;
     });
   }
 

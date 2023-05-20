@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/audio_play_item.dart';
-import 'package:chatapp_clone_whatsapp/features/media/models/audio.dart';
+import 'package:chatapp_clone_whatsapp/models/audio.dart';
 import 'package:flutter/material.dart';
 
 class AudioTabarView extends StatelessWidget {

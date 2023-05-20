@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chatapp_clone_whatsapp/features/media/models/audio.dart';
-import 'package:chatapp_clone_whatsapp/features/media/models/document.dart';
-import 'package:chatapp_clone_whatsapp/features/media/models/image.dart';
-import 'package:chatapp_clone_whatsapp/features/media/models/video.dart';
+import 'package:chatapp_clone_whatsapp/models/audio.dart';
+import 'package:chatapp_clone_whatsapp/models/document.dart';
+import 'package:chatapp_clone_whatsapp/models/image.dart';
+import 'package:chatapp_clone_whatsapp/models/video.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/screens/video_image_sceen.dart';

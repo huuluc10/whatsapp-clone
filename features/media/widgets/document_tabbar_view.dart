@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/document_item.dart';
-import 'package:chatapp_clone_whatsapp/features/media/models/document.dart';
+import 'package:chatapp_clone_whatsapp/models/document.dart';
 import 'package:flutter/material.dart';
 
 class DocumentTabarView extends StatelessWidget {
