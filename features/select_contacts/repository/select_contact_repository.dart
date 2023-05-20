@@ -28,14 +28,14 @@ class SelectContactRepository {
         contacts = await FlutterContacts.getContacts(withProperties: true);
       }
     } catch (e) {
-      print(contacts.length);
       debugPrint(e.toString());
     }
-
     return contacts;
   }
 
-  void invite(BuildContext context, String phoneNumber) async {
+  void inviteFriend(BuildContext context, phoneNumber) async {
+    showSnackBar(
+        context: context, content: 'This number is not exist on this app.');
     String? confirm = await showConfirmDialog(
         context, "Do you want to share this app to your friend ");
     // print(confirm);
@@ -59,6 +59,7 @@ class SelectContactRepository {
 
   void selectContact(Contact selectedContact, BuildContext context) async {
     String selectedPhoneNum = '';
+
     try {
       var userCollection = await firestore.collection('users').get();
       bool isFound = false;
@@ -72,13 +73,12 @@ class SelectContactRepository {
           Navigator.pushNamed(context, ChatScreen.routeName, arguments: {
             'name': userData.name,
             'uid': userData.uid,
+            'isGroupChat': false,
           });
         }
       }
       if (!isFound) {
-        showSnackBar(
-            context: context, content: 'This number is not exist on this app.');
-        invite(context, selectedPhoneNum);
+        inviteFriend(context, selectedContact);
       }
     } catch (e) {
       showSnackBar(context: context, content: e.toString());

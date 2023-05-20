@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:chatapp_clone_whatsapp/features/group/controller/group_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -19,7 +20,7 @@ class ChatList extends ConsumerStatefulWidget {
   final String recieverUserId;
   final bool isGroupChat;
 
-  ChatList({
+  const ChatList({
     super.key,
     required this.recieverUserId,
     required this.isGroupChat,
@@ -54,8 +55,11 @@ class _ChatListState extends ConsumerState<ChatList> {
     Video video = Video();
     video.removeList();
     return StreamBuilder<List<Message>>(
-      stream:
-          ref.read(chatControllerProvider).chatStream(widget.recieverUserId),
+      stream: !widget.isGroupChat
+          ? ref.read(chatControllerProvider).chatStream(widget.recieverUserId)
+          : ref
+              .read(groupControllerProvider)
+              .chatGroupStream(widget.recieverUserId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Loader();

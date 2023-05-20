@@ -57,6 +57,7 @@ class ChatController {
     BuildContext context,
     String text,
     String recieverUserId,
+    bool isGroupChat,
   ) {
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendTextMessage(
@@ -64,6 +65,7 @@ class ChatController {
             text: text,
             recieverUserId: recieverUserId,
             senderUser: value!,
+            isGroupChat: isGroupChat,
           ),
         );
   }
@@ -73,6 +75,7 @@ class ChatController {
     File file,
     String recieverUserId,
     MessageEnum messageEnum,
+    bool isGroupChat,
   ) {
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendFileMessage(
@@ -82,6 +85,7 @@ class ChatController {
             senderUserData: value!,
             messageEnum: messageEnum,
             ref: ref,
+            isGroupChat: isGroupChat,
           ),
         );
   }
@@ -90,20 +94,20 @@ class ChatController {
     BuildContext context,
     String gifUrl,
     String recieverUserId,
+    bool isGroupChat,
   ) {
     //https://giphy.com/gifs/mumbaiindians-mumbai-indians-ipl-2023-arjun-tendulkar-xtLtPJDa3HCaRG4olK
     //https://i.giphy.com/media/xtLtPJDa3HCaRG4olK/200.gif
     int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
     String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
     String gifNewUrl = 'https://i.giphy.com/media/$gifUrlPart/200.gif';
-    ref
-        .read(userDataAuthProvider)
-        .whenData((value) => chatRepository.sendGIFMessage(
-              context: context,
-              gifUrl: gifNewUrl,
-              recieverUserId: recieverUserId,
-              senderUser: value!,
-            ));
+    ref.read(userDataAuthProvider).whenData((value) =>
+        chatRepository.sendGIFMessage(
+            context: context,
+            gifUrl: gifNewUrl,
+            recieverUserId: recieverUserId,
+            senderUser: value!,
+            isGroupChat: isGroupChat));
   }
 
   void setChatStatusSeen(

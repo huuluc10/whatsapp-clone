@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chatapp_clone_whatsapp/models/group.dart';
+import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,5 +34,9 @@ class GroupController {
     List<Contact> contacts,
   ) {
     groupRepository.createGroup(context, nameGroup, groupPic, contacts);
+  }
+
+  Stream<List<Message>> chatGroupStream(String groupId) {
+    return groupRepository.getGroupChatStream(groupId);
   }
 }
