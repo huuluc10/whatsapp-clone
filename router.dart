@@ -8,6 +8,7 @@ import 'package:chatapp_clone_whatsapp/features/auth/screens/login_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/screens/chat_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/group/screens/group_info.dart';
 import 'package:chatapp_clone_whatsapp/features/media/screens/media_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/group/screens/create_group_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
@@ -45,18 +46,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final arguments = settings.arguments as Map<String, dynamic>;
       final name = arguments['name'];
       final uid = arguments['uid'];
+      final isGroupChat = arguments['isGroupChat'] as bool;
       // final bool isNewUser = settings.arguments as bool;
       return MaterialPageRoute(
         builder: (context) => ChatScreen(
           name: name,
           uid: uid,
+          isGroupChat: isGroupChat,
         ),
       );
 
     case MainScreenLayout.routeName:
-      final tab = settings.arguments as int;
       return MaterialPageRoute(
-        builder: (context) => MainScreenLayout(tab: tab),
+        builder: (context) => MainScreenLayout(),
       );
     case WelcomeScreen.routeName:
       return MaterialPageRoute(
@@ -100,6 +102,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CreateGroupScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => CreateGroupScreen(),
+      );
+    case GroupInfoScreen.routeName:
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final name = arguments['name'];
+      final uid = arguments['uid'];
+      return MaterialPageRoute(
+        builder: (context) => GroupInfoScreen(name: name, uid: uid),
       );
     default:
       return MaterialPageRoute(

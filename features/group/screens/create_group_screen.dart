@@ -54,8 +54,10 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
           );
       ref.read(selectGroupContacts.notifier).update((state) => []);
       Navigator.pushNamedAndRemoveUntil(
-          context, MainScreenLayout.routeName, (route) => false,
-          arguments: 2);
+        context,
+        MainScreenLayout.routeName,
+        (route) => false,
+      );
     }
   }
 
@@ -134,7 +136,10 @@ class _CreateGroupScreenState extends ConsumerState<CreateGroupScreen> {
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.55,
-                      child: const SelectContactGroup(),
+                      child: const Flexible(
+                        flex: 1,
+                        child: SelectContactGroup(),
+                      ),
                     ),
                   ],
                 ),

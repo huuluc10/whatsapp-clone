@@ -21,21 +21,7 @@ class SelectContactsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Select contact"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.more_vert,
-            ),
-          )
-        ],
+        title: const Text("Chọn liên hệ"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -65,7 +51,7 @@ class SelectContactsScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: 500,
               child: ref.watch(getContactsProvider).when(
                     data: (contactList) => ListView.builder(

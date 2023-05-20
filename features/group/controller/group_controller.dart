@@ -26,8 +26,12 @@ class GroupController {
     return groupRepository.getChatGroups();
   }
 
-  void createGroup(BuildContext context, String nameGroup, File groupPic,
-      List<Contact> contacts) {
+  void createGroup(
+    BuildContext context,
+    String nameGroup,
+    File groupPic,
+    List<Contact> contacts,
+  ) {
     groupRepository.createGroup(context, nameGroup, groupPic, contacts);
   }
 }

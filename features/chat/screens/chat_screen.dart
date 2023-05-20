@@ -1,21 +1,30 @@
-import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
-import 'package:chatapp_clone_whatsapp/features/chat/widgets/chat_list.dart';
-import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
-import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
-import 'package:chatapp_clone_whatsapp/features/media/screens/media_screen.dart';
-import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contact_info_screen.dart';
-import 'package:chatapp_clone_whatsapp/models/user_model.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:chatapp_clone_whatsapp/features/group/screens/group_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
+import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
+import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/chat_list.dart';
+import 'package:chatapp_clone_whatsapp/features/media/screens/media_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contact_info_screen.dart';
+import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import '../widgets/bottom_chat_field.dart';
 
 class ChatScreen extends ConsumerStatefulWidget {
-  const ChatScreen({Key? key, required this.name, required this.uid})
-      : super(key: key);
   static const String routeName = '/mobile-chat-screen';
   final String name;
   final String uid;
+  final bool isGroupChat;
+
+  const ChatScreen({
+    super.key,
+    required this.name,
+    required this.uid,
+    required this.isGroupChat,
+  });
 
   @override
   ConsumerState<ChatScreen> createState() => _ChatScreenState();
@@ -43,26 +52,31 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: StreamBuilder<UserModel>(
-          stream: ref.read(authControllerProvider).userDataById(widget.uid),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Loader();
-            } else {
-              isOnline = snapshot.data!.isOnline;
-              return Column(
-                children: [
-                  Text(widget.name),
-                  Text(
-                    snapshot.data!.isOnline ? 'Đang hoạt động' : 'Ngoại tuyến',
-                    style: const TextStyle(
-                        fontSize: 13, fontWeight: FontWeight.normal),
-                  ),
-                ],
-              );
-            }
-          },
-        ),
+        title: widget.isGroupChat
+            ? Text(widget.name)
+            : StreamBuilder<UserModel>(
+                stream:
+                    ref.read(authControllerProvider).userDataById(widget.uid),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Loader();
+                  } else {
+                    isOnline = snapshot.data!.isOnline;
+                    return Column(
+                      children: [
+                        Text(widget.name),
+                        Text(
+                          snapshot.data!.isOnline
+                              ? 'Đang hoạt động'
+                              : 'Ngoại tuyến',
+                          style: const TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
         centerTitle: false,
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.video_call)),
@@ -84,6 +98,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     'isOnline': isOnline,
                   },
                 );
+              } else if (value == 'group-info') {
+                Navigator.pushNamed(
+                  context,
+                  GroupInfoScreen.routeName,
+                  arguments: {
+                    'uid': widget.uid,
+                    'name': widget.name,
+                  },
+                );
               } else {
                 Navigator.pushNamed(
                   context,
@@ -95,16 +118,27 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               }
             },
             itemBuilder: (context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem(
-                value: "contact-info",
-                child: SizedBox(
-                  width: 130,
-                  child: Text(
-                    'Xem thông tin liên hệ',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ),
-              ),
+              !widget.isGroupChat
+                  ? const PopupMenuItem(
+                      value: "contact-info",
+                      child: SizedBox(
+                        width: 130,
+                        child: Text(
+                          'Xem thông tin liên hệ',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    )
+                  : const PopupMenuItem(
+                      value: "group-info",
+                      child: SizedBox(
+                        width: 130,
+                        child: Text(
+                          'Xem thông tin nhóm',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    ),
               const PopupMenuItem(
                 value: 'media',
                 child: SizedBox(
@@ -132,11 +166,13 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
             Expanded(
               child: ChatList(
                 recieverUserId: widget.uid,
+                isGroupChat: widget.isGroupChat,
               ),
             ),
             BottomChatField(
               recieverUserId: widget.uid,
-            )
+              isGroupChat: widget.isGroupChat,
+            ),
           ],
         ),
       ),

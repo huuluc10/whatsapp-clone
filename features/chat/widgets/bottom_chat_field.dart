@@ -12,8 +12,10 @@ import 'package:flutter_sound/flutter_sound.dart';
 
 class BottomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
+  final bool isGroupChat;
 
-  const BottomChatField({super.key, required this.recieverUserId});
+  const BottomChatField(
+      {super.key, required this.recieverUserId, required this.isGroupChat});
 
   @override
   ConsumerState<BottomChatField> createState() => _BottomChatFieldState();

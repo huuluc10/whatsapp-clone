@@ -33,15 +33,25 @@ class GroupRepository {
 
   Stream<List<GroupChat>> getChatGroups() {
     return firestore.collection('groups').snapshots().asyncMap((event) async {
-      List<GroupChat> groups = [];
-      for (var document in event.docs) {
-        var group = GroupChat.fromMap(document.data());
-        if (group.listMemberId.contains(auth.currentUser!.uid)) {
-          groups.add(group);
+      try {
+        List<GroupChat> groups = [];
+        for (var document in event.docs) {
+          // print(document.data().keys[])
+          var group = GroupChat.fromMap(document.data());
+          if (group.listMemberId.contains(auth.currentUser!.uid)) {
+            groups.add(group);
+          }
         }
+        return groups;
+      } catch (e) {
+        return []; // Trả về danh sách rỗng trong trường hợp lỗi
       }
-      return groups;
     });
+  }
+
+  List<String> removeDuplicates(List<String> uids) {
+    Set<String> uniqueUids = Set<String>.from(uids);
+    return uniqueUids.toList();
   }
 
   void createGroup(
@@ -67,6 +77,8 @@ class GroupRepository {
         uids.add(user.docs[0].data()['uid']);
       }
     }
+    uids.add(auth.currentUser!.uid);
+    uids = removeDuplicates(uids);
     if (uids.length > 1) {
       var groupId = const Uuid().v1();
       String groupPicture = await ref
@@ -79,7 +91,7 @@ class GroupRepository {
         groupId: groupId,
         lastMessage: '',
         groupPic: groupPicture,
-        listMemberId: [...uids, auth.currentUser!.uid],
+        listMemberId: uids,
         timeSent: DateTime.now(),
       );
       await firestore.collection('groups').doc(groupId).set(groupChat.toMap());

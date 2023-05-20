@@ -38,7 +38,7 @@ class GroupChat {
       groupId: map['groupId'] as String,
       lastMessage: map['lastMessage'] as String,
       groupPic: map['groupPic'] as String,
-      listMemberId: List<String>.from((map['listMemberId'] as List<String>)),
+      listMemberId: List<String>.from(map['listMemberId']),
       timeSent: DateTime.fromMillisecondsSinceEpoch(map['timeSent'] as int),
     );
   }

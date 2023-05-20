@@ -28,9 +28,33 @@ class SelectContactRepository {
         contacts = await FlutterContacts.getContacts(withProperties: true);
       }
     } catch (e) {
+      print(contacts.length);
       debugPrint(e.toString());
     }
+
     return contacts;
+  }
+
+  void invite(BuildContext context, String phoneNumber) async {
+    String? confirm = await showConfirmDialog(
+        context, "Do you want to share this app to your friend ");
+    // print(confirm);
+    if (confirm == 'ok') {
+      final Uri smsLaunchUri = Uri(
+        scheme: 'sms',
+        path: phoneNumber,
+        queryParameters: <String, String>{
+          'body': Uri.encodeComponent(
+              'I am using this app to chat, you can download and instal to use with me at https://drive.google.com/drive/folders/10EIZybrPR83rPOKWqMw1USqFIZgQZAfe?usp=sharing'),
+        },
+      );
+      if (await canLaunchUrl(smsLaunchUri)) {
+        await launchUrl(smsLaunchUri);
+      } else {
+        // print('Can not to send message');
+        showSnackBar(context: context, content: "Can not to send message");
+      }
+    }
   }
 
   void selectContact(Contact selectedContact, BuildContext context) async {
@@ -54,25 +78,7 @@ class SelectContactRepository {
       if (!isFound) {
         showSnackBar(
             context: context, content: 'This number is not exist on this app.');
-        String? confirm = await showConfirmDialog(
-            context, "Do you want to share this app to your friend ");
-        // print(confirm);
-        if (confirm == 'ok') {
-          final Uri smsLaunchUri = Uri(
-            scheme: 'sms',
-            path: selectedPhoneNum,
-            queryParameters: <String, String>{
-              'body': Uri.encodeComponent(
-                  'I am using this app to chat, you can download and instal to use with me at https://drive.google.com/drive/folders/10EIZybrPR83rPOKWqMw1USqFIZgQZAfe?usp=sharing'),
-            },
-          );
-          if (await canLaunchUrl(smsLaunchUri)) {
-            await launchUrl(smsLaunchUri);
-          } else {
-            // print('Can not to send message');
-            showSnackBar(context: context, content: "Can not to send message");
-          }
-        }
+        invite(context, selectedPhoneNum);
       }
     } catch (e) {
       showSnackBar(context: context, content: e.toString());

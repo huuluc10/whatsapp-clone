@@ -213,7 +213,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
                       padding: const EdgeInsets.only(top: 14),
                       child: SizedBox(
                         width: 100,
-                        child: CustomButton(text: 'Đăng nhập', onPress: logout),
+                        child: CustomButton(text: 'Đăng xuất', onPress: logout),
                       ),
                     ),
                   ),

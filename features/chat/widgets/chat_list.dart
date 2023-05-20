@@ -1,22 +1,29 @@
-import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
-import 'package:chatapp_clone_whatsapp/features/chat/widgets/my_message_card.dart';
-import 'package:chatapp_clone_whatsapp/features/chat/widgets/sender_message_card.dart';
-import 'package:chatapp_clone_whatsapp/features/chat/controller/chat_controller.dart';
-import 'package:chatapp_clone_whatsapp/models/audio.dart';
-import 'package:chatapp_clone_whatsapp/models/document.dart';
-import 'package:chatapp_clone_whatsapp/models/image.dart';
-import 'package:chatapp_clone_whatsapp/models/message.dart';
-import 'package:chatapp_clone_whatsapp/models/video.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/controller/chat_controller.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/my_message_card.dart';
+import 'package:chatapp_clone_whatsapp/features/chat/widgets/sender_message_card.dart';
+import 'package:chatapp_clone_whatsapp/models/audio.dart';
+import 'package:chatapp_clone_whatsapp/models/document.dart';
+import 'package:chatapp_clone_whatsapp/models/image.dart';
+import 'package:chatapp_clone_whatsapp/models/message.dart';
+import 'package:chatapp_clone_whatsapp/models/video.dart';
+
 class ChatList extends ConsumerStatefulWidget {
   final String recieverUserId;
+  final bool isGroupChat;
 
-  const ChatList({Key? key, required this.recieverUserId}) : super(key: key);
+  ChatList({
+    super.key,
+    required this.recieverUserId,
+    required this.isGroupChat,
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatListState();

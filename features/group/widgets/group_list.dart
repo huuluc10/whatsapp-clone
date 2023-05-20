@@ -1,3 +1,4 @@
+import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/data_null.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/screens/chat_screen.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../common/widgets/oop.dart';
+
 class GroupList extends ConsumerWidget {
   const GroupList({super.key});
 
@@ -15,10 +18,10 @@ class GroupList extends ConsumerWidget {
     return StreamBuilder<List<GroupChat>>(
       stream: ref.watch(groupControllerProvider).chatGroups(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Loader();
-        } else {
-          if (snapshot.data!.isEmpty) {
+        if (snapshot.hasData) {
+          final List<GroupChat>? groupList = snapshot.data;
+
+          if (groupList == null || groupList.isEmpty) {
             return const DataNull(
               message:
                   'Bạn chưa có nhóm trò chuyện, bạn có thể tạo nhóm mới với những người khác.',
@@ -39,6 +42,7 @@ class GroupList extends ConsumerWidget {
                           arguments: {
                             'name': groupData.name,
                             'uid': groupData.groupId,
+                            'isGroupChat': true,
                           },
                         );
                       },
@@ -79,6 +83,10 @@ class GroupList extends ConsumerWidget {
               },
             );
           }
+        } else if (snapshot.hasError) {
+          return const OopsWidget();
+        } else {
+          return const Loader();
         }
       },
     );

@@ -15,12 +15,9 @@ import 'package:chatapp_clone_whatsapp/models/image.dart';
 import 'package:chatapp_clone_whatsapp/models/video.dart';
 
 class MainScreenLayout extends ConsumerStatefulWidget {
-  const MainScreenLayout({
-    required this.tab,
-  });
-
   static const routeName = '/main_screen';
-  final int tab;
+
+  const MainScreenLayout({super.key});
 
   @override
   ConsumerState<MainScreenLayout> createState() => _MainScreenLayoutState();
@@ -136,8 +133,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
             ],
           ),
         ),
-        body: IndexedStack(
-          index: widget.tab,
+        body: TabBarView(
           children: const [
             ContactsList(),
             GroupList(),

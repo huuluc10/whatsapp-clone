@@ -32,11 +32,15 @@ class _SelectContactGroupState extends ConsumerState<SelectContactGroup> {
   @override
   Widget build(BuildContext context) {
     return ref.watch(getContactsProvider).when(
-        data: (contactList) => Expanded(
+        data: (contactList) => Container(
               child: ListView.builder(
                 itemCount: contactList.length,
                 itemBuilder: (context, index) {
                   final contact = contactList[index];
+                  final name = contact.displayName;
+                  final phoneNumbber = contact.phones[0].number
+                      .replaceAll(' ', '')
+                      .replaceFirst('0', '+84');
                   return InkWell(
                     onTap: () {
                       selectContact(index, contact);
@@ -46,9 +50,10 @@ class _SelectContactGroupState extends ConsumerState<SelectContactGroup> {
                           ? const Icon(Icons.done)
                           : null,
                       title: Text(
-                        contact.displayName,
+                        name,
                         style: const TextStyle(fontSize: 18),
                       ),
+                      subtitle: Text(phoneNumbber),
                     ),
                   );
                 },
