@@ -9,9 +9,9 @@ import 'package:chatapp_clone_whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/screens/user_information_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/screens/chat_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/media/screens/media_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/group/screens/create_group_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:chatapp_clone_whatsapp/features/view_contact_info/screens/contact_info_screen.dart';
-import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:flutter/material.dart';
 import 'common/screens/settings_options.dart';
 
@@ -54,8 +54,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
 
     case MainScreenLayout.routeName:
+      final tab = settings.arguments as int;
       return MaterialPageRoute(
-        builder: (context) => const MainScreenLayout(),
+        builder: (context) => MainScreenLayout(tab: tab),
       );
     case WelcomeScreen.routeName:
       return MaterialPageRoute(
@@ -95,6 +96,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final name = arguments['name'];
       return MaterialPageRoute(
         builder: (context) => MediaScreen(name: name),
+      );
+    case CreateGroupScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => CreateGroupScreen(),
       );
     default:
       return MaterialPageRoute(

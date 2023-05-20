@@ -30,10 +30,6 @@ class ChatController {
     return chatRepository.getChatContacts();
   }
 
-  Stream<List<Group>> chatGroups() {
-    return chatRepository.getChatGroups();
-  }
-
   Stream<List<Message>> chatStream(String recieverUserId) {
     return chatRepository.getChatStream(recieverUserId);
   }

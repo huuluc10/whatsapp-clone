@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-class Group {
+class GroupChat {
   final String senderId;
   final String name;
   final String groupId;
@@ -10,7 +9,7 @@ class Group {
   final List<String> listMemberId;
   final DateTime timeSent;
 
-  Group({
+  GroupChat({
     required this.senderId,
     required this.name,
     required this.groupId,
@@ -32,8 +31,8 @@ class Group {
     };
   }
 
-  factory Group.fromMap(Map<String, dynamic> map) {
-    return Group(
+  factory GroupChat.fromMap(Map<String, dynamic> map) {
+    return GroupChat(
       senderId: map['senderId'] as String,
       name: map['name'] as String,
       groupId: map['groupId'] as String,
@@ -46,6 +45,6 @@ class Group {
 
   String toJson() => json.encode(toMap());
 
-  factory Group.fromJson(String source) =>
-      Group.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory GroupChat.fromJson(String source) =>
+      GroupChat.fromMap(json.decode(source) as Map<String, dynamic>);
 }

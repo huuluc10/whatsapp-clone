@@ -1,7 +1,7 @@
 import 'package:chatapp_clone_whatsapp/common/widgets/data_null.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
-import 'package:chatapp_clone_whatsapp/features/chat/controller/chat_controller.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/screens/chat_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/group/controller/group_controller.dart';
 import 'package:chatapp_clone_whatsapp/models/group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,8 +12,8 @@ class GroupList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return StreamBuilder<List<Group>>(
-      stream: ref.watch(chatControllerProvider).chatGroups(),
+    return StreamBuilder<List<GroupChat>>(
+      stream: ref.watch(groupControllerProvider).chatGroups(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Loader();

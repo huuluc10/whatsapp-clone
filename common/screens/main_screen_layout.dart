@@ -1,20 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:chatapp_clone_whatsapp/common/screens/settings_options.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/contacts_list.dart';
-import 'package:chatapp_clone_whatsapp/features/chat/widgets/group_list.dart';
+import 'package:chatapp_clone_whatsapp/features/group/screens/create_group_screen.dart';
+import 'package:chatapp_clone_whatsapp/features/group/widgets/group_list.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:chatapp_clone_whatsapp/models/audio.dart';
 import 'package:chatapp_clone_whatsapp/models/document.dart';
 import 'package:chatapp_clone_whatsapp/models/image.dart';
 import 'package:chatapp_clone_whatsapp/models/video.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MainScreenLayout extends ConsumerStatefulWidget {
-  const MainScreenLayout({super.key});
+  const MainScreenLayout({
+    required this.tab,
+  });
 
   static const routeName = '/main_screen';
+  final int tab;
 
   @override
   ConsumerState<MainScreenLayout> createState() => _MainScreenLayoutState();
@@ -86,7 +92,7 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
               ),
               onSelected: (value) {
                 if (value == 'newGroup') {
-                  //TODO: màn hình chọn thành viên cho group
+                  Navigator.pushNamed(context, CreateGroupScreen.routeName);
                 } else {
                   Navigator.pushNamed(context, SettingScreen.routeName);
                 }
@@ -130,8 +136,9 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
             ],
           ),
         ),
-        body: const TabBarView(
-          children: [
+        body: IndexedStack(
+          index: widget.tab,
+          children: const [
             ContactsList(),
             GroupList(),
           ],

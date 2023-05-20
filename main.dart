@@ -66,7 +66,9 @@ class MyApp extends ConsumerWidget {
             if (user == null) {
               return const WelcomeScreen();
             } else {
-              return const MainScreenLayout();
+              return const MainScreenLayout(
+                tab: 1,
+              );
             }
           },
           error: (error, trace) {

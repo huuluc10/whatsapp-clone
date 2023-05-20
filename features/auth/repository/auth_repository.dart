@@ -151,7 +151,7 @@ class AuthRepository {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => const MainScreenLayout(),
+            builder: (context) => const MainScreenLayout(tab: 1),
           ),
           (route) => false);
     } catch (e) {

@@ -55,19 +55,6 @@ class ChatRepository {
     });
   }
 
-  Stream<List<Group>> getChatGroups() {
-    return firestore.collection('groups').snapshots().asyncMap((event) async {
-      List<Group> groups = [];
-      for (var document in event.docs) {
-        var group = Group.fromMap(document.data());
-        if (group.listMemberId.contains(auth.currentUser!.uid)) {
-          groups.add(group);
-        }
-      }
-      return groups;
-    });
-  }
-
   Stream<List<Message>> getChatStream(String recieverUserId) {
     return firestore
         .collection('users')
