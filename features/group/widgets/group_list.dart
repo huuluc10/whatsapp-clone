@@ -42,7 +42,7 @@ class GroupList extends ConsumerWidget {
                             'name': groupData.name,
                             'uid': groupData.groupId,
                             'isGroupChat': true,
-                            'prifilePic': groupData.groupPic
+                            'profilePic': groupData.groupPic
                           },
                         );
                       },
