@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chatapp_clone_whatsapp/models/group.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
+import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,5 +39,26 @@ class GroupController {
 
   Stream<List<Message>> chatGroupStream(String groupId) {
     return groupRepository.getGroupChatStream(groupId);
+  }
+
+  Future<List<UserModel>> getListUserInGroup(String groupId) async {
+    return groupRepository.getListUserInGroup(groupId);
+  }
+
+  Future<GroupChat?> getGroupData(String groupId) async {
+    return groupRepository.getGroupData(groupId);
+  }
+
+  void changeProfileImageGroup(
+    BuildContext context,
+    String groupId,
+    File profilePic,
+  ) async {
+    return groupRepository.changeImageProfileGroup(
+      groupId: groupId,
+      profilePic: profilePic,
+      ref: ref,
+      context: context,
+    );
   }
 }
