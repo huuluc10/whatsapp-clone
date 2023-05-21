@@ -1,10 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:chatapp_clone_whatsapp/common/enums/type_file_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/custom_icon_type_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/controller/chat_controller.dart';
 
@@ -50,7 +46,7 @@ class _DocumentItemState extends ConsumerState<DocumentItem> {
       builder:
           (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
+          return const SizedBox(
             width: 70,
             height: 70,
             child: CircularProgressIndicator(),

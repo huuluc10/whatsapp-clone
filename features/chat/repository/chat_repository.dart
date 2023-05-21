@@ -1,10 +1,8 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/repositories/common_firebase_storage_repository.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
-import 'package:chatapp_clone_whatsapp/models/group.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -294,7 +292,7 @@ class ChatRepository {
       if (messageEnum == MessageEnum.doc) {
         messageId = file.path.substring(file.path.lastIndexOf('/') + 1);
       }
-      String imageUrl = await ref
+      String fileUrl = await ref
           .read(commonFirebaseStorageRepositoryProvider)
           .storeFileToFirebase(
               'chats/${messageEnum.type}/${senderUserData.uid}/$recieverUserId/$messageId',
@@ -332,7 +330,7 @@ class ChatRepository {
       );
       _saveMessageToMessageSubcollection(
         recieverUserId: recieverUserId,
-        text: imageUrl,
+        text: fileUrl,
         timeSent: timeSent,
         messageId: messageId,
         username: senderUserData.name,

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:chatapp_clone_whatsapp/models/chat_contact.dart';
-import 'package:chatapp_clone_whatsapp/models/group.dart';
 import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:chatapp_clone_whatsapp/models/user_model.dart';
 import 'package:flutter/material.dart';

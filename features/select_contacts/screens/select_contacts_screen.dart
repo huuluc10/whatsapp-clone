@@ -1,4 +1,3 @@
-import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/error.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
 import 'package:chatapp_clone_whatsapp/features/select_contacts/controller/select_contact_controller.dart';

@@ -41,7 +41,7 @@ Future<String?> showConfirmDialog(
 Future<File?> pickImage(BuildContext context, SourceFile source) async {
   File? image;
   try {
-    final pickedImage;
+    final XFile? pickedImage;
     if (source == SourceFile.gallary) {
       pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
     } else {
@@ -73,7 +73,7 @@ Future<GiphyGif?> pickGIF(BuildContext context) async {
 Future<File?> pickVideo(BuildContext context, SourceFile source) async {
   File? video;
   try {
-    final pickedVideo;
+    final XFile? pickedVideo;
     if (source == SourceFile.gallary) {
       pickedVideo = await ImagePicker().pickVideo(source: ImageSource.gallery);
     } else {
@@ -145,7 +145,6 @@ Future<File?> pickDocument(BuildContext context) async {
 Future<File?> downloadFileFromServer(
     BuildContext context, String url, String fileName) async {
   File? file;
-  print(url);
   var response = await http.get(Uri.parse(url));
   var filePath = '/storage/emulated/0/Download/$fileName';
   try {

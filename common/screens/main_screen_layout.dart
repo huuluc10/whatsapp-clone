@@ -133,8 +133,8 @@ class _MainScreenLayoutState extends ConsumerState<MainScreenLayout>
             ],
           ),
         ),
-        body: TabBarView(
-          children: const [
+        body: const TabBarView(
+          children: [
             ContactsList(),
             GroupList(),
           ],

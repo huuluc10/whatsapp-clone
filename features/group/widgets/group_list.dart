@@ -1,4 +1,3 @@
-import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/data_null.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/screens/chat_screen.dart';
@@ -43,6 +42,7 @@ class GroupList extends ConsumerWidget {
                             'name': groupData.name,
                             'uid': groupData.groupId,
                             'isGroupChat': true,
+                            'prifilePic': groupData.groupPic
                           },
                         );
                       },

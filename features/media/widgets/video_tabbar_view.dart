@@ -13,7 +13,7 @@ class VideoTabarView extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> link = videos.videos;
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3, // Số card trên mỗi hàng
         mainAxisSpacing: 8, // Khoảng cách giữa các hàng
         crossAxisSpacing: 8, // Khoảng cách giữa các card trong cùng một hàng

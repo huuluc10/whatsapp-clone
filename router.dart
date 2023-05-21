@@ -47,18 +47,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final name = arguments['name'];
       final uid = arguments['uid'];
       final isGroupChat = arguments['isGroupChat'] as bool;
+      final profilePic = arguments['profilePic'] as String;
       // final bool isNewUser = settings.arguments as bool;
       return MaterialPageRoute(
         builder: (context) => ChatScreen(
           name: name,
           uid: uid,
           isGroupChat: isGroupChat,
+          profilePic: profilePic,
         ),
       );
 
     case MainScreenLayout.routeName:
       return MaterialPageRoute(
-        builder: (context) => MainScreenLayout(),
+        builder: (context) => const MainScreenLayout(),
       );
     case WelcomeScreen.routeName:
       return MaterialPageRoute(
@@ -101,7 +103,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case CreateGroupScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => CreateGroupScreen(),
+        builder: (context) => const CreateGroupScreen(),
       );
     case GroupInfoScreen.routeName:
       final arguments = settings.arguments as Map<String, dynamic>;
