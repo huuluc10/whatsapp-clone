@@ -70,12 +70,16 @@ class SelectContactRepository {
             .replaceFirst('0', '+84');
         if (selectedPhoneNum == userData.phoneNumber) {
           isFound = true;
-          Navigator.pushNamed(context, ChatScreen.routeName, arguments: {
-            'name': userData.name,
-            'uid': userData.uid,
-            'isGroupChat': false,
-            'profilePic': userData.profilePic,
-          });
+          Navigator.pushNamed(
+            context,
+            ChatScreen.routeName,
+            arguments: {
+              'name': userData.name,
+              'uid': userData.uid,
+              'isGroupChat': false,
+              'profilePic': userData.profilePic,
+            },
+          );
         }
       }
       if (!isFound) {
