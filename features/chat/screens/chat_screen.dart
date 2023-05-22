@@ -45,14 +45,15 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     setState(() {});
   }
 
-  void makeCall() {
-    ref.read(callControllerProvider).makeCall(
-          widget.name,
-          context,
-          widget.uid,
-          widget.profilePic,
-          widget.isGroupChat,
-        );
+  void makeVideoCall() {
+    makeCall(
+      ref: ref,
+      context: context,
+      recieverUid: widget.uid,
+      recieverName: widget.name,
+      recieverProfilePic: widget.profilePic,
+      isGroupChat: widget.isGroupChat,
+    );
   }
 
   @override
@@ -96,7 +97,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           centerTitle: false,
           actions: [
             IconButton(
-              onPressed: makeCall,
+              onPressed: makeVideoCall,
               icon: const Icon(Icons.video_call),
             ),
             IconButton(

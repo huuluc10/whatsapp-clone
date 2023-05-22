@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
-
 import 'package:chatapp_clone_whatsapp/common/enums/source_file_enum.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
@@ -58,31 +57,37 @@ class _GroupInfoScreenState extends ConsumerState<GroupInfoScreen> {
                       .read(groupControllerProvider)
                       .getGroupData(widget.uid),
                   builder: (context, snapshot) {
-                    String profilePic = '';
+                    String? profilePic;
+                    Widget circleAvatar = Container();
                     if (snapshot.hasError) {
                       return ErrorScreen(error: snapshot.error.toString());
                     }
                     if (snapshot.hasData) {
                       GroupChat group = snapshot.data!;
                       profilePic = group.groupPic;
+                      if (image == null) {
+                        if (profilePic.isNotEmpty) {
+                          circleAvatar = CircleAvatar(
+                            backgroundImage: NetworkImage(profilePic),
+                            radius: 64,
+                          );
+                        } else {
+                          circleAvatar = const CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                'https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'),
+                            radius: 64,
+                          );
+                        }
+                      } else {
+                        circleAvatar = CircleAvatar(
+                          backgroundImage: FileImage(image!),
+                          radius: 64,
+                        );
+                      }
                     }
                     return Stack(
                       children: [
-                        profilePic != null
-                            ? CircleAvatar(
-                                backgroundImage: NetworkImage(profilePic),
-                                radius: 64,
-                              )
-                            : image == null
-                                ? const CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/group.jpg'),
-                                    radius: 64,
-                                  )
-                                : CircleAvatar(
-                                    backgroundImage: FileImage(image!),
-                                    radius: 64,
-                                  ),
+                        circleAvatar,
                         Positioned(
                           bottom: 0,
                           right: 0,
@@ -110,7 +115,7 @@ class _GroupInfoScreenState extends ConsumerState<GroupInfoScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                     widget.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
@@ -150,7 +155,7 @@ class _GroupInfoScreenState extends ConsumerState<GroupInfoScreen> {
                       child: ListView.builder(
                         itemCount: list.length,
                         itemBuilder: (context, index) => Padding(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,

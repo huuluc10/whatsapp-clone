@@ -1,10 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:agora_uikit/agora_uikit.dart';
-import 'package:agora_uikit/models/agora_settings.dart';
 import 'package:chatapp_clone_whatsapp/features/call/controller/call_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
 import 'package:chatapp_clone_whatsapp/config/agora_config.dart';
 import 'package:chatapp_clone_whatsapp/models/call.dart';

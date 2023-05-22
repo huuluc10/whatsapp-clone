@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:chatapp_clone_whatsapp/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:chatapp_clone_whatsapp/features/view_contact_info/controller/view_contact_info_controller.dart';
@@ -19,6 +20,7 @@ class ContactInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String? profilePic;
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
@@ -31,16 +33,19 @@ class ContactInfo extends ConsumerWidget {
               child: Column(
                 children: [
                   FutureBuilder<UserModel?>(
+                    future: ref
+                        .watch(viewContactInfoControllerProvider)
+                        .getInfo(uid),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        profilePic = snapshot.data!.profilePic;
                         return Column(
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 5),
                               child: CircleAvatar(
                                 radius: 80,
-                                backgroundImage:
-                                    NetworkImage(snapshot.data!.profilePic),
+                                backgroundImage: NetworkImage(profilePic!),
                               ),
                             ),
                             Padding(
@@ -69,9 +74,6 @@ class ContactInfo extends ConsumerWidget {
                         return const CircularProgressIndicator();
                       }
                     },
-                    future: ref
-                        .watch(viewContactInfoControllerProvider)
-                        .getInfo(uid),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -80,7 +82,11 @@ class ContactInfo extends ConsumerWidget {
                       Column(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showSnackBar(
+                                  context: context,
+                                  content: 'Tính năng chưa phát triển');
+                            },
                             icon: const Icon(
                               Icons.call,
                               color: Colors.green,
@@ -99,7 +105,16 @@ class ContactInfo extends ConsumerWidget {
                       Column(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              makeCall(
+                                ref: ref,
+                                context: context,
+                                recieverUid: uid,
+                                recieverName: name,
+                                recieverProfilePic: profilePic!,
+                                isGroupChat: false,
+                              );
+                            },
                             icon: const Icon(
                               Icons.video_call,
                               color: Colors.green,
@@ -116,35 +131,6 @@ class ContactInfo extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: InkWell(
-                      onTap: () {},
-                      child: Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24),
-                              color: Colors.green,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Icon(
-                                Icons.group_add_outlined,
-                                color: Colors.white,
-                                size: 25,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          Text(
-                            'Tạo nhóm với $name',
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),

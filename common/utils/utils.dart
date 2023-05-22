@@ -1,18 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 import 'package:chatapp_clone_whatsapp/common/enums/source_file_enum.dart';
+import 'package:chatapp_clone_whatsapp/features/call/controller/call_controller.dart';
 import 'package:enough_giphy_flutter/enough_giphy_flutter.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 void showSnackBar({required BuildContext context, required String content}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(content),
-    ),
-  );
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(content),
+    duration: const Duration(seconds: 2),
+  ));
 }
 
 Future<String?> showConfirmDialog(
@@ -156,4 +158,21 @@ Future<File?> downloadFileFromServer(
     );
   }
   return file;
+}
+
+void makeCall({
+  required WidgetRef ref,
+  required BuildContext context,
+  required String recieverName,
+  required String recieverUid,
+  required String recieverProfilePic,
+  required bool isGroupChat,
+}) {
+  ref.read(callControllerProvider).makeCall(
+        recieverName,
+        context,
+        recieverUid,
+        recieverProfilePic,
+        isGroupChat,
+      );
 }

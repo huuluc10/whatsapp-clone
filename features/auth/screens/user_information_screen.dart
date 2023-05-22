@@ -19,7 +19,6 @@ class UserInformationScreen extends ConsumerStatefulWidget {
 class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
   final TextEditingController nameController = TextEditingController();
   File? image;
-  String? username;
 
   @override
   void dispose() {
@@ -59,6 +58,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
           String username;
           String phoneNumber = 'Dữ liệu đang lấy...';
           String? profilePic;
+          Widget circleAvatar = Container();
           if (snapshot.hasData) {
             username = snapshot.data!.name;
             if (username.isNotEmpty) {
@@ -66,27 +66,33 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
             }
             phoneNumber = snapshot.data!.phoneNumber;
             profilePic = snapshot.data!.profilePic;
+
+            if (image == null) {
+              if (profilePic.isNotEmpty) {
+                circleAvatar = CircleAvatar(
+                  backgroundImage: NetworkImage(profilePic),
+                  radius: 64,
+                );
+              } else {
+                circleAvatar = const CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      'https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'),
+                  radius: 64,
+                );
+              }
+            } else {
+              circleAvatar = CircleAvatar(
+                backgroundImage: FileImage(image!),
+                radius: 64,
+              );
+            }
           }
           return ListView(
             children: [
               Center(
                 child: Stack(
                   children: [
-                    profilePic != null
-                        ? CircleAvatar(
-                            backgroundImage: NetworkImage(profilePic),
-                            radius: 64,
-                          )
-                        : image == null
-                            ? const CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    'https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'),
-                                radius: 64,
-                              )
-                            : CircleAvatar(
-                                backgroundImage: FileImage(image!),
-                                radius: 64,
-                              ),
+                    circleAvatar,
                     Positioned(
                       bottom: 0,
                       right: 0,
