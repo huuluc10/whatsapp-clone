@@ -44,7 +44,7 @@ class _CallScreenState extends ConsumerState<CallScreen> {
       ),
     );
     await client.initialize();
-    setState(() {}); // Cập nhật giao diện sau khi khởi tạo thành công
+    setState(() {});
   }
 
   @override
@@ -62,10 +62,10 @@ class _CallScreenState extends ConsumerState<CallScreen> {
                       onPressed: () async {
                         await client.engine.leaveChannel();
                         ref.read(callControllerProvider).endCall(
-                              widget.call.callerId,
-                              context,
-                              widget.call.recieverId,
-                            );
+                            widget.call.callerId,
+                            context,
+                            widget.call.recieverId,
+                            widget.isGroupChat);
                         Navigator.pop(context);
                       },
                       icon: const Icon(Icons.call_end),

@@ -1,8 +1,12 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
+import 'package:chatapp_clone_whatsapp/common/screens/video_image_sceen.dart';
 import 'package:chatapp_clone_whatsapp/models/image.dart';
+import 'package:chatapp_clone_whatsapp/models/message.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class ImageTabarView extends StatelessWidget {
   Img images = Img();
@@ -19,8 +23,22 @@ class ImageTabarView extends StatelessWidget {
       ),
       itemCount: link.length,
       itemBuilder: (context, index) => Card(
-        child: CachedNetworkImage(
-          imageUrl: link.elementAt(index),
+        child: InkWell(
+          onTap: () {
+            final messageId = const Uuid().v1();
+            Navigator.pushNamed(
+              context,
+              VideoImageScreen.routeName,
+              arguments: {
+                'message': link.elementAt(index),
+                'messageId': messageId,
+                'messageEnum': MessageEnum.image,
+              },
+            );
+          },
+          child: CachedNetworkImage(
+            imageUrl: link.elementAt(index),
+          ),
         ),
       ),
     );

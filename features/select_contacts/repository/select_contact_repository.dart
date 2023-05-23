@@ -33,11 +33,10 @@ class SelectContactRepository {
     return contacts;
   }
 
-  void inviteFriend(BuildContext context, phoneNumber) async {
-    showSnackBar(
-        context: context, content: 'This number is not exist on this app.');
-    String? confirm = await showConfirmDialog(
-        context, "Do you want to share this app to your friend ");
+  void inviteFriend(BuildContext context, String phoneNumber) async {
+    showSnackBar(context: context, content: 'Số này không có trong hệ thống.');
+    String? confirm =
+        await showConfirmDialog(context, "Bạn có muốn mời họ dùng không?");
     // print(confirm);
     if (confirm == 'ok') {
       final Uri smsLaunchUri = Uri(
@@ -45,7 +44,7 @@ class SelectContactRepository {
         path: phoneNumber,
         queryParameters: <String, String>{
           'body': Uri.encodeComponent(
-              'I am using this app to chat, you can download and instal to use with me at https://drive.google.com/drive/folders/10EIZybrPR83rPOKWqMw1USqFIZgQZAfe?usp=sharing'),
+              'Bạn có thể cài đặt ứng dụng ở đây để dùng với minh https://drive.google.com/drive/folders/10EIZybrPR83rPOKWqMw1USqFIZgQZAfe?usp=sharing'),
         },
       );
       if (await canLaunchUrl(smsLaunchUri)) {
@@ -83,7 +82,7 @@ class SelectContactRepository {
         }
       }
       if (!isFound) {
-        inviteFriend(context, selectedContact);
+        inviteFriend(context, selectedPhoneNum);
       }
     } catch (e) {
       showSnackBar(context: context, content: e.toString());

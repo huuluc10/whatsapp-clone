@@ -80,7 +80,11 @@ class CallController {
 
   Stream<DocumentSnapshot> get callStream => callRepository.callSream;
 
-  void endCall(String callerId, BuildContext context, String recieverId) {
+  void endCall(String callerId, BuildContext context, String recieverId,
+      bool isGroupChat) {
     callRepository.endCall(callerId, context, recieverId);
+    if (isGroupChat) {
+      callRepository.endGroupCall(callerId, context, recieverId);
+    }
   }
 }

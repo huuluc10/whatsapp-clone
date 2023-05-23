@@ -1,8 +1,11 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:chatapp_clone_whatsapp/common/enums/message_enum.dart';
+import 'package:chatapp_clone_whatsapp/common/screens/video_image_sceen.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/video_player_item.dart';
 import 'package:chatapp_clone_whatsapp/models/video.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class VideoTabarView extends StatelessWidget {
   Video videos = Video();
@@ -20,8 +23,22 @@ class VideoTabarView extends StatelessWidget {
       ),
       itemCount: link.length,
       itemBuilder: (context, index) => Card(
-        child: VideoPlayerItem(
-          videoUrl: link.elementAt(index),
+        child: InkWell(
+          onTap: () {
+            final messageId = const Uuid().v1();
+            Navigator.pushNamed(
+              context,
+              VideoImageScreen.routeName,
+              arguments: {
+                'message': link.elementAt(index),
+                'messageId': messageId,
+                'messageEnum': MessageEnum.video,
+              },
+            );
+          },
+          child: VideoPlayerItem(
+            videoUrl: link.elementAt(index),
+          ),
         ),
       ),
     );

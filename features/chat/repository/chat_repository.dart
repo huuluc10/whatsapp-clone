@@ -211,14 +211,15 @@ class ChatRepository {
       );
 
       _saveMessageToMessageSubcollection(
-          recieverUserId: recieverUserId,
-          text: text,
-          timeSent: timeSent,
-          messageId: messageId,
-          username: senderUser.name,
-          recieverUsername: recieverUserData?.name,
-          messageType: MessageEnum.text,
-          isGroupChat: isGroupChat);
+        recieverUserId: recieverUserId,
+        text: text,
+        timeSent: timeSent,
+        messageId: messageId,
+        username: senderUser.name,
+        recieverUsername: recieverUserData?.name,
+        messageType: MessageEnum.text,
+        isGroupChat: isGroupChat,
+      );
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
@@ -263,6 +264,41 @@ class ChatRepository {
     }
   }
 
+  Future<Message?> getMessageData(
+    String messageId,
+    String senderId,
+    String recieverId,
+  ) async {
+    DocumentSnapshot documentSnapshot;
+    Message? mesage;
+    if (recieverId.startsWith('group')) {
+      documentSnapshot = await firestore
+          .collection('groups')
+          .doc(recieverId)
+          .collection('chats')
+          .doc(messageId)
+          .get();
+      if (documentSnapshot.exists) {
+        mesage =
+            Message.fromMap(documentSnapshot.data() as Map<String, dynamic>);
+      }
+    } else {
+      documentSnapshot = await firestore
+          .collection('users')
+          .doc(senderId)
+          .collection('chats')
+          .doc(recieverId)
+          .collection('messages')
+          .doc(messageId)
+          .get();
+      if (documentSnapshot.exists) {
+        mesage =
+            Message.fromMap(documentSnapshot.data() as Map<String, dynamic>);
+      }
+    }
+    return mesage;
+  }
+
   Future<Map<String, dynamic>> getFileMetadata({
     required BuildContext context,
     required String recieverUserId,
@@ -271,10 +307,14 @@ class ChatRepository {
     required MessageEnum messageEnum,
     required String messageId,
   }) async {
+    Message? message =
+        await getMessageData(messageId, senderUserData!.uid, recieverUserId);
+    String senderUID = message!.senderId;
+    String recieverUID = message.recieverId;
     Map<String, dynamic> info = await ref
         .read(commonFirebaseStorageRepositoryProvider)
         .getFileMetadata(
-            'chats/${messageEnum.type}/${senderUserData!.uid}/$recieverUserId/$messageId');
+            'chats/${messageEnum.type}/$senderUID/$recieverUID/$messageId');
     return info;
   }
 

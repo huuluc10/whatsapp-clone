@@ -107,7 +107,7 @@ class GroupRepository {
       }
     }
 
-    var groupId = const Uuid().v1();
+    var groupId = 'group${const Uuid().v1()}';
     String groupPicture = await ref
         .watch(commonFirebaseStorageRepositoryProvider)
         .storeFileToFirebase('groups/$groupId', groupPic);

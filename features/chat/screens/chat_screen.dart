@@ -4,11 +4,9 @@ import 'package:chatapp_clone_whatsapp/features/call/screens/call_pickup_screen.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:chatapp_clone_whatsapp/common/utils/colors.dart';
 import 'package:chatapp_clone_whatsapp/common/widgets/loader.dart';
 import 'package:chatapp_clone_whatsapp/features/auth/controller/auth_controller.dart';
-import 'package:chatapp_clone_whatsapp/features/call/controller/call_controller.dart';
 import 'package:chatapp_clone_whatsapp/features/chat/widgets/chat_list.dart';
 import 'package:chatapp_clone_whatsapp/features/group/screens/group_info.dart';
 import 'package:chatapp_clone_whatsapp/features/media/screens/media_screen.dart';
