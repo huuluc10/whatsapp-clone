@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class UserInformationScreen extends ConsumerStatefulWidget {
   static const routeName = '/user-information';
 
-  const UserInformationScreen({super.key});
+  const UserInformationScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<UserInformationScreen> createState() =>
@@ -19,6 +19,8 @@ class UserInformationScreen extends ConsumerStatefulWidget {
 class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
   final TextEditingController nameController = TextEditingController();
   File? image;
+  String profilePic =
+      'https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg';
 
   @override
   void dispose() {
@@ -57,42 +59,28 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
         builder: (context, snapshot) {
           String username;
           String phoneNumber = 'Dữ liệu đang lấy...';
-          String? profilePic;
-          Widget circleAvatar = Container();
           if (snapshot.hasData) {
             username = snapshot.data!.name;
+            profilePic = snapshot.data!.profilePic;
             if (username.isNotEmpty) {
               nameController.text = username;
             }
             phoneNumber = snapshot.data!.phoneNumber;
-            profilePic = snapshot.data!.profilePic;
-
-            if (image == null) {
-              if (profilePic.isNotEmpty) {
-                circleAvatar = CircleAvatar(
-                  backgroundImage: NetworkImage(profilePic),
-                  radius: 64,
-                );
-              } else {
-                circleAvatar = const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://as1.ftcdn.net/v2/jpg/03/53/11/00/1000_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg'),
-                  radius: 64,
-                );
-              }
-            } else {
-              circleAvatar = CircleAvatar(
-                backgroundImage: FileImage(image!),
-                radius: 64,
-              );
-            }
           }
           return ListView(
             children: [
               Center(
                 child: Stack(
                   children: [
-                    circleAvatar,
+                    image == null
+                        ? CircleAvatar(
+                            backgroundImage: NetworkImage(profilePic),
+                            radius: 64,
+                          )
+                        : CircleAvatar(
+                            backgroundImage: FileImage(image!),
+                            radius: 64,
+                          ),
                     Positioned(
                       bottom: 0,
                       right: 0,
